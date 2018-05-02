@@ -1,0 +1,50 @@
+{% extends "@includes/base-post.html.twig" %}
+
+{% block content %}
+
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    <p>J'ai pas mal joué à Guildwars, un jeu multi-joueurs en ligne.</p>
+                    <p>Pour mieux gérer ses "builds" (la barre de compétence disponible en jeu), j'ai créé un outil pour
+                        cela.</p>
+                    <p>Il a pas mal servi à la communauté.</p>
+
+                    <h2 class="section-heading">Apercu du programme</h2>
+
+                    <p><img class="img-fluid" src="screen.png"/></p>
+
+                    <h2 class="section-heading">Morceau de code concernant la gestion binaire des templates de
+                        builds</h2>
+
+                    <p>Je mets ce bout de code ici directement car je sais que cela peut intéresser certains qui
+                        voudraient implémenter cet algorithme ailleurs. A vous de le traduire dans le langage de votre
+                        choix.</p>
+
+                    <pre class="delphi"><code>{% include "delphi/gw-build-manager/UTemplate.pas" %}</code></pre>
+
+                    <h2 class="section-heading">Téléchargement</h2>
+
+                    <p>Vous trouverez dans le zip les sources et binaires.</p>
+
+                    <p>Vous pouvez télécharger le binaire, tous les sources, les installeurs, les différentes version,
+                        etc... Libre à vous de jouer avec.</p>
+                    <p>
+                        <a class="btn btn-primary" href="GWBuildManager.zip" role="button">
+                            <i class="fa fa-download"></i>GWBuildManager.zip
+                        </a>
+                    </p>
+                    <p>
+                        <a class="btn btn-primary" href="_Delphi.zip" role="button">
+                            <i class="fa fa-download"></i>_Delphi.zip
+                        </a>
+                        <em> (dépendances utilisées par le projet principal)</em>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </article>
+
+{% endblock %}

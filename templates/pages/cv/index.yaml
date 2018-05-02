@@ -16,7 +16,7 @@ cv:
              grapiller des connaissances autour de moi et même mieux : découvrir d'autres manières de penser.
           - >
             Je programme à depuis l'âge de 6 ans, cela fait partie de mon ADN, j'ai passé des dizaines d'heures sur mes
-            calcultrices à inventer seul des concepts que je saurai nommer plus tard comme la récursivité, les
+            calcultrices à inventer seul des concepts que je saurai nommer plus tard comme la récursivité ou les
             algorithmes de Brensenham.
 
 
@@ -24,20 +24,20 @@ cv:
     experience:
 
       - company: LivingObjects
-        title: Développeur PHP
+        title: Lead développeur PHP
         location: Colomiers, 31
         dates: [ avril 2017, présent ]
         description: >
             LivingObjects développe des solutions de gestion de performance réseau (fixe, mobile,...)
             pour des opérateurs télécom comme SFR
         items:
-          - Architecture de nouvelles solutions plus modernes et en phase avec les besoins des infrastructure.
+          - Architecture de nouvelles solutions plus modernes et en phase avec les besoins des infrastructures.
           - Développement de modules et correction de bogues sur les solutions existantes.
-          - Lead technique PHP.
-        technos: PHP, MySql, Javascript, CSS
+          - Lead dev PHP, conseil et décision dans un esprit devops pour consolider l'existant et préparer l'avenir.
+        technos: PHP5/7, MySql, Javascript, CSS
 
       - company: Bewoopi
-        title: Développeur PHP
+        title: Développeur PHP sénior
         location: Ramonville Saint-Agnes, 31
         dates: [ mars 2014, mars 2017 ]
         description: >
@@ -46,8 +46,8 @@ cv:
           - Développement d'une architecture logicielle PHP interne moderne.
           - Développement d'API web pour les terminaux mobiles.
           - Développement de back offices.
-          - Conception d'une architecture de notifications push.
-        technos: PHP, MySql, Javascript, CSS
+          - Conception d'une architecture de notifications push (1 à 2M de pushs/jour).
+        technos: PHP5, MySql, Javascript, CSS
 
       - company: LivingObjects
         title: Développeur PHP
@@ -59,7 +59,7 @@ cv:
         items:
           - Développement de la nouvelle version du framework PHP maison basé sur des composants de Symfony 2.
           - Développement de modules et correction de bogues sur les solutions existantes.
-          - Lead technique concernant la POO en PHP.
+          - Lead technique concernant la POO et le PHP.
           - Conseil et soutien pour l'architecture de projets.
         technos: PHP, MySql, Javascript, CSS, NodeJS
 
@@ -72,8 +72,8 @@ cv:
             title: Développeur PHP
             company: LivingObjects (Colomiers, 31)
             items:
-              - Développement de modules PHP.
-            technos: PHP, MySql, Javascript, CSS
+              - Développement de modules PHP pour une application intranet d'un client dans les télécoms.
+            technos: PHP5, MySql, Javascript, CSS
 
       - company: Anakeen
         title: Développeur PHP
@@ -82,9 +82,8 @@ cv:
         description: >
             Editeur de Dynacase, solution open source de Case Management
         items:
-          - Développement d'évolutions.
-          - Correction de bogues.
-        technos: PHP, Postgresql, ExtJS, git, Linux
+          - Développement d'évolutions et correction de bogues.
+        technos: PHP5, Postgresql, ExtJS, git, Linux
 
       - company: Softakt
         title: Développeur PHP + C#/WPF
@@ -94,10 +93,11 @@ cv:
             Agence web de création de solutions internet (e-commerce, immobilières, institutionnelles) et
             d'applications Microsoft Surface TM (à travers la deuxième société Aftermouse.com).
         items:
-          - Développement de modules PHP sur le CMS maison.
-          - Développement C# .Net / WPF pour Microsoft Surface TM.
+          - Développement de modules PHP sur le CMS maison (immobilier, e-commerce, vente privée).
+          - Développement C# .Net / WPF pour Microsoft Surface TM (hôtellerie, restauration, immobilier, ...)
+          - Développement front, découpe HTML, intégration HTML/CSS
           - Gestion de petits projets client.
-        technos: PHP, Javascript, CSS, C# .Net, WPF
+        technos: PHP5, Javascript, CSS, C# .Net, WPF
 
       - company: DL System
         title: Développeur Delphi/Pascal
@@ -105,8 +105,7 @@ cv:
         dates: [ avril 2008, juin 2008 ]
         description: Edition d'un logiciel de gestion de production pour l'industrie alimentaire
         items:
-          - Développement des évolutions.
-          - Correction de bogues.
+          - Développement d'évolutions et correction de bogues.
         technos: Delphi/Pascal, Microsoft Visual Source Safe
 
       - company: Devoteam
@@ -129,7 +128,7 @@ cv:
             items:
               - Gestion et surveillance de l'infrastructure Active Directory des plus de 2000 serveurs d'agences.
               - "Scripting et statistiques : développement d'un site intranet pour le reporting sur l'exploitation des serveurs."
-            technos: Active Directory, PHP, VBS
+            technos: Active Directory, PHP5, VBS
 
           - date: septembre 2005
             title: Administration TSM
@@ -208,10 +207,8 @@ cv:
             5 mois de travail en tant qu'ouvrier spécialisé dans 3 entreprises différentes à des postes variés :
             contrôle qualité, reprise dans le décolletage, cuisson de boîtes de conserves de légumes...
         items:
-          - Apprentissage du métier d'ouvrier.
-          - Rester longtemps en poste sur la même activité.
-          - Apprentissage des composantes d'une chaîne industrielle.
-          - Ouverture d'esprit sur le milieu industriel.
+          - Apprentissage des composantes d'une chaîne de fabrication industrielle.
+          - Importance de la qualité et des règles de sécurité.
         technos: Travail posté, qualité
 
 

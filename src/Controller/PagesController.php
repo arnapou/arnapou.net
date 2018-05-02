@@ -32,26 +32,65 @@ class PagesController extends Controller
     {
         if ($trailingSlash) {
             if ($this->pageExists("$page/index.html.twig")) {
-                return $this->render("$page/index.html.twig", $this->getContext("$page/index"));
+                return $this->renderPage("$page/index.html.twig");
             }
         } else {
             if ($this->pageExists("$page.html.twig")) {
-                return $this->render("$page.html.twig", $this->getContext("$page"));
+                return $this->renderPage("$page.html.twig");
             } elseif ($this->pageIsDirectory($page)) {
                 return new RedirectResponse("$page/");
             }
         }
-        return $this->render("404.html.twig", $this->getContext("404"), new Response('', 404));
+        return $this->renderPage("404.html.twig");
     }
 
     /**
-     * @param $page
+     * @param string $name
+     * @param int    $code
+     * @return Response
+     */
+    private function renderPage($name, $code = 200)
+    {
+        $context = $this->getContext(str_replace('html.twig', 'yaml', $name));
+        if ($context['list-posts'] ?? false) {
+            $context = array_merge($context, ['posts' => $this->getListPosts(dirname($name))]);
+        }
+        return $this->render($name, $context, $code == 200 ? null : new Response('', $code));
+    }
+
+    /**
+     * @param $dir
      * @return array
      */
-    private function getContext($page)
+    private function getListPosts($dir)
     {
-        if (is_file($this->getPathPages() . "/$page.yaml")) {
-            return Yaml::parseFile($this->getPathPages() . "/$page.yaml");
+        $postFolders = glob($this->getPathPages() . "/$dir/*", GLOB_ONLYDIR | GLOB_NOSORT);
+        if (!is_array($postFolders)) {
+            return [];
+        }
+        $posts = [];
+        foreach ($postFolders as $folder) {
+            if (is_file("$folder/index.yaml")) {
+                $data = Yaml::parseFile("$folder/index.yaml");
+                if (isset($data['post'])) {
+                    $posts[] = $data['post'] + ['baseurl' => basename($folder)];
+                }
+            }
+        }
+        usort($posts, function ($a, $b) {
+            return ($b['month'] ?? 0) <=> ($a['month'] ?? 0);
+        });
+        return $posts;
+    }
+
+    /**
+     * @param $name
+     * @return array
+     */
+    private function getContext($name)
+    {
+        if (is_file($this->getPathPages() . "/$name")) {
+            return Yaml::parseFile($this->getPathPages() . "/$name");
         }
         return [];
     }
