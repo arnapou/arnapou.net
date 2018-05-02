@@ -1,0 +1,14 @@
+twig:
+    paths:
+        '%kernel.project_dir%/templates/pages': ''
+        '%kernel.project_dir%/templates/includes': 'includes'
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    globals:
+        email: '%me.email%'
+        age: '@App\Service\Age'
+        domain: arnapou.net
+        page_title: '%page.title%'
+        social_twitter: '%social.twitter%'
+        social_linkedin: '%social.linkedin%'
+        social_github: '%social.github%'

@@ -1,0 +1,283 @@
+cv:
+
+    #----------( ABOUT )----------
+    about:
+        firstname: Arnaud
+        lastname: Buathier
+        location: La Salvetat Saint-Gilles (31)
+        items:
+          - >
+            Je me définis en priorité comme un développeur, et ensuite seulement comme expert en PHP.
+            J'aime me pencher sur des problématiques d'architecture logicielle.
+            Pour moi, programmer c'est autre chose que juste des lignes de code, mais une philosophie,
+            une manière de structurer sa pensée, un savoir-faire.
+          - >
+             Chaque jour qui passe autour de mes activités de développeur, c'est un moyen de partager mon savoir et de
+             grapiller des connaissances autour de moi et même mieux : découvrir d'autres manières de penser.
+          - >
+            Je programme à depuis l'âge de 6 ans, cela fait partie de mon ADN, j'ai passé des dizaines d'heures sur mes
+            calcultrices à inventer seul des concepts que je saurai nommer plus tard comme la récursivité, les
+            algorithmes de Brensenham.
+
+
+    #----------( EXPERIENCE )----------
+    experience:
+
+      - company: LivingObjects
+        title: Développeur PHP
+        location: Colomiers, 31
+        dates: [ avril 2017, présent ]
+        description: >
+            LivingObjects développe des solutions de gestion de performance réseau (fixe, mobile,...)
+            pour des opérateurs télécom comme SFR
+        items:
+          - Architecture de nouvelles solutions plus modernes et en phase avec les besoins des infrastructure.
+          - Développement de modules et correction de bogues sur les solutions existantes.
+          - Lead technique PHP.
+        technos: PHP, MySql, Javascript, CSS
+
+      - company: Bewoopi
+        title: Développeur PHP
+        location: Ramonville Saint-Agnes, 31
+        dates: [ mars 2014, mars 2017 ]
+        description: >
+            Bewoopi est une agence qui développe des solutions web et mobiles pour divers acteurs du web.
+        items:
+          - Développement d'une architecture logicielle PHP interne moderne.
+          - Développement d'API web pour les terminaux mobiles.
+          - Développement de back offices.
+          - Conception d'une architecture de notifications push.
+        technos: PHP, MySql, Javascript, CSS
+
+      - company: LivingObjects
+        title: Développeur PHP
+        location: Colomiers, 31
+        dates: [ juillet 2011, février 2014 ]
+        description: >
+            LivingObjects développe des solutions de gestion de performance réseau (fixe, mobile,...)
+            pour des opérateurs télécom comme SFR
+        items:
+          - Développement de la nouvelle version du framework PHP maison basé sur des composants de Symfony 2.
+          - Développement de modules et correction de bogues sur les solutions existantes.
+          - Lead technique concernant la POO en PHP.
+          - Conseil et soutien pour l'architecture de projets.
+        technos: PHP, MySql, Javascript, CSS, NodeJS
+
+      - company: Celad
+        title: Développeur PHP
+        location: Balma, 31
+        dates: [ mai 2011, juillet 2011 ]
+        missions:
+          - date: mai 2011
+            title: Développeur PHP
+            company: LivingObjects (Colomiers, 31)
+            items:
+              - Développement de modules PHP.
+            technos: PHP, MySql, Javascript, CSS
+
+      - company: Anakeen
+        title: Développeur PHP
+        location: Colomiers, 31
+        dates: [ juin 2010, mai 2011 ]
+        description: >
+            Editeur de Dynacase, solution open source de Case Management
+        items:
+          - Développement d'évolutions.
+          - Correction de bogues.
+        technos: PHP, Postgresql, ExtJS, git, Linux
+
+      - company: Softakt
+        title: Développeur PHP + C#/WPF
+        location: Lyon, 69
+        dates: [ juin 2008, mai 2010 ]
+        description: >
+            Agence web de création de solutions internet (e-commerce, immobilières, institutionnelles) et
+            d'applications Microsoft Surface TM (à travers la deuxième société Aftermouse.com).
+        items:
+          - Développement de modules PHP sur le CMS maison.
+          - Développement C# .Net / WPF pour Microsoft Surface TM.
+          - Gestion de petits projets client.
+        technos: PHP, Javascript, CSS, C# .Net, WPF
+
+      - company: DL System
+        title: Développeur Delphi/Pascal
+        location: Villefranche sur Saône, 69
+        dates: [ avril 2008, juin 2008 ]
+        description: Edition d'un logiciel de gestion de production pour l'industrie alimentaire
+        items:
+          - Développement des évolutions.
+          - Correction de bogues.
+        technos: Delphi/Pascal, Microsoft Visual Source Safe
+
+      - company: Devoteam
+        title: Consultant - expert TSM
+        location: Lyon, 69
+        dates: [ juin 2005, mars 2008 ]
+        missions:
+          - date: avril 2007
+            title: Administrateur Asset Center (gestion de parc)
+            company: SNCF - DIST X (Lyon 6°)
+            items:
+              - "Gestion d'Asset Center : contrôles, exports, imports, évolutions..."
+              - Scripting via ConnectIt des tâches récurrentes d'export/import.
+              - Support aux utilisateurs.
+            technos: Asset Center, ConnectIt, Perl
+
+          - date: février 2006
+            title: Ingénieur d'Exploitation niveau 2
+            company: Arpège, Caisse d'Epargne (Rillieux La Pape)
+            items:
+              - Gestion et surveillance de l'infrastructure Active Directory des plus de 2000 serveurs d'agences.
+              - "Scripting et statistiques : développement d'un site intranet pour le reporting sur l'exploitation des serveurs."
+            technos: Active Directory, PHP, VBS
+
+          - date: septembre 2005
+            title: Administration TSM
+            company: IBM (Ecully)
+            items:
+              - Gestion et surveillance de l'infrastructure TSM de grands comptes (Sanofi entre autres).
+              - Scripting et amélioration des remontées de données de suivi de performance.
+            technos: Perl, TSM
+
+          - date: août 2005
+            title: Administration TSM
+            company: Dexia Crédit Local (Paris)
+            items:
+              - Application des procédures quotidiennes et hebdomadaires.
+              - Création d'outils de reporting / historisation de données en VB / VBA.
+            technos: VBA, TSM
+
+      - company: Segula Technologies
+        title: Responsable du Système d'Exploitation Informatique
+        location: Siège, Rueil Malmaison, 92
+        dates: [ janvier 2003, mai 2005 ]
+        description: Administration informatique du parc serveur de la DSI.
+        items:
+          - Gestion des serveurs du siège (DHCP, WINS, Exchange, AD, Fichier, IIS, Sql Server, Oracle, Navision, TSE, Compta/Paye,...).
+          - Migration du parc serveur de NT 4 vers 2003 Server (60 serveurs).
+          - "Mise en place d'une nouvelle architecture de sauvegarde (TSM: Tivoli Storage Manager et TSRM: Tivoli Storage Resource Manager)."
+          - Administration des serveurs et du domaine Active Directory 2003.
+          - "Hotline : support aux informaticiens régionaux et aux utilisateurs."
+          - Mise en place de processus et scripts de surveillance.
+          - Amélioration continue du système à travers la proposition et réalisation de projets.
+          - Gestion des licences CAO de l'entreprise (plus de 1200 licences, 2M€ de budget).
+        technos: >
+            Windows NT4, Windows 2000/2003 Server, Active Directory, GPO, DHCP, WINS, Echange, Terminal Server,
+            Sql Server, Sage, IIS, réseau ADSL/SDSL, TSM, TSRM, Hotline, Cubes, AIX, IRIX, Solaris, Linux, VBS, ASP...
+
+      - company: Acetex
+        title: Ingénieur systéme
+        location: Pardies, 64
+        dates: [ novembre 2002, décembre 2002 ]
+        description: Embauche temporaire (intérim) pour pallier à une surcharge de travail.
+        items:
+          - Maintenance réseaux et applications (backups, administration à distance, installations,...).
+          - Préparation/étude de la migration du parc de postes vers XP Pro et serveurs vers Active Directory sous Windows 2000 Server.
+        technos: Windows NT4, Windows 2000 Server, Active Directory, Windows GPO, NTBackup, Token Ring
+
+      - company: Lebas Engineering
+        title: Stage de fin d'études (Travail Etude Recherche - TER)
+        location: Lille, 59
+        dates: [ avril 2002, juin 2002 ]
+        description: Réalisation d'une application de gestion des fiches techniques.
+        items:
+          - Etude des besoins et rédaction du cahier des charges.
+          - Conception du modèle de base de données (MCD).
+          - Réalisation en VBA sur MsAccess (plus de 10.000 lignes de code).
+        technos: MCD, VBA, MsAccess
+
+      - company: Atos Origin Multimédia
+        title: Stage ingénieur
+        location: Seclin, 59
+        dates: [ septembre 2001, novembre 2001 ]
+        description: >
+            Etude et tests de faisabilité d'une application en Visual Basic pour l'amélioration du suivi dans
+            le service d'exploitation (gestion des watchdog et des remontées de log des serveurs en temps réel).
+        items:
+          - Etude des besoins et rédaction du cahier des charges.
+          - Conception du modèle de base de données (MCD).
+          - Tests de validation de choix de conception (composants ActiveX, sécurité).
+          - Conclusion favorable pour la réalisation.
+        technos: MCD, VB6, ActiveX
+
+      - company: 3 entreprises
+        title: Ouvrier
+        location: Haute-Savoie, Pyrénées-Atlantique
+        dates: [ 1998, 2002 ]
+        description: >
+            5 mois de travail en tant qu'ouvrier spécialisé dans 3 entreprises différentes à des postes variés :
+            contrôle qualité, reprise dans le décolletage, cuisson de boîtes de conserves de légumes...
+        items:
+          - Apprentissage du métier d'ouvrier.
+          - Rester longtemps en poste sur la même activité.
+          - Apprentissage des composantes d'une chaîne industrielle.
+          - Ouverture d'esprit sur le milieu industriel.
+        technos: Travail posté, qualité
+
+
+    #----------( EDUCATION )----------
+    education:
+      - date: novembre 2012
+        location: Balma, 31
+        title: Zend Certified Engineer PHP 5.3
+        subtitle: Certification PHP
+        link: http://www.zend.com/en/store/education/certification/yellow-pages.php#show-ClientCandidateID=ZEND020840
+
+      - date: 1997-2002
+        location: Lille, 59
+        title: Ingénieur généraliste HEI
+        subtitle: Spécialisation Informatique
+        link: http://www.hei.fr/
+
+      - date: février 2002
+        location: Lille, 59
+        title: Certification Européenne en Management par la Valeur
+        subtitle: Participant en Management par la Valeur
+        link: https://www.afav.eu/
+
+      - date: juin 1999
+        location: Lille, 59
+        title: First Certificate of Cambridge
+        subtitle: Diplôme d'anglais
+
+
+    #----------( SKILLS )----------
+    skills:
+      - domain: Développement
+        items:
+          - PHP 7/5/4/3, Symfony 4/3/2
+          - HTML5, XHTML, HTML
+          - CSS 3/2
+          - Javascript, jQuery
+          - perl
+          - C#/WPF
+          - Delphi
+      - domain: Applications
+        items:
+          - PhpStorm, Netbeans, Git
+          - Inkscape, The Gimp
+          - Firefox, Chrome, Thunderbird
+      - domain: Langues
+        items:
+          - Anglais, bon niveau (First Certificate of Cambridge obtenu en juin 1999),
+          - Italien, niveau moyen (5 ans de pratique en milieu scolaire)
+          - Allemand, niveau débutant (8 ans de pratique en milieu scolaire),
+          - Japonais, niveau débutant (2 ans de pratique en milieu scolaire)
+
+    #----------( INTERESTS )----------
+    interests:
+      - >
+        Je suis passionné par GuildWars 2, un jeu vertueux comparé à pas mal de MMO.
+        Son design graphique et technique est vraiment sympa.
+        Ce jeu récompense les compétences du joueur et son équipement seul ne suffit pas à faire un bon joueur.
+      - >
+        Dans mes temps libres, j'adore lire. Je lis depuis l'âge de 7 ans très régulièrement.
+        J'ai avalé des milliers de livres, Avec une prédilection pour les romans de science-fiction ou de fantaisie.
+        Font partie de mes bouquins préférés des livres comme Dune, les sagas d'Asimov, de Lois Mc Master Bujold ou de
+        Marion Zimmer Bradley. J'aime beaucoup aussi les livres d'histoire romancée comme l'Alliance de James Michener
+        qui permettent d'apprendre tout en se divertissant.
+      - >
+        Evidemment, je passe du temps aussi pour programmer des outils pour mon usage personnel 😉.
+        J'ai codé au tout début des années 2000 des frameworks et un système de templating maison, j'avais en
+        2007 un fan-site Guildwars qui avait plus de 20Go de trafic mensuel avec environ 20000 comptes.
+

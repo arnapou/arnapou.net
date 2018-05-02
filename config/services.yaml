@@ -1,6 +1,12 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    page.title: Arnapou
+    me.email: arnaud@arnapou.net
+    me.birthday: 29/11/1979
+    social.twitter: https://twitter.com/arnapou
+    social.linkedin: https://www.linkedin.com/in/arnaud-buathier/
+    social.github: https://github.com/arnapou
 
 services:
     # default configuration for services in *this* file
@@ -25,3 +31,7 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Service\Age:
+        arguments: ['%me.birthday%']
+
