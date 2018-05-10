@@ -1,0 +1,87 @@
+{% extends "@includes/base-post.html.twig" %}
+
+{% block article %}
+    <div class="clearfix">
+        <img src="table.jpg" class="float-md-right img-fluid img-thumbnail"/>
+        <p><a href="http://fr.wikipedia.org/wiki/Microsoft_PixelSense">Microsoft Surface &trade;</a> (aujourd'hui appelé
+            PixelSense) est
+            une technologie de table tactile sortie fin 2008 sur laquelle j'ai eu l'honneur de travailler pendant une
+            grosse année dès début 2009.</p>
+        <p>Il s'agissait d'une table (de la taille d'une table basse : écran de 30") équipée de capteurs infrarouge et
+            de caméras.
+            Grâce à ces capteurs, la table était en mesure de détecter des objets et des mouvements à la surface de
+            l'écran.
+        <p>
+        <p>A l'époque, Microsoft Surface &trade; fonctionnait sous Windows Vista à l'aide du Framework .Net 3.5 et du
+            SDK adapté.
+            L'interface graphique étaient faite en <a
+                    href="http://fr.wikipedia.org/wiki/Windows_Presentation_Foundation">WPF</a>.
+            On faisait la grande partie de l'intégration du design sous <a
+                    href="http://fr.wikipedia.org/wiki/Microsoft_Expression_Blend">Blend</a>.</p>
+        <p>En ce qui me concerne, j'ai développé des composants graphiques plus ou moins génériques.</p>
+    </div>
+
+    <h2 class="section-heading">Exemple CarouselPanel</h2>
+    <div class="clearfix">
+        <img src="screen1-tn.jpg" class="float-md-right img-fluid img-thumbnail"/>
+        <p>Vous pouvez voir dans le screen de l'application ci-contre 4 carousels qui utilisent un panel customisé
+            réalisé par mes soins.</p>
+        <p>Il s'agit d'un carousel en 2D complètement géré à partir de l'extension d'un <code>Panel</code> avec
+            l'implémentation d'un <code>ISurfaceScrollInfo</code>.
+            L'effet 3D est effectué avec de simple formules de projection calculées avec de la trigonométrie basique.
+        </p>
+        <p>Une chose qui m'avait demandé du temps a été la détection de la fin du scrolling pour pouvoir repositionner
+            automatiquement le carousel
+            sur l'élément le plus proche en fin de scroll via une animation. J'ai pu le résoudre via un <code>PropertyDescriptor</code>
+            qui me permet de catcher
+            le changement de la propriété <code>IsScrolling</code> et de déclencher le code adéquat.</p>
+    </div>
+    <h4>Code de la classe</h4>
+    <pre class="csharp"><code>{{ source('csharp/ms-surface/CarouselPanel.cs')|escape }}</code></pre>
+
+
+    <h2 class="section-heading">Exemple ArcLoopingPanel</h2>
+    <div class="clearfix">
+        <img src="screen2-tn.jpg" class="float-md-right img-fluid img-thumbnail"/>
+        <p>Dans cet exemple, il s'agit d'un autre panel qui a servi pour avoir une liste qui se déroule de manière
+            continue (infinie) en arc de cercle.</p>
+        <p>Comme pour le CarouselPanel, j'ai étendu <code>Panel</code> avec l'implémentation d'un <code>ISurfaceScrollInfo</code>.
+        </p>
+    </div>
+    <h4>Code de la classe</h4>
+    <pre class="csharp"><code>{{ source('csharp/ms-surface/ArcLoopingPanel.cs')|escape }}</code></pre>
+
+    <h2 class="section-heading">Divers</h2>
+    <p>Certains des développements les plus amusants que j'ai eu à faire sont ceux qui utilisent l'inertie.</p>
+    <p>Je parle par exemple de l'utilisateur qui déplace un objet avec son doigt et le lance : son doigt quitte la
+        surface de la table et la table
+        perd le contact mais en se basant sur la vitesse de déplacement et des facteurs de décélération, l'objet
+        continue sa course jusqu'à s'arrêter.</p>
+    <p>Le SDK fournit des composants "tout prêts" pour gérer ces phénomènes comme le
+        <code>Affine2DManipulationProcessor</code> qui permet de gérer
+        facilement ce genre d'effets : il calcule pour vous la décélération etc ... vous n'avez qu'à l'utiliser à bon
+        escient en bindant correctement les
+        évènements qu'il propose.</p>
+    <p>Le plus compliqué dans le développement tactile concerne l'ergonomie et l'expérience utilisateur : on a tendance
+        à trop réfléchir en mode "top-down"
+        (un écran qui est orienté de haut en bas), alors que dans le cas d'écran tactile de type table, il faut penser
+        au fait que plusieurs utilisateurs sont
+        autours de la table : ca change radicalement la manière de concevoir les interfaces.</p>
+    <p>D'ailleurs, plus vous testez en "live" sur la table et mieux ce sera. L'émulateur fourni pour le dev est sympa
+        mais ne vous empêchera pas de faire des
+        erreurs qui paraissent grossières une fois sur la table. Par exemple vous testez votre application avec un
+        collègue qui va faire une autre action en même temps de vous
+        et qui va vous poser un problème. Ou alors le positionnement de tel bouton finalement ne va pas car en voulant
+        l'activer vous avez tendance à toucher autre chose
+        qui va perturber l'expérience que vous souhaitez pour l'utilisateur.</p>
+    <p>Cette expérience a été très enrichissante et le point majeur de la réussite se passe par le test et les retours
+        utilisateurs : faire tester par le maximum
+        de personnes et prendre en compte leurs retours, le designer, le développeur sont presques moins importants que
+        l'ergonome. Il faut laisse son égo de coté et écouter les autres.</p>
+    <p>C'est parce que ces aspects d'écoute manquaient dans la société que je l'ai quitté et qu'elle a été mise en
+        liquidation judiciaire 1 an plus tard.</p>
+    </div>
+
+
+
+{% endblock %}

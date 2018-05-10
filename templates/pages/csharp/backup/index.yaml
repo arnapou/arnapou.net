@@ -1,0 +1,8 @@
+post:
+
+    month: 2010-03
+    date: Mars 2010
+    title: Backup script
+    subtitle: Un script de backup en C#
+    downloads:
+      - name: backup_copy.zip

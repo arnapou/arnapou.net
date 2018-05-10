@@ -1,0 +1,9 @@
+post:
+
+    month: 2011-12
+    date: Décembre 2011
+    title: Image cropper
+    subtitle: Deux petits outils de traitement d'images
+    downloads:
+      - name: ArnapouCropper.zip
+      - name: ArnapouRectangle.zip
