@@ -43,7 +43,7 @@
     <a class="navbar-brand js-scroll-trigger" href="#page-top">
         <span class="d-block d-lg-none">Start Bootstrap</span>
         <span class="d-none d-lg-block">
-          <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{{ asset('theme-cv/img/avatar.png') }}"
+          <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="{{ asset('cv/avatar.png') }}"
                alt="">
         </span>
     </a>
@@ -86,7 +86,17 @@
                 <p class="{{ loop.last ? 'mb-5' : '' }}">{{ item }}</p>
             {% endfor %}
             <ul class="list-inline list-social-icons mb-0">
-                {% include "@includes/social-icons.html.twig" %}
+                {% embed "@includes/social-icons.html.twig" %}
+                    {% block items %}
+                        {{ parent() }}
+
+                        <li class="list-inline-item">
+                            <a href="http://www.zend.com/en/yellow-pages/ZEND020840">
+                                <img src="zce_php5-3.gif" title="Zend Certified Engineer PHP 5.3" style="max-height: 3rem;margin: 0 .4rem"/>
+                            </a>
+                        </li>
+                    {% endblock %}
+                {% endembed %}
             </ul>
         </div>
     </section>
