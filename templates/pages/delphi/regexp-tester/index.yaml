@@ -4,3 +4,5 @@ post:
     date: Juin 2007
     title: RegExp tester
     subtitle: Outil de test d'expressions régulières
+    downloads:
+      - name: RegExpTester.zip

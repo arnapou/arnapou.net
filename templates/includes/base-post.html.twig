@@ -12,7 +12,62 @@
             font-size: 60%;
             max-height: 400px;
         }
+
+        h4 {
+            margin-top: 2em;
+        }
     </style>
+{% endblock %}
+
+{% block content %}
+
+    <article>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-10 mx-auto">
+                    {% block article %}{% endblock %}
+                    {{ block('downloads') }}
+                    {{ block('links') }}
+                </div>
+            </div>
+        </div>
+    </article>
+
+{% endblock %}
+
+{% block downloads %}
+    {% if post.downloads is defined and post.downloads is iterable %}
+        {% set s = (post.downloads|length) > 1 ? 's' : '' %}
+        <h2 class="section-heading">Téléchargement{{ s }}</h2>
+        <p>Vous trouverez dans le{{ s }} zip des sources et des binaires.</p>
+        {% for dl in post.downloads %}
+            <p>
+                <a class="btn btn-primary" href="{{ dl.name }}" role="button">
+                    <i class="fa fa-download"></i>{{ dl.name }}
+                </a>
+                {% if dl.text is defined and dl.text %}
+                    <em> {{ dl.text }}</em>
+                {% endif %}
+            </p>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+
+{% block links %}
+    {% if post.links is defined and post.links is iterable %}
+        {% set icons = { demo: 'eye',          github: 'github' } %}
+        {% set texts = { demo: 'Voir la démo', github: 'Voir sur GitHub' } %}
+        <h2 class="section-heading">Liens</h2>
+        <p>
+            {% for type, url in post.links %}
+                {% if type in ['demo', 'github'] %}
+                    <a class="btn btn-primary" href="{{ url }}" role="button">
+                        <i class="fa fa-{{ icons[type] }}"></i>{{ texts[type] }}
+                    </a>
+                {% endif %}
+            {% endfor %}
+        </p>
+    {% endif %}
 {% endblock %}
 
 {% block header_body %}

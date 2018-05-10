@@ -1,0 +1,9 @@
+post:
+
+    month: 2009-05
+    date: Mai 2009
+    title: Mime Mail
+    subtitle: Classe basique d'envoi de mail
+    downloads:
+      - name: mime_mail.zip
+    
