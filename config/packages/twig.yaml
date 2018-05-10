@@ -7,7 +7,7 @@ twig:
     strict_variables: '%kernel.debug%'
     globals:
         email: '%me.email%'
-        age: '@App\Service\Age'
+        age: '@App\Service\AgeService'
         domain: arnapou.net
         page_title: '%page.title%'
         social_twitter: '%social.twitter%'

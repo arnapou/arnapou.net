@@ -4,7 +4,7 @@
 namespace App\Service;
 
 
-class Age
+class AgeService
 {
     /**
      * @var string
