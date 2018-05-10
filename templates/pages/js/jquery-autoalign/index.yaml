@@ -1,0 +1,10 @@
+post:
+
+    month: 2008-02
+    date: Février 2008
+    title: jQuery - jAutoAlign
+    subtitle: Plugin jQuery pour aligner des éléments
+    links:
+        demo: demo
+    downloads:
+      - name: jAutoAlign.zip

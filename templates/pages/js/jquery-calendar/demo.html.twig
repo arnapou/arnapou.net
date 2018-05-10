@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="__lang__">
+<head>
+    <script src="jQuery.js" type="text/javascript"></script>
+
+    <link href="jCalendar.css" rel="stylesheet" type="text/css" />
+    <script src="jCalendar.js" type="text/javascript"></script>
+
+    <style type="text/css">
+        * {
+            font-family: Verdana, Arial;
+        }
+        body {
+            background-color: #888888;
+            padding: 16px 16px 100px 16px;
+            margin: 0px;
+        }
+        h1 {
+            text-align: center;
+            padding: 0px;
+            margin: 0px;
+        }
+        fieldset {
+            display: block;
+            padding: 8px;
+            margin: 8px auto;
+            width: 760px;
+            border: 2px solid white;
+            background-color: #aaaaaa;
+        }
+        fieldset span,
+        fieldset p,
+        fieldset strong,
+        fieldset label,
+        fieldset select,
+        fieldset option {
+            font-size: 12px;
+        }
+        legend {
+            padding: 1px 8px;
+            border: 0px;
+            background-color: #ffffff;
+            font-weight: bold;
+        }
+        p {
+            padding: 2px 0px;
+            margin: 0px;
+            overflow: hidden;
+        }
+        p label {
+            display: block;
+            float: left;
+            text-align: right;
+            padding-right: 4px;
+            width: 125px;
+        }
+        p input.s {
+            width: 300px;
+        }
+        pre {
+            font-family: Consolas, 'Lucida Console', Monaco, monospace, Courier New;
+            font-size: 13px;
+            border: 1px dotted black;
+            background-color: #666666;
+            color: #eeeeee;
+            padding: 4px;
+            line-height: 150%;
+            margin: 4px 0px;
+        }
+        span.pre,
+        pre * {
+            font-family: Consolas, 'Lucida Console', Monaco, monospace, Courier New;
+            font-size: 13px;
+        }
+        pre em {
+            color: #ddeedd;
+        }
+        pre a {
+            color: #add8e6;
+            text-decoration: underline;
+        }
+        pre a:hover {
+            color: #ade6b9;
+            text-decoration: underline;
+        }
+        em {
+            color: green;
+        }
+        pre em,
+        span.s1 {
+            color: lightgreen;
+        }
+        span.s2 {
+            color: #ff8888;
+        }
+        span.c {
+            color: #aabbaa;
+        }
+        div.container1,
+        div.container2,
+        div.container3 {
+            padding: 10px;
+            margin: 10px;
+            border: 1px dotted #dddddd;
+            background: #bbbbbb;
+            float: left;
+        }
+
+
+
+    </style>
+    <script type="text/javascript">
+        function log(msg) {
+            document.getElementById('log').innerHTML += msg+"<br />";
+        }
+        function fnShow(instance) {
+            log("Instance #"+instance.index+" shown !");
+        }
+        function fnHide(instance) {
+            log("Instance #"+instance.index+" hidden !");
+        }
+        function fnSelect(instance) {
+            log("Instance #"+instance.index+" clicked ! The date selected is "+instance.getDateFormat());
+        }
+
+        $(document).ready(function() {
+            $('#jCalendar1').jCalendar({
+                setOnLoad: true,
+                onShow: fnShow,
+                onHide: fnHide,
+                onSelect: fnSelect
+            });
+            $('#jCalendar2').jCalendar({
+                dateMask: 'yyyy-mm-dd',
+                onShow: fnShow,
+                onHide: fnHide,
+                onSelect: fnSelect
+            });
+            $('#jCalendar3').jCalendar({
+                inline: true,
+                dateMask: 'dddd d mmmm yyyy',
+                date: '29/11/1979',
+                lang: 'en',
+                onShow: fnShow,
+                onHide: fnHide,
+                onSelect: fnSelect
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+<h1>jCalendar</h1>
+<!-------------------- Date Picker -------------------->
+<form style="overflow: hidden;" action="" method="get">
+    <fieldset><legend>Date Picker</legend>
+
+        <div class="container1">
+            <input type="text" id="jCalendar1" />
+            <a href="javascript:void(0)" onclick="document.getElementById('jCalendar1').jCalendar.show();">show</a>
+            <a href="javascript:void(0)" onclick="document.getElementById('jCalendar1').jCalendar.hide();">hide</a>
+        </div>
+
+        <div class="container2">
+            <input type="text" id="jCalendar2" value="2008-02-15" />
+        </div>
+
+        <div class="container3">
+            <div id="jCalendar3"></div>
+            <a href="javascript:void(0)" onclick="alert(document.getElementById('jCalendar3').jCalendar.getDate());">getDate</a>
+            <a href="javascript:void(0)" onclick="alert(document.getElementById('jCalendar3').jCalendar.getDateFormat());">getDateFormat</a>
+        </div>
+
+    </fieldset>
+</form>
+<!-------------------- LOG -------------------->
+<fieldset><legend>Log</legend>
+    <pre id="log"></pre>
+</fieldset>
+
+
+
+<fieldset><legend>Usage</legend>
+    <pre>$(document).ready(function() {
+	$('.jCalendar').jCalendar();
+});
+</pre>
+</fieldset>
+<fieldset><legend>Usage with options (example)</legend>
+    <pre>$(document).ready(function() {
+	var options = {
+		date : '15/05/2009',
+		dateMask : 'dddd dd mmmm yyyy',
+		onHide : function(instance) {
+			alert('Instance number '+instance.index+' hidden !');
+		}
+	};
+	$('.jCalendar').jCalendar(options);
+});</pre>
+</fieldset>
+<fieldset><legend>Options available (with <em>default value</em>)</legend>
+    <pre>titleMask        <em>'mmm yy'</em>               title mask
+dateMask         <em>'dd/mm/yyyy'</em>           date mask used to write attribute value
+attribute        <em>'value'</em>                attribute of "input" element to set when selected
+firstDayOfWeek   <em>1</em>                      0 = sunday, 1 = monday, .... 6 = saturday
+setOnLoad        <em>false</em>                  init input date by date of current day
+inline           <em>false</em>                  inline calendar or not
+lang             <em>null</em>                   'fr' or 'en'
+date             <em>null</em>                   initial date to set
+setPosition      <em>true</em>                   whether to set absolute position of calendar
+notEmpty         <em>false</em>                  whether to allow empty value or not (allowed by default)
+offset           <em>{ top: 25, left: 0 }</em>   offset position of the input element (if setPosition is true)
+onShow           <em>null</em>                   callback when shown
+onHide           <em>null</em>                   callback when hidden
+onSelect         <em>null</em>                   callback when selected
+</pre>
+</fieldset>
+<fieldset><legend>Driving the calendar</legend>
+    <pre>
+var input = document.getElementById('my_input');
+obj.jCalendar.show()                    show the calendar
+obj.jCalendar.hide()                    hide the calendar
+obj.jCalendar.getDate()                 get the JS date object of the calendar
+obj.jCalendar.getDateFormat()           get the date with mask of the calendar
+</pre>
+</fieldset>
+
+</body>
+</html>

@@ -2,6 +2,14 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 
-controllers:
-    resource: '../src/Controller/'
-    type:     annotation
+redirects:
+    resource: App\Controller\RedirectedController
+    type: annotation
+
+pages:
+    resource: App\Controller\PagesController
+    type: annotation
+
+#controllers:
+#    resource: '../src/Controller/'
+#    type: annotation

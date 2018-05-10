@@ -1,9 +1,0 @@
-post:
-
-    month: 2007-04
-    date: Avril 2007
-    title: JS/CSS minifier
-    subtitle: Minification de JS/CSS à la volée
-    downloads:
-      - name: gzip_browser.zip
-    

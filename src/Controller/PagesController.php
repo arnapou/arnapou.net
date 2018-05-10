@@ -38,7 +38,7 @@ class PagesController extends Controller
             if ($this->pageExists("$page.html.twig")) {
                 return $this->renderPage("$page.html.twig");
             } elseif ($this->pageIsDirectory($page)) {
-                return new RedirectResponse("$page/");
+                return new RedirectResponse("/$page/");
             }
         }
         return $this->renderPage("404.html.twig");
@@ -78,7 +78,8 @@ class PagesController extends Controller
             }
         }
         usort($posts, function ($a, $b) {
-            return ($b['month'] ?? 0) <=> ($a['month'] ?? 0);
+            return (($b['month'] ?? 0) <=> ($a['month'] ?? 0))
+                ?: (($b['title'] ?? 0) <=> ($a['title'] ?? 0));
         });
         return $posts;
     }

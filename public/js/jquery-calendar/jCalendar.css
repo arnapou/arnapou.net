@@ -1,0 +1,188 @@
+.jCalendarObject {
+	background-color: #ffffff;
+	border: 1px solid #1f60a9;
+	padding: 2px;
+	width: 126px;
+	overflow: hidden;
+}
+
+.jCalendarObject * {
+	cursor: default;
+	font-size: 10px;
+	font-family: Verdana, Arial;
+}
+
+/**********************************************   ALL LINKS   ***/
+.jCalendarObject a,
+.jCalendarObject a:hover {
+	font-weight: bold;
+	text-decoration: none;
+	cursor: pointer;
+	outline: 0;
+}
+
+/**********************************************   HEADER   ***/
+.jCalendarObject div.header * {
+	font-weight: bold
+}
+.jCalendarObject div.header {
+	background-color: #6b8ec6;
+	height: 14px;
+	padding: 1px 1px 1px 1px;
+	text-align: center;
+}
+
+/**********************************************   HEADER TITLE   ***/
+.jCalendarObject div.header span {
+	color: white;
+}
+
+/**********************************************   HEADER ARROWS   ***/
+.jCalendarObject div.header a.year_prev,
+.jCalendarObject div.header a.month_prev {
+	float: left;
+}
+.jCalendarObject div.header a.year_next,
+.jCalendarObject div.header a.month_next {
+	float: right;
+}
+
+.jCalendarObject div.header a {
+	padding: 1px 2px;
+	color: white;
+}
+.jCalendarObject div.header a:hover {
+	color: #cde5f7;
+}
+
+/**********************************************   HEADER CLOSE   ***/
+.jCalendarObject div.header a.close {
+	float: right;
+	color: white;
+}
+.jCalendarObject div.header a.close:hover {
+	color: #ff9999;
+}
+
+/**********************************************   DAYS CONTAINER   ***/
+.jCalendarObject .days {
+	height: 126px;
+}
+
+/**********************************************   DAYS   ***/
+.jCalendarObject .days a {
+	display: block;
+	float: left;
+	border: 0px;
+	color: #1f60a9;
+	width: 16px;
+	height: 14px;
+	padding: 3px 1px 1px 1px;
+	font-weight: bold;
+	text-align: center;
+}
+
+/**********************************************   HEADERS   ***/
+.jCalendarObject .days a.header{
+	border-bottom: 1px solid #1f60a9;
+	font-weight: normal;
+	cursor: default;
+}
+.jCalendarObject .days a.header:hover {
+	border-bottom: 1px solid #1f60a9;
+	font-weight: normal;
+	cursor: default;
+}
+
+/**********************************************   MONDAY   ***/
+.jCalendarObject .days a.monday {
+	background-color: transparent;
+}
+.jCalendarObject .days a.monday:hover{
+}
+
+/**********************************************   TUESDAY   ***/
+.jCalendarObject .days a.tuesday {
+	background-color: transparent;
+}
+.jCalendarObject .days a.tuesday:hover{
+}
+
+/**********************************************   WEDNESDAY   ***/
+.jCalendarObject .days a.wednesday {
+	background-color: transparent;
+}
+.jCalendarObject .days a.wednesday:hover{
+}
+
+/**********************************************   THURSDAY   ***/
+.jCalendarObject .days a.thursday {
+	background-color: transparent;
+}
+.jCalendarObject .days a.thursday:hover{
+}
+
+/**********************************************   FRIDAY   ***/
+.jCalendarObject .days a.friday {
+	background-color: transparent;
+}
+.jCalendarObject .days a.friday:hover{
+}
+
+/**********************************************   SATURDAY   ***/
+.jCalendarObject .days a.saturday {
+	background-color: #eeeeee;
+}
+.jCalendarObject .days a.saturday:hover{
+}
+
+/**********************************************   SUNDAY   ***/
+.jCalendarObject .days a.sunday {
+	background-color: #eeeeee;
+}
+.jCalendarObject .days a.sunday:hover{
+}
+
+/**********************************************   DAYS IN MONTH   ***/
+.jCalendarObject .days a.in_month {
+	color: #1f60a9;
+}
+.jCalendarObject .days a.in_month:hover{
+	background-color: #cde5f7;
+	color: black;
+}
+
+/**********************************************   DAYS OUT MONTH   ***/
+.jCalendarObject .days a.out_month {
+	color: #999999;
+}
+.jCalendarObject .days a.out_month:hover{
+	background-color: #cde5f7;
+	color: black;
+}
+
+/**********************************************   CURRENT DAY   ***/
+.jCalendarObject .days a.current {
+	background-color: #1f60a9;
+	color: white;
+}
+.jCalendarObject .days a.current:hover {
+	background-color: #cde5f7;
+	color: black;
+}
+
+/**********************************************   FOOTER   ***/
+.jCalendarObject a.footer {
+	display: block;
+	cursor: pointer;
+	border-top: 1px solid #1f60a9;
+	padding: 2px;
+	margin: 1px 0px 0px 0px;
+	text-align: center;
+	text-decoration: none;
+	color: #1f60a9;
+}
+.jCalendarObject a.footer:hover {
+	text-decoration: underline;
+	color: #1f60a9;
+}

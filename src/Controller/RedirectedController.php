@@ -15,12 +15,14 @@ class RedirectedController extends Controller
      *
      * @Route(path="{path}.html", requirements={"path": ".+"})
      * @Route(path="{path}.twig", requirements={"path": ".+"})
+     * @Route(path="tech-{path}", requirements={"path": ".+"})
      * @param $path
      * @return RedirectResponse
      */
     public function redirectOldUrls($path)
     {
-        return new RedirectResponse('/' . rtrim($path, ' / '), 301);
+        $path = rtrim($path, '/');
+        return new RedirectResponse("/$path", 301);
     }
 
 }

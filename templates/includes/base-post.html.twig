@@ -39,7 +39,6 @@
     {% if post.downloads is defined and post.downloads is iterable %}
         {% set s = (post.downloads|length) > 1 ? 's' : '' %}
         <h2 class="section-heading">Téléchargement{{ s }}</h2>
-        <p>Vous trouverez dans le{{ s }} zip des sources et des binaires.</p>
         {% for dl in post.downloads %}
             <p>
                 <a class="btn btn-primary" href="{{ dl.name }}" role="button">

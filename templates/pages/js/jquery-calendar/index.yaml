@@ -1,0 +1,10 @@
+post:
+
+    month: 2009-03
+    date: Mars 2009
+    title: jQuery - jCalendar
+    subtitle: Plugin jQuery pour afficher un calendrier
+    links:
+        demo: demo
+    downloads:
+      - name: jCalendar.zip

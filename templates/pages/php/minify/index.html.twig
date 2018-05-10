@@ -1,0 +1,92 @@
+{% extends "@includes/base-post.html.twig" %}
+
+{% block article %}
+
+    <p>Les bonnes pratiques de développement web nous apprennent uns chose simple : compresser les flux au maximum, et
+        limiter le nombre de hits.</p>
+    <p>Dans cet objectif, j'ai créé une classe de compression gzip à la volée de mes fichiers JS et CSS.</p>
+    <p>Cette classe gère les versions concatenées et gzippées des fichiers en cache.</p>
+
+
+    <h2 class="section-heading">Fonctionnalités</h2>
+    <p>Remarque : les classes nécessitent <b>PHP5</b>. Je ne développe plus pour PHP4, il faut savoir un jour tourner la
+        page. Pour moi c'est fait depuis un bail. Je vous laisse le soin de tout porter en PHP4 si vous y tenez quand
+        même...</p>
+    <ul>
+        <li>Minification des fichiers JS et CSS (pour le JS, j'utilise le portage PHP fait par <a
+                    href="http://code.google.com/p/jsmin-php/" rel="external">Ryan Grove</a> de <b>JSMin</b>, script de
+            <a href="http://www.crockford.com/" rel=external">Douglas Crockford's</a>)
+        </li>
+        <li>Concaténation des fichiers (diminue le nombre de hits)</li>
+        <li>Compression Gzip (si le navigateur le supporte, bien évidemment)</li>
+    </ul>
+
+
+    <h2 class="section-heading">Coté .htaccess</h2>
+    <p>Histoire d'éviter les lien biscornus, je préfère utiliser du rewriting via htaccess. Je ne vais pas tout vous
+        expliquer, vous avez l'idée, à vous de l'adapter, ca ressemble à ça :</p>
+    <pre><code>RewriteEngine On
+RewriteRule ^(.*\.(?:[jJ][sS]|[cC][sS][sS]|[xX][mM][lL]))$ /gzip.php?uri=$1 [L]</code></pre>
+
+
+    <h2 class="section-heading">Coté gzip.php</h2>
+    <pre><code class="php">{{ source('php/minify/gzip.php')|escape }}</code></pre>
+
+
+    <h2 class="section-heading">Coté intégration HTML</h2>
+    <p>Si vous voulez voir à quoi ça ressemble "in fine", affichez le code HTML de ce site ;)</p>
+    <pre><code class="php">&lt;link rel="stylesheet" type="text/css" href="/chemin/fichier.css" /&gt;
+&lt;link rel="stylesheet" type="text/css" href="/chemin/fichier1,fichier2.css" /&gt;
+
+&lt;script src="/chemin/fichier.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script src="/chemin/fichier1,fichier2.js" type="text/javascript"&gt;&lt;/script&gt;
+</code></pre>
+
+
+    <h2 class="section-heading">Fonctionnalités techniques de la classe</h2>
+    <p>Je vous encourage à lire le code source, rien de tel pour tout comprendre... puis la classe n'est pas très
+        compliquée.</p>
+    <p>En synthèse brève, voilà les paramètres principaux</p>
+    <small>
+        <ul>
+            <li><code>&#36;gzip-><b>param</b></code> : nom du paramètre en GET utilisé (si vide, vous devez renseigner
+                <code>value</code>). Ce paramètre est le premier paramètre du constructeur de la classe aussi.
+            </li>
+            <li><code>&#36;gzip-><b>value</b></code> : uri utilisée (si vide, vous devez renseigner <code>param</code>).
+            </li>
+            <li><code>&#36;gzip-><b>exit</b></code> : indique si la classe fait un exit en cas d'erreur 403 et 404 (au
+                cas
+                ou vous voulez les gérer vous même par derrière). La méthode <code>send</code> retournera false en cas
+                d'erreur.
+            </li>
+            <li><code>&#36;gzip-><b>document_root</b></code> : c'est la racine de votre site, bref ça vous sert si vous
+                utilisez le script dans un sous-dossier de votre racine.
+            </li>
+            <li><code>&#36;gzip-><b>gz_folder</b></code> : le dossier de cache, évidemment doit être accessible en
+                écriture
+                hein ;).
+            </li>
+            <li><code>&#36;gzip-><b>cache_days</b></code> : durée du cache si aucune modif n'est faite sur les fichiers
+                entre temps (environ 10 ans par défaut, normalement, pas besoin de toucher à ça).
+            </li>
+            <li><code>&#36;gzip-><b>js_replacements</b></code> : hashtable de remplacements à faire lors de l'analyse
+                des
+                fichiers (ça me sert pour initialiser des variables JS à la volée issues de la conf du site).
+            </li>
+            <li><code>&#36;gzip-><b>css_replacements</b></code> : idem que <code>js_replacements</code> mais pour les
+                css.
+            </li>
+            <li><code>&#36;gzip-><b>minify_js</b></code> : true ou false selon que vous vouliez ou pas désactiver la
+                minification.
+            </li>
+            <li><code>&#36;gzip-><b>minify_css</b></code> : true ou false selon que vous vouliez ou pas désactiver la
+                minification.
+            </li>
+        </ul>
+    </small>
+
+    <h2 class="section-heading">La classe</h2>
+
+    <pre><code class="php">{{ source('php/minify/class.gzip_browser.php')|escape }}</code></pre>
+
+{% endblock %}

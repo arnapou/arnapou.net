@@ -1,0 +1,9 @@
+post:
+
+    month: 2012-07
+    date: Juillet 2012
+    title: jQuery - jqCron
+    subtitle: Plugin jQuery pour afficher un cron
+    links:
+        demo: http://jqcron.arnapou.net/
+        github: https://github.com/arnapou/jqcron/

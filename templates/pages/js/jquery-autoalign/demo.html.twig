@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr">
+<head>
+    <title>jAutoAlign</title>
+    <script src="jQuery.js" type="text/javascript"></script>
+    <script type="text/javascript" src="jAutoAlign.js" ></script>
+    <style type="text/css">
+        * {
+            font-family: Verdana, Arial;
+        }
+        body {
+            background-color: #888888;
+            padding: 16px 16px 100px 16px;
+            margin: 0px;
+        }
+        h1 {
+            text-align: center;
+            padding: 0px;
+            margin: 0px;
+        }
+        fieldset {
+            display: block;
+            padding: 8px;
+            margin: 8px auto;
+            width: 760px;
+            border: 2px solid white;
+            background-color: #aaaaaa;
+        }
+        fieldset span,
+        fieldset p,
+        fieldset strong,
+        fieldset label,
+        fieldset select,
+        fieldset option {
+            font-size: 12px;
+        }
+        legend {
+            padding: 1px 8px;
+            border: 0px;
+            background-color: #ffffff;
+            font-weight: bold;
+        }
+        p {
+            padding: 2px 0px;
+            margin: 0px;
+            overflow: hidden;
+        }
+        p label {
+            display: block;
+            float: left;
+            text-align: right;
+            padding-right: 4px;
+            width: 125px;
+        }
+        p input.s {
+            width: 300px;
+        }
+        pre {
+            font-family: Consolas, 'Lucida Console', Monaco, monospace, Courier New;
+            font-size: 13px;
+            border: 1px dotted black;
+            background-color: #666666;
+            color: #eeeeee;
+            padding: 4px;
+            line-height: 150%;
+            margin: 4px 0px;
+        }
+        span.pre,
+        pre * {
+            font-family: Consolas, 'Lucida Console', Monaco, monospace, Courier New;
+            font-size: 13px;
+        }
+        pre em {
+            color: #ddeedd;
+        }
+        pre a {
+            color: #add8e6;
+            text-decoration: underline;
+        }
+        pre a:hover {
+            color: #ade6b9;
+            text-decoration: underline;
+        }
+        em {
+            color: green;
+        }
+        pre em,
+        span.s1 {
+            color: lightgreen;
+        }
+        span.s2 {
+            color: #ff8888;
+        }
+        span.s3 {
+            color: #aaa;
+        }
+        span.c {
+            color: #aabbaa;
+        }
+        div {
+            border: 1px solid #777;
+            background-color: #eee;
+        }
+        div.blue {
+            border: 1px solid #228;
+            background-color: #aaf;
+        }
+        div.red {
+            border: 1px solid #822;
+            background-color: #faa;
+        }
+        div.green {
+            border: 1px solid #282;
+            background-color: #afa;
+        }
+        div.box {
+            text-align: center;
+            font-size: 10px;
+            padding: 2px;
+        }
+        div.sub_contener {
+            border: 1px dotted #999;
+            background-color: #ddd;
+            float: left;
+            padding: 4px;
+        }
+        div.contener1,
+        div.contener2 {
+            overflow: hidden;
+            padding:8px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>jAutoAlign</h1>
+
+<fieldset><legend>Usage</legend>
+    <pre>$(document).ready(function() {
+	<span class="s3">// contener 1</span>
+	$('div.contener1').<span class="s2">adjust_spacing_horiz</span>('div.sub_contener');
+	$('div.contener1 > div.sub_contener').<span class="s2">same_height</span>();
+	$('div.box').<span class="s2">center</span>();
+
+	<span class="s3">// contener 2</span>
+	$('div.contener2').<span class="s2">adjust_width</span>('div.sub_contener');
+	$('div.contener2 > div.sub_contener').<span class="s2">same_height</span>();
+	$('div.box').<span class="s2">center</span>();
+});
+</pre>
+</fieldset>
+
+<fieldset><legend>Eléments espacés automatiquement puis centrés</legend>
+    <div class="contener1">
+        <div class="sub_contener"><div class="blue box">box 1</div></div>
+        <div class="sub_contener"><div class="blue box">box 2</div></div>
+        <div class="sub_contener"><div class="blue box">box 3</div></div>
+        <div class="sub_contener"><div class="blue box">box 4</div></div>
+    </div>
+</fieldset>
+
+<fieldset><legend>Eléments é qui on force la méme largeur avant de centrer</legend>
+    <div class="contener2">
+        <div class="sub_contener"><div class="red box">box 5</div></div>
+        <div class="sub_contener"><div class="red box">box 6</div></div>
+        <div class="sub_contener"><div class="red box">box 7</div></div>
+        <div class="sub_contener"><div class="red box">box 8</div></div>
+    </div>
+</fieldset>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        // affecte des tailles aélatoires aux div.box
+        // dans la réalité, les IMG ou autres blocs doivent avoir des tailles fixées
+        $('div.box').each(function() {
+            var w = 10*Math.random();
+            var h = 10*Math.random();
+            if (w < 4) { w = 4; }
+            if (h < 2) { h = 2; }
+            w = 10*Math.floor(w);
+            h = 10*Math.floor(h);
+            $(this).css({width: w, height: h});
+        });
+
+        // contener1
+        $('div.contener1').adjust_spacing_horiz('div.sub_contener');
+        $('div.contener1 > div.sub_contener').same_height();
+        $('div.box').center();
+        // contener2
+        $('div.contener2').adjust_width('div.sub_contener');
+        $('div.contener2 > div.sub_contener').same_height();
+        $('div.box').center();
+    });
+</script>
+</body>
+</html>

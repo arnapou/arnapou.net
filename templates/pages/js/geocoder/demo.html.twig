@@ -1,0 +1,393 @@
+<html>
+<head>
+    <title>Google map geocoder</title>
+    <style type="text/css">
+        * {
+            font-family: Verdana, Arial;
+            font-size: 12px;
+        }
+        pre,textarea {
+            font-family: Courier New;
+        }
+        pre {
+            border: 1px solid #808080;
+            background-color: #eeeeee;
+            padding: 4px;
+        }
+        body {
+            margin: 0px;
+            padding: 4px 8px 8px 8px;
+            background-color: #cccccc;
+        }
+        fieldset {
+            margin: 0px;
+            height: 100px;
+            position: relative;
+        }
+        button {
+            width: 100px;
+            text-align:center;
+        }
+        legend {
+            font-weight: bold;
+        }
+        #log {
+            border: 1px solid #808080;
+            overflow: auto;
+            background-color: #eeeeee;
+        }
+        #log * {
+            font-family: Courier New;
+        }
+        #pct {
+            margin-top: 8px;
+            height: 40px;
+            text-align:center;
+        }
+        textarea, input {
+            border: 1px solid #808080;
+            background-color: #eeeeee;
+        }
+        textarea {
+            width: 100%;
+            margin-bottom: 8px;
+        }
+        table {
+            border: 0px;
+            width: 100%;
+        }
+        td.c50 {
+            width: 48%;
+        }
+        textarea,
+        #log * {
+            font-size: 12px;
+        }
+        #log a {
+            text-decoration: none;
+            color: blue;
+        }
+        #log a.multiple {
+            color: darkgreen;
+        }
+        #log div {
+            border-bottom: 1px dotted #808080;
+        }
+        #log div.current {
+            background-color: #ffbbbb;
+        }
+        #mapconteneur {
+            overflow: hidden;
+            border: 1px solid #808080;
+        }
+        #rech {
+            border-top: 1px solid #808080;
+            position: relative;
+            top: -26px;
+            left: 0px;
+            height: 30px;
+            padding: 1px 2px;
+            background-color: #cccccc;
+        }
+        #rech input,
+        #rech button {
+            width: 100%;
+        }
+        #ico {
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+            padding: 1px;
+        }
+        img.current {
+            border: 1px solid #808080;
+            border-top: 1px solid #fff;
+            border-left: 1px solid #fff;
+            background-color: #eeeeee;
+        }
+    </style>
+
+    <script src="http://maps.google.com/maps?file=api&v=2&key=ABQIAAAAWvdXURyMHfIBv1XOraLs2BT8zqlKHUTIh-9XO-KGiG8UjI6GOxRqbKlEX-W1y7YsL98zSgS8DLytBA" type="text/javascript"></script>
+    <script src="gmap.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        gmap.oninit = function () {
+            gmap.dom.fsource = document.getElementById('fsource');
+            gmap.dom.fdest = document.getElementById('fdest');
+            gmap.dom.tsource = document.getElementById('tsource');
+            gmap.dom.tdest = document.getElementById('tdest');
+            gmap.dom.map = document.getElementById('map');
+            gmap.dom.log = document.getElementById('log');
+            gmap.dom.go = document.getElementById('go');
+            gmap.dom.stop = document.getElementById('stop');
+            gmap.dom.cont = document.getElementById('cont');
+            gmap.dom.pct = document.getElementById('pct');
+            gmap.dom.rechtxt = document.getElementById('rechtxt');
+            gmap.dom.rech = document.getElementById('rech');
+            gmap.dom.ico = document.getElementById('ico');
+            gmap.dom.mapconteneur = document.getElementById('mapconteneur');
+
+            gmap.dom.go.style.display = 'block';
+            gmap.dom.stop.style.display = 'none';
+            gmap.dom.cont.style.display = 'none';
+            gmap.dom.rech.style.display = 'none';
+        };
+        gmap.onload = function () {
+            gmap.listener.add(gmap.map, 'click', gmap.ico.onclick);
+        };
+        gmap.add_result = function(item) {
+            gmap.dom.tdest.value += item.key+';'+item.address.replace(/\s+$/g, '')+';'+item.lat+';'+item.lng+'\n';
+        };
+        gmap.geocode = {
+            index: 0,
+            delay: 600,
+            datas: [],
+            blocage: false,
+            currentindex: 0,
+            init: function() {
+                var content = gmap.dom.tsource.value;
+                var datas = [];
+                var lines = content.split('\n');
+                var cols, i;
+                for(i in lines) {
+                    cols = lines[i].split(';');
+                    if (cols.length >= 2) {
+                        datas.push({ key: cols[0], address: cols[1], lat: 0, lng: 0, err: 0, places: null });
+                    }
+                }
+                return datas;
+            },
+            go: function() {
+                var datas = gmap.geocode.init();
+                if (datas) {
+                    gmap.geocode.index = 0;
+                    gmap.geocode.blocage = false;
+                    gmap.geocode.datas = datas;
+                    gmap.dom.log.innerHTML = '';
+                    gmap.dom.tdest.value = '';
+                    gmap.dom.go.style.display = 'none';
+                    gmap.dom.stop.style.display = 'block';
+                    gmap.geocode.step();
+                }
+            },
+            step: function() {
+                if (gmap.geocode.index < gmap.geocode.datas.length) {
+                    gmap.geocoder.request(gmap.geocode.datas[gmap.geocode.index].address, gmap.geocode.response);
+                    var pct = Math.floor(100*gmap.geocode.index/gmap.geocode.datas.length);
+                    gmap.dom.pct.innerHTML = gmap.geocode.index+'/'+gmap.geocode.datas.length+' ('+pct+'%)';
+                } else {
+                    gmap.geocode.end();
+                }
+            },
+            next: function() {
+                gmap.geocode.index++;
+                if (!gmap.geocode.blocage) {
+                    window.setTimeout(gmap.geocode.step, gmap.geocode.delay);
+                } else {
+                    gmap.dom.stop.style.display = 'none';
+                    gmap.dom.cont.style.display = 'block';
+                }
+            },
+            stop: function() {
+                gmap.geocode.blocage = true;
+            },
+            cont: function() {
+                gmap.dom.cont.style.display = 'none';
+                gmap.dom.stop.style.display = 'block';
+                gmap.geocode.blocage = false;
+                gmap.geocode.step();
+            },
+            voir: function(index) {
+                var last = document.getElementById('log_'+gmap.geocode.currentindex);
+                if (last) {
+                    last.className = '';
+                }
+                document.getElementById('log_'+index).className = 'current';
+                gmap.dom.rech.style.display = 'block';
+                gmap.geocode.currentindex = index;
+                var i, item = gmap.geocode.datas[index];
+                var min_lat = 0, min_lng = 0, max_lat = 0, max_lng = 0;
+                gmap.map.clearOverlays();
+                for(i in item.places) {
+                    if (min_lat == 0 || min_lat > item.places[i].lat) { min_lat = item.places[i].lat; }
+                    if (max_lat == 0 || max_lat < item.places[i].lat) { max_lat = item.places[i].lat; }
+                    if (min_lng == 0 || min_lng > item.places[i].lng) { min_lng = item.places[i].lng; }
+                    if (max_lng == 0 || max_lng < item.places[i].lng) { max_lng = item.places[i].lng; }
+                    gmap.geocode.add_marker(item.places[i].lat, item.places[i].lng, index, item.places[i].desc);
+                }
+                if (item.places.length > 0) {
+                    var bounds = new GLatLngBounds(new GLatLng(min_lat, min_lng), new GLatLng(max_lat, max_lng));
+                    var zoom = gmap.map.getBoundsZoomLevel(bounds);
+                    gmap.center.set((min_lat+max_lat)/2, (min_lng+max_lng)/2, zoom);
+                } else {
+                    gmap.center.set(47, 3, 5);
+                }
+                gmap.dom.rechtxt.value = item.address;
+            },
+            add_marker: function(lat, lng, index, desc) {
+                var marker = new GMarker(new GLatLng(lat, lng));
+                GEvent.addListener(marker, 'click', function() {
+                    marker.openInfoWindowHtml(
+                        desc.replace(/, /g, '<br />')+'<br /><br /><button onclick="gmap.geocode.click_marker('+lat+', '+lng+', '+index+')">OK</button>',
+                        {draggable: true}
+                    );
+                });
+                gmap.map.addOverlay(marker);
+            },
+            click_marker: function(lat, lng, index) {
+                var item = gmap.geocode.datas[index];
+                var div = document.getElementById('log_'+index);
+                item.lat = lat;
+                item.lng = lng;
+                gmap.add_result(item);
+                gmap.dom.log.removeChild(div);
+                gmap.map.clearOverlays();
+                gmap.dom.rech.style.display = 'none';
+            },
+            err: function(err, places) {
+                var index = gmap.geocode.index;
+                var item = gmap.geocode.datas[index];
+                var txt = err+', '+gmap.errcode(err);
+                var aclass = '';
+                item.err = err;
+                if (places) {
+                    item.places = places;
+                    aclass = ' class="multiple"';
+                } else {
+                    item.places = [];
+                }
+                gmap.dom.log.innerHTML += '<div id="log_'+index+'"><a href="javascript:gmap.geocode.voir('+index+')"'+aclass+'>'+item.key+';'+item.address+';'+txt+'</a></div>';
+                gmap.geocode.next();
+            },
+            response: function(resp) {
+                var place, point, item;
+                if (!resp || resp.Status.code != 200) {
+                    gmap.geocode.err(resp.Status.code);
+                } else {
+                    if (resp.Placemark.length == 0) {
+                        gmap.geocode.err('no results');
+                    }
+                    else if (resp.Placemark.length == 1) {
+                        item = gmap.geocode.datas[gmap.geocode.index];
+                        item.err = '';
+                        item.lat = resp.Placemark[0].Point.coordinates[1];
+                        item.lng = resp.Placemark[0].Point.coordinates[0];
+                        point = new GLatLng(item.lat, item.lng);
+                        gmap.add_result(item);
+                        gmap.geocode.next();
+                    }
+                    else {
+                        var places = new Array();
+                        for(var i in resp.Placemark) {
+                            var lat = resp.Placemark[i].Point.coordinates[1];
+                            var lng = resp.Placemark[i].Point.coordinates[0];
+                            places.push({lat: lat, lng: lng, desc: resp.Placemark[i].address});
+                        }
+                        gmap.geocode.err('multiple', places);
+                    }
+                }
+            },
+            end: function() {
+                gmap.dom.pct.innerHTML = 'FINI';
+                gmap.dom.stop.style.display = 'none';
+                gmap.dom.go.style.display = 'block';
+            }
+        };
+        gmap.ico = {
+            active: false,
+            click: function() {
+                if (gmap.ico.active) {
+                    gmap.ico.active = false;
+                    gmap.dom.ico.className = '';
+                } else {
+                    gmap.ico.active = true;
+                    gmap.dom.ico.className = 'current';
+                }
+            },
+            onclick: function(overlay, point){
+                if (gmap.ico.active) {
+                    gmap.geocode.add_marker(point.y, point.x, gmap.geocode.currentindex, point.y+' , '+point.x);
+                    gmap.ico.click();
+                }
+            }
+        };
+        gmap.rech = function() {
+            gmap.geocoder.request(gmap.dom.rechtxt.value, function(resp) {
+                var place, point, item;
+                if (!resp || resp.Status.code != 200) {
+                    alert('Erreur de geocoding ('+resp.Status.code+', '+gmap.errcode(resp.Status.code)+')');
+                } else {
+                    if (resp.Placemark.length == 0) {
+                        alert('Pas de résultat');
+                    }
+                    else {
+                        var min_lat = 0, min_lng = 0, max_lat = 0, max_lng = 0;
+                        for(var i in resp.Placemark) {
+                            var lat = resp.Placemark[i].Point.coordinates[1];
+                            var lng = resp.Placemark[i].Point.coordinates[0];
+                            if (min_lat == 0 || min_lat > lat) { min_lat = lat; }
+                            if (max_lat == 0 || max_lat < lat) { max_lat = lat; }
+                            if (min_lng == 0 || min_lng > lng) { min_lng = lng; }
+                            if (max_lng == 0 || max_lng < lng) { max_lng = lng; }
+                            gmap.geocode.add_marker(lat, lng, gmap.geocode.currentindex, resp.Placemark[i].address);
+                        }
+                        if (min_lat != max_lat && min_lng != max_lng) {
+                            var bounds = new GLatLngBounds(new GLatLng(min_lat, min_lng), new GLatLng(max_lat, max_lng));
+                            var zoom = gmap.map.getBoundsZoomLevel(bounds);
+                            gmap.center.set((min_lat+max_lat)/2, (min_lng+max_lng)/2, zoom);
+                        } else if (min_lat != 0 && min_lng != 0) {
+                            gmap.center.set(min_lat, min_lng, 14);
+                        }
+                    }
+                }
+            });
+        };
+        gmap.page.onresize = function() {
+            var map_height = 400;
+            var height = gmap.page.height() - 100;
+            if (height < 520) { height = 520; }
+            gmap.dom.fsource.style.height = height + 'px';
+            gmap.dom.fdest.style.height = height + 'px';
+            gmap.dom.tsource.style.height = (height - map_height - 20) + 'px';
+            gmap.dom.tdest.style.height = (height - map_height - 20) + 'px';
+            gmap.dom.mapconteneur.style.height = map_height + 'px';
+            gmap.dom.map.style.height = map_height + 'px';
+            gmap.dom.log.style.height = map_height + 'px';
+        };
+        gmap.page.set_handlers();
+    </script>
+</head>
+<body>
+<table><tr><td class="c50" valign="top">
+            <fieldset id="fsource">
+                <legend>Données sources</legend>
+                <textarea id="tsource"></textarea>
+                <div id="mapconteneur">
+                    <div id="map"></div>
+                    <div id="rech"><table cellpadding="0" cellspacing="0" border="0"><tr><td>
+                                    <input type="text" id="rechtxt" />
+                                </td><td style="width:25px" align="center">
+                                    <img src="http://maps.google.com/mapfiles/ms/micons/red-dot.png" id="ico" onclick="gmap.ico.click()" />
+                                </td><td style="width:90px" align="right">
+                                    <button onclick="gmap.rech()">Voir</button>
+                                </td></tr></table></div>
+                </div>
+            </fieldset>
+        </td><td align="center">
+            <button onclick="gmap.geocode.go();" id="go">&raquo;&nbsp;GO&nbsp;&raquo;</button>
+            <button onclick="gmap.geocode.stop();" id="stop">&bull;&nbsp;PAUSE&nbsp;&bull;</button>
+            <button onclick="gmap.geocode.cont();" id="cont">&raquo;&nbsp;PLAY&nbsp;&raquo;</button>
+            <div id="pct"></div>
+        </td><td class="c50" valign="top">
+            <fieldset id="fdest">
+                <legend>Résultat</legend>
+                <textarea id="tdest"></textarea>
+                <div id="log"></div>
+            </fieldset>
+        </td></tr></table>
+<div>
+    Les données sources doivent être au format qui suit, la clé doit respecter une contrainte d'unicité :
+    <pre>CLE;ADRESSE;</pre>
+</div>
+</body>
+</html>
