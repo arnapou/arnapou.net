@@ -1,0 +1,8 @@
+post:
+
+    month: 2006-05
+    date: Mai 2006
+    title: Jeu de dames chinoises en C
+    subtitle: En réseau et avec IA
+    downloads:
+      - name: dames_chinoises.zip

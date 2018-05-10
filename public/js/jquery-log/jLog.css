@@ -1,0 +1,253 @@
+/*********************************************************************************
+# jLog - Open Source Javascript script based on jQuery Javascript Library
+# 
+# Author  : Arnaud BUATHIER
+# Web     : http://arnapou.net
+# Version : 1.0 (2008-10-23)
+#
+# Copyright (c) 2008 Arnaud BUATHIER
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+*********************************************************************************/
+#jLog {
+	position: fixed;
+	_position: absolute; /* IE hack */
+	z-index: 99;
+	width: 270px;
+	height: 250px;
+	border: 1px solid #cccccc;
+	background-color: transparent;
+	padding: 21px 0px 0px 0px;
+	margin: 0px;
+	overflow: hidden;
+	cursor: default;
+}
+#jLog * {
+	color: white;
+	font-size: 11px;
+	font-family: Consolas, 'Lucida Console', Monaco, monospace, Courier New;
+}
+/********** Resize **********/
+#jLog.large {
+	width: 500px;
+	height: 580px;
+}
+/********** Positions **********/
+#jLog.top_left {
+	top: 5px;
+	left: 5px;
+}
+#jLog.top_right {
+	top: 5px;
+	right: 5px;
+}
+#jLog.bottom_left {
+	bottom: 5px;
+	left: 5px;
+}
+#jLog.bottom_right {
+	bottom: 5px;
+	right: 5px;
+}
+/********** Blocks **********/
+#jLog .jLogHeader,
+#jLog .jLogBody,
+#jLog .jLogBgBody {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	border: 0px;
+	padding: 0px;
+	margin: 0px;
+}
+#jLog .jLogHeader {
+	height: 20px;
+	border-bottom: 1px dotted #555555;
+	background-color: #111111;
+	z-index: 5;
+}
+#jLog .jLogHeaderLeft {
+	float: left;
+	padding: 3px 0px 0px 3px;
+}
+#jLog .jLogHeaderRight {
+	float: right;
+	padding: 3px 3px 0px 0px;
+}
+#jLog .jLogBody {
+	top: 21px;
+	background-color: transparent;
+	overflow: scroll;
+	overflow-y: auto;
+	overflow-x: hidden;
+	z-index: 2;
+}
+#jLog .jLogBgBody {
+	background-color: #111111;
+	z-index: 1;
+}
+#jLog .jLogBody ul {
+	border: 0px;
+	padding: 3px 3px;
+	margin: 0px;
+	list-style-type: none;
+	list-style-image: none;
+}
+#jLog .jLogBody ul.jLog_Debug li.jLog_Debug {
+	display: none;
+}
+#jLog .jLogBody ul.jLog_Info li.jLog_Info {
+	display: none;
+}
+#jLog .jLogBody ul.jLog_Warn li.jLog_Warn {
+	display: none;
+}
+#jLog .jLogBody ul.jLog_Error li.jLog_Error {
+	display: none;
+}
+#jLog .jLogBody ul.jLog_Timer li.jLog_Timer {
+	display: none;
+}
+#jLog .jLogBody ul.jLog_ShowTimes span.jLog_Time {
+	display: block;
+}
+#jLog .jLogBody ul li {
+	border: 0px;
+	padding: 1px 0px;
+	margin: 0px;
+	list-style-type: none;
+	list-style-image: none;
+	overflow: hidden;
+}
+/********** Buttons **********/
+#jLog span.jLog_Close,
+#jLog span.jLog_ShowTimes,
+#jLog span.jLog_Resize,
+#jLog span.jLog_Clear,
+#jLog span.jLog_Move,
+#jLog span.jLog_Debug,
+#jLog span.jLog_Info,
+#jLog span.jLog_Warn,
+#jLog span.jLog_Error,
+#jLog span.jLog_Timer {
+	display: block;
+	float: left;
+	padding: 0px 1px;
+	width: 12px;
+	text-align: center;
+	margin: 0px 2px 0px 0px;
+}
+/********** Close **********/
+#jLog span.jLog_Close {
+	background-color: #993333;
+	margin: 0px 10px 0px 0px;
+}
+#jLog span.jLog_Close_Over {
+	color: #993333;
+	background-color: #ffffff;
+}
+/********** ShowTimes **********/
+#jLog span.jLog_ShowTimes {
+	background-color: #777799;
+}
+#jLog span.jLog_ShowTimes_Over {
+	color: #777799;
+	background-color: #ffffff;
+}
+/********** Resize **********/
+#jLog span.jLog_Resize {
+	background-color: #777799;
+}
+#jLog span.jLog_Resize_Over {
+	color: #777799;
+	background-color: #ffffff;
+}
+/********** Clear **********/
+#jLog span.jLog_Clear {
+	background-color: #777799;
+}
+#jLog span.jLog_Clear_Over {
+	color: #777799;
+	background-color: #ffffff;
+}
+/********** Move **********/
+#jLog span.jLog_Move {
+	background-color: #777799;
+}
+#jLog span.jLog_Move_Over {
+	color: #777799;
+	background-color: #ffffff;
+}
+/********** Debug **********/
+#jLog span.jLog_Debug {
+	background-color: #4f8600;
+}
+#jLog span.jLog_Debug_Over {
+	color: #4f8600;
+	background-color: #ffffff;
+}
+/********** Info **********/
+#jLog span.jLog_Info {
+	background-color: #0056cc;
+}
+#jLog span.jLog_Info_Over {
+	color: #0056cc;
+	background-color: #ffffff;
+}
+/********** Warn **********/
+#jLog span.jLog_Warn {
+	background-color: #c08000;
+}
+#jLog span.jLog_Warn_Over {
+	color: #c08000;
+	background-color: #ffffff;
+}
+/********** Error **********/
+#jLog span.jLog_Error {
+	background-color: #cc0000;
+}
+#jLog span.jLog_Error_Over {
+	color: #cc0000;
+	background-color: #ffffff;
+}
+/********** Timer **********/
+#jLog span.jLog_Timer {
+	background-color: #666666;
+}
+#jLog span.jLog_Timer_Over {
+	color: #666666;
+	background-color: #ffffff;
+}
+/********** Filters Selected **********/
+#jLog span.jLog_Filter_Selected {
+	color: #000000;
+	background-color: #bbbbbb;
+}
+/********** Time **********/
+#jLog span.jLog_Time {
+	display: block;
+	float: left;
+	padding: 0px 1px;
+	text-align: center;
+	color: #666666;
+	margin: 0px 2px 0px 0px;
+	display: none;
+}

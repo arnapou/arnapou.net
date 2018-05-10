@@ -1,0 +1,94 @@
+{% extends "@includes/base-post.html.twig" %}
+
+{% block article %}
+
+    <p>Comme cela m'arrive parfois, il m'est venu une idée de challenge complètement inutile... réaliser un jeu de dames
+        chinoises en C (mode console).</p>
+    <p>En pur C bien gore... Et par dessus le marché, histoire de relever le challenge de quelques crans, le jeu existe
+        en 4 versions : </p>
+    <ul>
+        <li>Manual : vous jouez jusqu'à 6 sur le même PC, les uns après les autres.</li>
+        <li>IA : le même que "Manual", mais vous pouvez rajouter des ordinateurs contre lesquels jouer.</li>
+        <li>Network : mode client/serveur, vous jouez à plusieurs joueurs humains en réseau.</li>
+        <li>Network/IA : idem que Network mais avec la possibilité de rajouter des IA.</li>
+    </ul>
+    <p>L'ensemble m'a pris une quinzaine de jours à coder. Le plus dur fut l'IA programmée qui fait appel à des
+        structures assez costaudes et surtout dans les règles du jeu de dames chinoises, il existe la possibilité de
+        repasser sur son propre chemin ce qui fait que l'arbre décisionnel de l'IA doit mémoriser son chemin de test
+        pour éviter de boucler indéfinimment.</p>
+
+    <h2 class="section-heading">Le jeu</h2>
+    <div class="row">
+        <div class="col-md-8">
+            <p>Plateau de jeu ci-contre.</p>
+            <p>Pour ceux qui ne connaissent pas les règles des dames chinoises, allez voir sur <a
+                        href="http://fr.wikipedia.org/wiki/Dames_chinoises">Wikipédia</a>.</p>
+            <p>En bref, le jeu s'apparente aux dames "classiques" mais on peut y jouer jusqu'à 6.</p>
+        </div>
+        <div class="col-md-4">
+            <img class="img-fluid" src="plateau.jpg"/>
+        </div>
+    </div>
+
+
+
+    <h2 class="section-heading">Environnement/jouer</h2>
+    <p>Vous pouvez y jouer sous windows ou linux mais sous windows, il vous faudra modifier quelques constantes dans le
+        <code>define.h</code> car le terminal windows ne supporte pas la coloration ANSI.</p>
+    <p>Je vous conseille de le faire sous linux, il vous faut seulement <code>make</code> et <code>gcc</code></p>
+    <pre class="bash"><code># pour compiler un simple make fera l'affaire
+make
+./dames</code></pre>
+
+
+    <h2 class="section-heading">Déroulement du jeu en mode "manual"</h2>
+    <p>Au début du jeu, on renseigne le nombre d'utilisateurs et leurs noms :</p>
+    <img class="img-fluid" src="img/capture1.png"/>
+    <p>Comme indiqué, à n'importe quel moment, le fait de taper 'exit' vous fera quitter le jeu proprement.</p>
+    <p>Ensuite le plateau est affiché :</p>
+    <img class="img-fluid" src="img/capture2.png"/>
+    <p>Vous choisissez le pion et sa direction :</p>
+    <img class="img-fluid" src="img/capture3.png"/>
+    <p>Ensuite c'est à l'adversaire de jouer :</p>
+    <img class="img-fluid" src="img/capture4.png"/>
+    <p>Et ainsi de suite jusqu'à ce qu'un des joueurs gagne (en suivant les règles bien sûr...).</p>
+    <img class="img-fluid" src="img/capture5.png"/>
+
+    <h2 class="section-heading">Différences en mode réseau</h2>
+    <p>Le premier joueur se connectant au serveur indique le nombre de joueurs à se connecter après avoir saisi son nom
+        :</p>
+    <img class="img-fluid" src="img/capture6.png"/>
+    <p>Le jeu commence vraiment une fois tout le monde connecté :</p>
+    <img class="img-fluid" src="img/capture7.png"/>
+    <p>N'importe qui peut quitter en cours de jeu en tapant exit et les autres joueurs sont tenus au courant :</p>
+    <img class="img-fluid" src="img/capture8.png"/>
+    <p>Bien entendu, si trop de personnes quittent, le jeu est annulé :</p>
+    <img class="img-fluid" src="img/capture9.png"/>
+
+
+    <h2 class="section-heading">Code</h2>
+    <img class="img-fluid" src="schema.jpg" class="right"/>
+    <p>Pour ceux qui s'intéressent au code source, je vous met ci-contre un schema de la structure des objets
+        utilisés.</p>
+
+    <h4>Le plateau de jeu</h4>
+    <p>La représentation textuelle du plateau n'a pas été facile à définir, j'ai adopté cette représentation :</p>
+    <p><img class="img-fluid" src="img/etoile1.png"/></p>
+    <p>Les 'x' représentent une case.<br/>
+        Le numéro à gauche est le numéro de la première case de chaque ligne.<br/>
+        L'affichage du plateau est géré ligne par ligne en affichant des espaces suivi des cases.<br/>
+        Comme le nombre de lignes est fini, j'ai affiché « en dur » les lignes sans passer par un système de boucles.
+    </p>
+
+
+    <h4>Pointeurs entre les cases</h4>
+    <img class="img-fluid" src="img/etoile2.png" class="right"/>
+    <p>Le problème de tous mes liens, c'est qu'il faut être sûr de les avoir bien initialisés. C'est pour cela que j'ai
+        réalisé un fichier debug.h qui affiche les pointeurs des cases.</p>
+    <p>Voici le schéma des liens qui est observable sans affichage des numéros des cases pointées (chaque trait
+        représente un lien ou pointeur, à l'intersection des liens se trouvent les cases) :</p>
+    <p>Il s'agit d'un semble de cases avec ces liens : <img class="img-fluid" src="img/etoile3.png"/></p>
+    <p>Sachant qu'un espace est affiché lorsqu'un lien est égal à <code>NULL</code>.</p>
+
+
+{% endblock %}

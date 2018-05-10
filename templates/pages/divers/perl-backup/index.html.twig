@@ -1,0 +1,23 @@
+{% extends "@includes/base-post.html.twig" %}
+
+{% block article %}
+
+    <p>Je partage avec vous un script de backup très simple que j'ai réalisé en perl.</p>
+    <p>Pourquoi le perl ?</p>
+    <p>Tout simplement parce que c'est très portable et rapide... même sous windows... oui même sous windows...</p>
+    <p>Le script fait un backup / image : il copie dans le dossier de destination le dossier source en supprimant dans
+        le dossier de destination les fichiers ayant disparu du dossier source</p>
+
+    <h2 class="section-heading">Script</h2>
+    <p>Ce script est fournit tel quel, utilisez-le à vos risques et périls !</p>
+    <p>Histoire de dédramatiser, notez que je n'ai jamais eu de problème avec.</p>
+    <pre><code>Usage: perl backup_copy.pl &lt;Source> &lt;Dest> [Delete] [Log]
+       - Source : source folder
+       - Dest   : destination folder
+       - Delete : whether to delete backup old files (default TRUE)
+       - Log    : log file (default : no log)</code></pre>
+
+    <h2 class="section-heading">Code source</h2>
+    <pre class="perl"><code>{{ source('divers/perl-backup/backup_copy.pl')|escape }}</code></pre>
+
+{% endblock %}

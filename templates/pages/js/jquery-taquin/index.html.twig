@@ -1,0 +1,24 @@
+{% extends "@includes/base-post.html.twig" %}
+
+{% block article %}
+
+    <p>En Août 2008, j'ai fabriqué ce petit jeu avec jQuery... c'était un challenge, car ça ne m'a jamais servi...</p>
+    <p>Bref je vous le mets ici pour ceux que ça intéresse, le code vaut ce qu'il vaut, depuis le temps je le referais
+        autrement si j'avais à le mettre en prod. Mais si ça se trouve ça suffira largement à ceux qui seront
+        intéressés...</p>
+
+
+    <h2 class="section-heading">Taquin</h2>
+    <p>Je pars du principe que vous connaissez le jeu de Taquin... un jeu très simple où vous bougez les pièces pour
+        reconstituer le puzzle.</p>
+    <p>L'image est personnalisable dans le code JS.</p>
+
+
+
+    <h2 class="section-heading">jTaquin.js</h2>
+    <pre class="js"><code>{{ source('@public/js/jquery-taquin/jTaquin.js')|escape }}</code></pre>
+
+
+
+{% endblock %}
+

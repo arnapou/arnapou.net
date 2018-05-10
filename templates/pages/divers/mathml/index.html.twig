@@ -1,0 +1,65 @@
+{% extends "@includes/base-post-mathml.html.twig" %}
+
+{% block article %}
+
+    <p>Je ne sais pas si vous connaissez <a href="http://fr.wikipedia.org/wiki/MathML" rel="external">MathML</a>, mais
+        cette syntaxe n'est pas génialement supportée par les browsers d'aujourd'hui... c'est fort dommage.</p>
+    <p>Il existe un script JS sympatique nommé <a href="http://www1.chapman.edu/~jipsen/mathml/asciimath.html"
+                                                  rel="external">ASCIIMathML</a> qui mérite d'être connu car il vous
+        permet d'utiliser une syntaxe très simple pour décrire vos formules et il les traduit en MathML
+        automatiquement... :D</p>
+    <p>Si vous utilisez IE, vous serez obligé d'installer le plugin <a
+                href="http://www.dessci.com/en/products/mathplayer/download.htm" rel="external">MathPlayer</a> pour voir
+        vos formules correctement... c'est triste mais pas surprenant.</p>
+
+    <h2 class="section-heading">Références</h2>
+    <ul>
+        <li><a href="http://www1.chapman.edu/~jipsen/mathml/asciimath.html" rel="external">ASCIIMathML</a>
+            <small><em>(support de graphiques)</em></small>
+        </li>
+        <li><a href="http://www.mathjax.org/" rel="external">MathJax.org</a>
+            <small><em>(que les formules, pas de graphiques)</em></small>
+        </li>
+        <li><a href="http://fr.wikipedia.org/wiki/MathML" rel="external">MathML Wikipedia</a></li>
+        <li><a href="http://www.dessci.com/en/products/mathplayer/download.htm" rel="external">Plugin MathPlayer pour
+                IE</a></li>
+    </ul>
+
+    <h2 class="section-heading">Compatibilité</h2>
+    <ul>
+        <li><b>ASCIIMathML formules</b> : Firefox 3+, Safari 5.1+, <a
+                    href="http://www.dessci.com/en/products/mathplayer/download.htm" rel="external">MathPlayer</a>
+            nécessaire pour IE, apparence plus ou moins dégradée sans être horrible pour Webkit
+        </li>
+        <li><b>ASCIIMathML graphiques</b> : tous les browsers</li>
+        <li><b>MathJax formules</b> : tous les browsers</li>
+        <li>
+            <small><em>Note : la cohabitation des deux librairies ensemble fonctionne.</em></small>
+        </li>
+    </ul>
+
+    <h2 class="section-heading">Exemples</h2>
+
+    <p>
+        Surround ASCIIMath formulas
+        with left-quotes:
+        `sum_(i=1)^n i=(n(n+1))/2` or LaTeX formulas with dollar signs
+        $\int_0^{\pi/2} \sin x\,dx=1$.
+    </p>
+
+    <p>
+        And here is a simple graph:
+
+        agraph plot(sin(x)) endagraph
+
+        followed by a more elaborate graph (try double-clicking it, also
+        while holding down shift or alt)
+
+        agraph
+        width=300; height=200; xmin=-5; xmax=5; xscl=1;
+        plot((x-2)*(x-1)*x*(x+1)*(x+2)/2,-2.5,2.5);
+        endagraph
+    </p>
+
+
+{% endblock %}

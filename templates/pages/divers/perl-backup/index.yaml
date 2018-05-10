@@ -1,0 +1,8 @@
+post:
+
+    month: 2010-03
+    date: Mars 2010
+    title: Perl - Backup script
+    subtitle: Un script de backup en perl
+    downloads:
+      - name: backup_copy.zip

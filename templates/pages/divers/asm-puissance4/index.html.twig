@@ -1,0 +1,15 @@
+{% extends "@includes/base-post.html.twig" %}
+
+{% block article %}
+
+    <p>J'ai retrouvé au fond de mes tiroirs un morceau inachevé de mon puissance 4 en assembleur que j'ai fait durant
+        mes études... </p>
+    <p>C'est pour ce programme que j'avais passé du temps à découvrir les algos de tracé de
+        <a href="../algo-droite/">droite</a> et de <a href="../algo-cercle/">cercle</a>
+        pixel par pixel.</p>
+
+    <h2 class="section-heading">Apercu du code</h2>
+    <pre class="asm"><code>{{ source('divers/asm-puissance4/PUIS4.ASM')|escape }}</code></pre>
+
+
+{% endblock %}

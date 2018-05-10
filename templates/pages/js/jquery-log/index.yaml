@@ -1,0 +1,10 @@
+post:
+
+    month: 2008-08
+    date: Octobre 2008
+    title: jQuery - jLog
+    subtitle: Plugin jQuery pour loguer des infos
+    links:
+        demo: demo
+    downloads:
+      - name: jLog.zip

@@ -1,0 +1,8 @@
+post:
+
+    month: 2001-05
+    date: Mai 2001
+    title: ASM - Puissance 4
+    subtitle: Extrait d'algo de Brensenham en assembleur
+    downloads:
+      - name: PUIS4.zip

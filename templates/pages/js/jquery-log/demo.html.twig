@@ -1,0 +1,395 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!---------------------------------------------------------------------------
+# jLog - Open Source Javascript script based on jQuery Javascript Library
+# 
+# Author  : Arnaud BUATHIER
+# Web     : http://arnapou.net
+# Version : 1.0 (2008-10-23)
+#
+# Copyright (c) 2008 Arnaud BUATHIER
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
+--------------------------------------------------------------------------->
+<html>
+<head>
+    <title>jLog</title>
+    <script type="text/javascript" src="jQuery.js" ></script>
+    <script type="text/javascript" src="jLog.js" ></script>
+    <link rel="stylesheet" type="text/css" href="jLog.css" />
+    <style type="text/css">
+        * {
+            font-family: Verdana, Arial;
+        }
+        body {
+            background-color: #888888;
+            padding: 16px 16px 100px 16px;
+            margin: 0px;
+        }
+        h1 {
+            text-align: center;
+            padding: 0px;
+            margin: 0px;
+        }
+        fieldset {
+            display: block;
+            padding: 8px;
+            margin: 8px auto;
+            width: 570px;
+            border: 2px solid white;
+            background-color: #aaaaaa;
+        }
+        fieldset span,
+        fieldset p,
+        fieldset strong,
+        fieldset label,
+        fieldset select,
+        fieldset option {
+            font-size: 12px;
+        }
+        legend {
+            padding: 1px 8px;
+            border: 0px;
+            background-color: #ffffff;
+            font-weight: bold;
+        }
+        p {
+            padding: 2px 0px;
+            margin: 0px;
+            overflow: hidden;
+        }
+        p label {
+            display: block;
+            float: left;
+            text-align: right;
+            padding-right: 4px;
+            width: 125px;
+        }
+        p input.s {
+            width: 300px;
+        }
+        pre {
+            font-family: Consolas, 'Lucida Console', Monaco, monospace, Courier New;
+            font-size: 13px;
+            border: 1px dotted black;
+            background-color: #666666;
+            color: #eeeeee;
+            padding: 4px;
+            line-height: 150%;
+            margin: 4px 0px;
+        }
+        span.pre,
+        pre * {
+            font-family: Consolas, 'Lucida Console', Monaco, monospace, Courier New;
+            font-size: 13px;
+        }
+        pre em {
+            color: #ddeedd;
+        }
+        pre a {
+            color: #add8e6;
+            text-decoration: underline;
+        }
+        pre a:hover {
+            color: #ade6b9;
+            text-decoration: underline;
+        }
+        span.s1 {
+            color: lightgreen;
+        }
+        span.s2 {
+            color: #ff8888;
+        }
+        span.c {
+            color: #aabbaa;
+        }
+    </style>
+</head>
+<body>
+
+<h1>jLog</h1>
+<!-------------------- USAGE -------------------->
+<fieldset><legend>Usage</legend>
+    <strong>Require</strong>
+    <pre><a href="http://jquery.com/">jQuery</a> javascript library
+Available on <a href="http://jquery.com/">http://jquery.com/</a></pre>
+
+    <strong>HTML Source</strong>
+    <pre>&lt;script type="text/javascript" src="<span class="s1">YOUR_PATH/</span><span class="s2">jQuery.js</span>"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="<span class="s1">YOUR_PATH/</span><span class="s2">jLog.js</span>"&gt;&lt;/script&gt;
+&lt;link type="text/css" rel="stylesheet" href="<span class="s1">YOUR_PATH/</span><span class="s2">jLog.css</span>" /&gt;</pre>
+
+    <strong>Loading jLog</strong>
+    <pre>jQuery(window).load(function() {
+    <span class="s2">jLog</span>.show();
+});
+<span class="c">// don't use jQuery(document).ready(...)
+// because it causes some sizing problems on Safari and Chrome</span></pre>
+
+    <strong>Javascript API</strong>
+    <pre><span class="s2">jLog</span>.show()               <span class="c">// show jLog</span>
+<span class="s2">jLog</span>.hide()               <span class="c">// hide jLog</span>
+<span class="s2">jLog</span>.toggle()             <span class="c">// show, hide jLog</span>
+<span class="s2">jLog</span>.clear()              <span class="c">// clear the log</span>
+<span class="s2">jLog</span>.move()               <span class="c">// move jLog to next corner</span>
+<span class="s2">jLog</span>.resize()             <span class="c">// reduce, enlarge jLog</span>
+<span class="s2">jLog</span>.show_times()         <span class="c">// show execution times</span>
+<span class="s2">jLog</span>.hide_times()         <span class="c">// hide execution times</span>
+<span class="s2">jLog</span>.toggle_times()       <span class="c">// show, hide execution times</span>
+<span class="s2">jLog</span>.filter(type, bool)   <span class="c">// apply or not (<em>bool</em> = <em>true</em> or <em>false</em>) <em>type</em> filter
+                          // <em>type</em> = <em>debug</em>, <em>info</em>, <em>warn</em>, <em>error</em> or <em>timer</em> </span>
+<span class="s2">jLog</span>.toggle_filter(type)  <span class="c">// filter or not the <em>type</em> filter</span>
+                          // <em>type</em> = <em>debug</em>, <em>info</em>, <em>warn</em>, <em>error</em> or <em>timer</em> </span>
+        <span class="s2">jLog</span>.debug(msg)           <span class="c">// add a debug message (<em>msg</em> parameter)</span>
+<span class="s2">jLog</span>.info(msg)            <span class="c">// add an info message (<em>msg</em> parameter)</span>
+<span class="s2">jLog</span>.warn(msg)            <span class="c">// add a warning message (<em>msg</em> parameter)</span>
+<span class="s2">jLog</span>.error(msg)           <span class="c">// add an error message (<em>msg</em> parameter)</span>
+<span class="s2">jLog</span>.timer(key[, msg])    <span class="c">// start the <em>key</em> timer, or add <em>msg</em> message
+                          // if <em>key</em> timer already started</span></pre>
+
+    <strong>Keyboard shortcuts</strong>
+    <pre>F2                        <span class="c">// show, hide jLog</span>
+Shift + F2                <span class="c">// move jLog to next corner</span>
+Ctrl + F2                 <span class="c">// enlarge + show times, reduce + hide times</span>
+Shift + Ctrl + F2         <span class="c">// clear jLog</span></pre>
+</fieldset>
+<!-------------------- SAMPLE 1 -------------------->
+<fieldset><legend>Sample 1</legend>
+    <pre><span class="s2">jLog</span>.debug(<span class="c">'this is a debug message'</span>);
+<span class="s2">jLog</span>.info(<span class="c">'this is an info message'</span>);
+<span class="s2">jLog</span>.warn(<span class="c">'this is a warning message'</span>);
+<span class="s2">jLog</span>.error(<span class="c">'this is an error message'</span>);</pre>
+    <p>
+        <label>&nbsp;</label>
+        <input type="submit" value="Send" onclick="sample1()" />
+    </p>
+</fieldset>
+<!-------------------- SAMPLE 2 -------------------->
+<fieldset><legend>Sample 2</legend>
+    <pre>
+var test, i, j, n;
+<span class="s2">jLog</span>.timer(<span class="c">'main'</span>);
+<em>for</em>(j=1; j&lt;6; j++) {
+	<span class="s2">jLog</span>.timer(<span class="c">'loop'</span>);
+	test = <span class="c">''</span>;
+	n = Math.floor(Math.random()*16)*1000+4000;
+	<em>for</em>(i=0; i&lt;n; i++) {
+		test += <span class="c">'-'</span>;
+	}
+	<span class="s2">jLog</span>.timer(<span class="c">'loop'</span>, <span class="c">'n�'</span>+j+<span class="c">', '</span>+n+<span class="c">' loops'</span>);
+}
+<span class="s2">jLog</span>.timer(<span class="c">'main'</span>, <span class="c">'main program'</span>);</pre>
+    <p>
+        <label>&nbsp;</label>
+        <input type="submit" value="Send" onclick="sample2()" />
+    </p>
+</fieldset>
+<!-------------------- SAMPLE 3 -------------------->
+<fieldset><legend>Sample 3</legend>
+    <p>
+        <label>Message :</label>
+        <input type="text" id="s3Message" class="s" value="test string :-)" />
+    </p>
+    <hr />
+    <p>
+        <label>Debug :</label>
+        <input type="submit" value=" 1 " onclick="sample3('debug', 1)" /> &nbsp;
+        <input type="submit" value=" 2 " onclick="sample3('debug', 2)" /> &nbsp;
+        <input type="submit" value=" 5 " onclick="sample3('debug', 5)" /> &nbsp;
+        <input type="submit" value=" 10 " onclick="sample3('debug', 10)" /> &nbsp;
+        <input type="submit" value=" 50 " onclick="sample3('debug', 50)" /> &nbsp;
+        <input type="submit" value=" 100 " onclick="sample3('debug', 100)" /> &nbsp; times
+    </p>
+    <p>
+        <label>Info :</label>
+        <input type="submit" value=" 1 " onclick="sample3('info', 1)" /> &nbsp;
+        <input type="submit" value=" 2 " onclick="sample3('info', 2)" /> &nbsp;
+        <input type="submit" value=" 5 " onclick="sample3('info', 5)" /> &nbsp;
+        <input type="submit" value=" 10 " onclick="sample3('info', 10)" /> &nbsp;
+        <input type="submit" value=" 50 " onclick="sample3('info', 50)" /> &nbsp;
+        <input type="submit" value=" 100 " onclick="sample3('info', 100)" /> &nbsp; times
+    </p>
+    <p>
+        <label>Warning :</label>
+        <input type="submit" value=" 1 " onclick="sample3('warn', 1)" /> &nbsp;
+        <input type="submit" value=" 2 " onclick="sample3('warn', 2)" /> &nbsp;
+        <input type="submit" value=" 5 " onclick="sample3('warn', 5)" /> &nbsp;
+        <input type="submit" value=" 10 " onclick="sample3('warn', 10)" /> &nbsp;
+        <input type="submit" value=" 50 " onclick="sample3('warn', 50)" /> &nbsp;
+        <input type="submit" value=" 100 " onclick="sample3('warn', 100)" /> &nbsp; times
+    </p>
+    <p>
+        <label>Error :</label>
+        <input type="submit" value=" 1 " onclick="sample3('error', 1)" /> &nbsp;
+        <input type="submit" value=" 2 " onclick="sample3('error', 2)" /> &nbsp;
+        <input type="submit" value=" 5 " onclick="sample3('error', 5)" /> &nbsp;
+        <input type="submit" value=" 10 " onclick="sample3('error', 10)" /> &nbsp;
+        <input type="submit" value=" 50 " onclick="sample3('error', 50)" /> &nbsp;
+        <input type="submit" value=" 100 " onclick="sample3('error', 100)" /> &nbsp; times
+    </p>
+    <hr />
+    <p>
+        <label>All :</label>
+        <input type="submit" value=" 1 " onclick="sample3('all', 1)" /> &nbsp;
+        <input type="submit" value=" 2 " onclick="sample3('all', 2)" /> &nbsp;
+        <input type="submit" value=" 5 " onclick="sample3('all', 5)" /> &nbsp;
+        <input type="submit" value=" 10 " onclick="sample3('all', 10)" /> &nbsp;
+        <input type="submit" value=" 50 " onclick="sample3('all', 50)" /> &nbsp;
+        <input type="submit" value=" 100 " onclick="sample3('all', 100)" /> &nbsp; times
+    </p>
+</fieldset>
+<!-------------------- SAMPLE 4 -------------------->
+<fieldset><legend>Sample 4</legend>
+    <p>
+        <label>Debug :</label>
+        <input type="submit" value="Enable" onclick="sample4('debug', 1)" /> &nbsp;
+        <input type="submit" value="Disable" onclick="sample4('debug', 2)" /> &nbsp;
+        <input type="submit" value="Toggle" onclick="sample4('debug', 3)" /> &nbsp; filter
+    </p>
+    <p>
+        <label>Info :</label>
+        <input type="submit" value="Enable" onclick="sample4('info', 1)" /> &nbsp;
+        <input type="submit" value="Disable" onclick="sample4('info', 2)" /> &nbsp;
+        <input type="submit" value="Toggle" onclick="sample4('info', 3)" /> &nbsp; filter
+    </p>
+    <p>
+        <label>Warning :</label>
+        <input type="submit" value="Enable" onclick="sample4('warn', 1)" /> &nbsp;
+        <input type="submit" value="Disable" onclick="sample4('warn', 2)" /> &nbsp;
+        <input type="submit" value="Toggle" onclick="sample4('warn', 3)" /> &nbsp; filter
+    </p>
+    <p>
+        <label>Error :</label>
+        <input type="submit" value="Enable" onclick="sample4('error', 1)" /> &nbsp;
+        <input type="submit" value="Disable" onclick="sample4('error', 2)" /> &nbsp;
+        <input type="submit" value="Toggle" onclick="sample4('error', 3)" /> &nbsp; filter
+    </p>
+    <p>
+        <label>Timer :</label>
+        <input type="submit" value="Enable" onclick="sample4('timer', 1)" /> &nbsp;
+        <input type="submit" value="Disable" onclick="sample4('timer', 2)" /> &nbsp;
+        <input type="submit" value="Toggle" onclick="sample4('timer', 3)" /> &nbsp; filter
+    </p>
+    <hr />
+    <p>
+        <label>All :</label>
+        <input type="submit" value="Enable" onclick="sample4('all', 4)" /> &nbsp;
+        <input type="submit" value="Disable" onclick="sample4('all', 5)" /> &nbsp;
+        <input type="submit" value="Toggle" onclick="sample4('all', 6)" /> &nbsp; filter
+    </p>
+</fieldset>
+
+
+<script type="text/javascript">
+    $(window).load(function() {
+        jLog.show();
+        jLog.debug('Hello World !');
+    });
+
+    function sample1() {
+        window.setTimeout(function() {
+            jLog.debug('this is a debug message');
+            jLog.info('this is an info message');
+            jLog.warn('this is a warning message');
+            jLog.error('this is an error message');
+        }, 5);
+    }
+
+    function sample2() {
+        window.setTimeout(function() {
+            var test, i, j, n;
+            jLog.timer('main');
+            for(j=1; j<6; j++) {
+                jLog.timer('loop');
+                test = '';
+                n = Math.floor(Math.random()*16)*1000+4000;
+                for(i=0; i<n; i++) {
+                    test += '-';
+                }
+                jLog.timer('loop', 'n�'+j+', '+n+' loops');
+            }
+            jLog.timer('main', 'main program');
+        }, 5);
+    }
+
+    function sample3(type, nb) {
+        window.setTimeout(function() {
+            var msg = document.getElementById('s3Message').value;
+            var i;
+            if(type == 'debug' || type == 'all') {
+                for(i=0; i<nb; i++) {
+                    jLog.debug(msg+' ['+(i+1)+']');
+                }
+            }
+            if(type == 'info' || type == 'all') {
+                for(i=0; i<nb; i++) {
+                    jLog.info(msg+' ['+(i+1)+']');
+                }
+            }
+            if(type == 'warn' || type == 'all') {
+                for(i=0; i<nb; i++) {
+                    jLog.warn(msg+' ['+(i+1)+']');
+                }
+            }
+            if(type == 'error' || type == 'all') {
+                for(i=0; i<nb; i++) {
+                    jLog.error(msg+' ['+(i+1)+']');
+                }
+            }
+        }, 5);
+    }
+
+    function sample4(type, test) {
+        window.setTimeout(function() {
+            switch(test) {
+                case 1:
+                    jLog.filter(type, true);
+                    break;
+                case 2:
+                    jLog.filter(type, false);
+                    break;
+                case 3:
+                    jLog.toggle_filter(type);
+                    break;
+                case 4:
+                    jLog.filter('debug', true);
+                    jLog.filter('info', true);
+                    jLog.filter('warn', true);
+                    jLog.filter('error', true);
+                    jLog.filter('timer', true);
+                    break;
+                case 5:
+                    jLog.filter('debug', false);
+                    jLog.filter('info', false);
+                    jLog.filter('warn', false);
+                    jLog.filter('error', false);
+                    jLog.filter('timer', false);
+                    break;
+                case 6:
+                    jLog.toggle_filter('debug');
+                    jLog.toggle_filter('info');
+                    jLog.toggle_filter('warn');
+                    jLog.toggle_filter('error');
+                    jLog.toggle_filter('timer');
+                    break;
+            }
+        }, 5);
+    }
+</script>
+</body>
+</html>

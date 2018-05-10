@@ -1,0 +1,162 @@
+{% extends "@includes/base-post-mathml.html.twig" %}
+
+{% block article %}
+
+    <p>Durant mes études... j'ai travaillé sur un jeu de puissance 4 en assembleur, à cette occasion, j'ai eu à trouver
+        une technique de tracé de droite et de cercle en minimisant les calculs.</p>
+    <p>J'ai découvert plus tard que cet algorithme avait déjà un nom. C'est celui de leur inventeur originel : <a
+                href="http://fr.wikipedia.org/wiki/Jack_E._Bresenham" rel="external">Jack E. Bresenham</a></p>
+    <p>Vous trouverez ici ma forme de cet algorithme de tracé de cercle.</p>
+
+    <h2 class="section-heading">Schéma</h2>
+    <div class="row">
+        <div class="col-md-5">
+            <img src="img1.png" class="img-fluid"/>
+        </div>
+        <div class="col-md-7">
+            <b> R </b> : rayon du cercle<br/>
+            On suppose le Centre du cercle en <b> (0, 0) </b><br/>
+            Point Rose <b> (R, 0) </b> : point de départ de l'algorithme
+        </div>
+    </div>
+
+    <!------------------------->
+    <h2 class="section-heading">L'idée</h2>
+    <p>
+        L'idée est que les points suivent le chemin qui est le plus prêt possible du cercle donc ce qui peut être
+        traduit par :<br/>
+        =&gt; le cercle est le chemin de pixels pour lequel l'écart avec le rayon est minimal
+    </p><p>
+    Tout se passe donc par rapport au rayon.
+</p>
+    <!------------------------->
+    <h2 class="section-heading">Petits calculs</h2>
+    <p>
+        <b>Equation du cercle dans le cas parfait :</b><br/>`R^2 = x^2 + y^2`
+    </p><p>
+    <b>Equation du cercle dans le cas <b>A</b> ou `x' = x - 1` et `y' = y + 1` (cf point A sur graphe) :</b><br/>
+    `R'^2 = x'^2 + y'^2`<br/>
+    `R'^2 = (x-1)^2 + (y+1)^2`<br/>
+    `R'^2 = x^2 - 2x + 1 + y^2 + 2y +1`<br/>
+    `R'^2 = x^2 + y^2 + 2y - 2x + 2`<br/>
+    `R'^2 = R^2 + 2y - 2x + 2`<br/>
+    `R'^2 = R^2 + DeltaR`&nbsp;&nbsp;&nbsp;avec&nbsp;&nbsp;&nbsp;`DeltaR = 2y - 2x + 2`
+</p><p>
+    <b>Equation du cercle dans le cas <b>B</b> ou `x' = x` et `y' = y + 1` (cf point B sur graphe) :</b><br/>
+    `R'^2 = x'^2 + y'^2`<br/>
+    `R'^2 = x^2 + (y+1)^2`<br/>
+    `R'^2 = x^2 + y^2 + 2y +1`<br/>
+    `R'^2 = R^2 + 2y +1`<br/>
+    `R'^2 = R^2 + DeltaR`&nbsp;&nbsp;&nbsp;avec&nbsp;&nbsp;&nbsp;`DeltaR = 2y +1`
+</p>
+    </p><p>
+    <b>Remarque :</b><br/>
+    On se limite qu'aux cas <b>A</b> et <b>B</b> car on arrêtera l'algorithme à `x = y` étant donné que pour les autres
+    points, il suffit de les représenter par symétries.
+</p><p>
+    <b>Conclusion :</b><br/>
+    On a les deux expressions possibles de `DeltaR`.<br/>
+    Pour tracer le cercle il suffit d'itérer cela en choisissant à chaque fois le `DeltaR` le plus petit.
+</p>
+    <!------------------------->
+    <h2 class="section-heading">Algorithme</h2>
+    <p>
+        Cet algorithme a comme syntaxe une syntaxe très basique.<br/>
+        A vous de la traduire dans le language qu'il vous plaira.
+    </p>
+    <!--------------------->
+    <h4>Algorithme pour que le cercle puisse être colorié par un programme de coloriage à 4 voisins :</h4>
+
+    <p class="algo">
+        Début<br/>
+        <br/>
+        `R =` rayon du cercle<br/>
+        `DeltaR = 0`<br/>
+        `X = R`<br/>
+        `Y = 0`<br/>
+        Trace_Pixels(`R`, `0`)<br/>
+        Trace_Pixels(`0`, `R`)<br/>
+        Tant que `X > Y` faire<br/>
+        <q>
+            `Delta_(1) = DeltaR + 2Y - 2X + 2`<br/>
+            `Delta_(2) = DeltaR + 2Y + 1`<br/>
+            Si `|Delta_(1)| < |Delta_(2)|`<br/>
+            <q>
+                Alors<br/>
+                <q>
+                    `DeltaR = Delta_(1)`<br/>
+                    `Y = Y + 1`<br/>
+                    `X = X - 1`<br/>
+                </q>
+                Sinon<br/>
+                <q>
+                    `DeltaR = Delta_(2)`<br/>
+                    `Y = Y + 1`<br/>
+                </q>
+            </q>
+            Trace_Pixels(`X`, `Y`)<br/>
+            Trace_Pixels(`Y`, `X`)<br/>
+        </q>
+        <br/>
+        Fin
+    </p>
+    <p>Cet algorithme présente un problème dans le cas où vous voudriez effectuer un coloriage du cercle avec un
+        algorithme à 8 voisins car le cercle n'arrêterait pas le coloriage.</p>
+
+    <!--------------------->
+    <h4>Algorithme pour que le cercle puisse être colorié par un programme de coloriage à 8 voisins :</h4>
+    <p class="algo">
+        Début<br/>
+        <br/>
+        `R =` rayon du cercle<br/>
+        `DeltaR = 0`<br/>
+        `X = R`<br/>
+        `Y = 0`<br/>
+        Trace_Pixels(`R`, `0`)<br/>
+        Trace_Pixels(`0`, `R`)<br/>
+        Tant que `X > Y` faire<br/>
+        <q>
+            `Delta_(1) = DeltaR + 2Y - 2X + 2`<br/>
+            `Delta_(2) = DeltaR + 2Y + 1`<br/>
+            Si `|Delta_(1)| < |Delta_(2)|`<br/>
+            <q>
+                Alors<br/>
+                <q>
+                    `DeltaR = Delta_(1)`<br/>
+                    `Y = Y + 1`<br/>
+                    Trace_Pixels(`X`, `Y`)<br/>
+                    Trace_Pixels(`Y`, `X`)<br/>
+                    `X = X - 1`<br/>
+                </q>
+                Sinon<br/>
+                <q>
+                    `DeltaR = Delta_(2)`<br/>
+                    `Y = Y + 1`<br/>
+                </q>
+            </q>
+            Trace_Pixels(`X`, `Y`)<br/>
+            Trace_Pixels(`Y`, `X`)<br/>
+        </q>
+        <br/>
+        Fin
+    </p>
+    <p>
+        La différence avec l'algorithme précédent est le tracé de pixels supplémentaires au milieu de la boucle.<br/>
+    </p>
+    <!--------------------->
+    <h4>Sous-Programme Trace_Pixels(X, Y)</h4>
+    <p class="algo">
+        Début <br/>
+        <br/>
+        `X_(0) =` abscisse du centre<br/>
+        `Y_(0) =` ordonnée du centre<br/>
+        Affiche_Pixel(`X_(0) + X`, `Y_(0) + Y`)<br/>
+        Affiche_Pixel(`X_(0) + X`, `Y_(0) - Y`)<br/>
+        Affiche_Pixel(`X_(0) - X`, `Y_(0) + Y`)<br/>
+        Affiche_Pixel(`X_(0) - X`, `Y_(0) - Y`)<br/>
+        <br/>
+        Fin
+    </p>
+
+
+{% endblock %}

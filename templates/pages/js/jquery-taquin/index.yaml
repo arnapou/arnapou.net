@@ -1,0 +1,10 @@
+post:
+
+    month: 2009-08
+    date: Août 2009
+    title: jQuery - jTaquin
+    subtitle: Petit jeu de taquin full js
+    links:
+        demo: demo
+    downloads:
+      - name: jTaquin.zip

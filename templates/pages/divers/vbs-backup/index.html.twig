@@ -1,0 +1,29 @@
+{% extends "@includes/base-post.html.twig" %}
+
+{% block article %}
+
+
+    <p>Je partage avec vous un script de backup très simple que j'ai réalisé en VBS.</p>
+    <p>Pourquoi le VBS ?</p>
+    <p>Parce qu'après avoir fait le premier script de backup en perl, je me suis demandé pourquoi pas en VBS après
+        tout... c'est quand même le language par excellence de windows qui permet l'accès WMI très simple etc...</p>
+    <p>Après quelques benchs... que constate-je ? o_O horreur ! (ou bonheur ?)... le même script en Perl est 50% plus
+        rapide... Si le VBS s'exécute plus lentement que le Perl... à part la souplesse d'accès aux fonctions systèmes,
+        pour le reste je ne vois plus d'intérêt au VBS...</p>
+    <p>Le script fait un backup / image : il copie dans le dossier de destination le dossier source en supprimant dans
+        le dossier de destination les fichiers ayant disparu du dossier source</p>
+
+
+    <h2 class="section-heading">Script</h2>
+    <p>Ce script est fournit tel quel, utilisez-le à vos risques et périls !</p>
+    <p>Histoire de dédramatiser, notez que je n'ai jamais eu de problème avec.</p>
+    <pre><code>Usage: cscript.exe backup_copy.vbs &lt;Source> &lt;Dest> [Delete] [Log]
+       - Source : source folder
+       - Dest   : destination folder
+       - Delete : whether to delete backup old files (default TRUE)
+       - Log    : log file (default : no log)</code></pre>
+
+    <h2 class="section-heading">Code source</h2>
+    <pre class="vb"><code>{{ source('divers/vbs-backup/backup_copy.vbs')|escape }}</code></pre>
+
+{% endblock %}
