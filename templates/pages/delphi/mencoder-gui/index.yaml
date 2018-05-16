@@ -1,0 +1,11 @@
+post:
+
+    month: 2008-12
+    date: Décembre 2008
+    title: MEncoder GUI
+    subtitle: GUI pour mencoder et autre outils
+    downloads:
+      - name: MEncoderGUI.zip
+        text: Sources et binaire de l'IHM
+      - name: FreeDVDEncoder_v1.6.exe
+        text: Dernière version du projet complet (déc. 2008)

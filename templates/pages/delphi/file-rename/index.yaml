@@ -1,0 +1,8 @@
+post:
+
+    month: 2007-11
+    date: Décembre 2007
+    title: File Rename
+    subtitle: Renommage de fichiers en batch avec expression régulières
+    downloads:
+      - name: FileRename.zip
