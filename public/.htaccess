@@ -20,6 +20,11 @@ DirectorySlash Off
 FileETag MTime Size
 Options -Indexes -MultiViews -ExecCGI +FollowSymLinks +SymLinksIfOwnerMatch
 
+RewriteCond %{HTTP_HOST} !^arnapou\.net [NC]
+RewriteCond %{HTTP_HOST} !^arnapou\.dev\.local [NC]
+RewriteCond %{HTTP_HOST} !^$
+RewriteRule ^/?(.*) http://arnapou.net/$1 [L,R,NE]
+
 # Default
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule . index.php [L,QSA]

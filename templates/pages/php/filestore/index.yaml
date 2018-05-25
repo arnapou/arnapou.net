@@ -4,5 +4,5 @@ post:
     date: Mai 2014
     title: FileStore
     subtitle: Outil simple de stockage de fichiers perso
-    links:
-        github: https://github.com/arnapou/filestore/
+#    links:
+#        github: https://github.com/arnapou/filestore/
