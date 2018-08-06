@@ -8,3 +8,4 @@
 
 .idea
 old
+.php_cs.cache

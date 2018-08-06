@@ -3,7 +3,6 @@
 
 namespace App\Service;
 
-
 use Symfony\Component\Yaml\Yaml;
 
 class PageService
@@ -74,7 +73,7 @@ class PageService
     public function isFile($name)
     {
         if (!preg_match('!^[a-zA-Z0-9_-]+(/[a-zA-Z0-9_-]+)*\.html\.twig$!', $name)) {
-            throw new \InvalidArgumentException("name is not valid");
+            throw new \InvalidArgumentException('name is not valid');
         }
         return is_file($this->getPathTemplates() . "/$name");
     }
@@ -86,7 +85,7 @@ class PageService
     public function isDir($name)
     {
         if (!preg_match('!^[a-zA-Z0-9_-]+(/[a-zA-Z0-9_-]+)*$!', $name)) {
-            throw new \InvalidArgumentException("name is not valid");
+            throw new \InvalidArgumentException('name is not valid');
         }
         return is_dir($this->getPathTemplates() . "/$name");
     }
@@ -96,8 +95,6 @@ class PageService
      */
     public function getPathTemplates()
     {
-        return __DIR__ . "/../../templates/pages";
+        return __DIR__ . '/../../templates/pages';
     }
-
-
 }

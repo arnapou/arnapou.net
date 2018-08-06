@@ -3,7 +3,6 @@
 
 namespace App\Service;
 
-
 class AgeService
 {
     /**
@@ -64,5 +63,4 @@ class AgeService
     {
         return (string)$this->age;
     }
-
 }

@@ -3,7 +3,6 @@
 
 namespace App\Controller;
 
-
 use App\Service\PageService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -50,12 +49,11 @@ class PagesController extends Controller
             $context  = $this->pageService->getContext($pageFound);
             $httpCode = 200;
         } else {
-            $pageFound = "404.html.twig";
+            $pageFound = '404.html.twig';
             $context   = [];
             $httpCode  = 404;
         }
 
         return $this->render($pageFound, $context, new Response('', $httpCode));
     }
-
 }
