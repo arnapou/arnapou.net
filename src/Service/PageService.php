@@ -15,7 +15,7 @@ class PageService
     {
         $context = [];
         if ($this->isFile($name)) {
-            $path    = dirname($this->getPathTemplates() . "/$name");
+            $path    = \dirname($this->getPathTemplates() . "/$name");
             $ctxFile = $this->getPathTemplates() . '/' . str_replace('.html.twig', '.yaml', $name);
             if (is_file($ctxFile)) {
                 $context = Yaml::parseFile($ctxFile);
@@ -56,7 +56,7 @@ class PageService
     {
         $contexts = [];
         $folders  = glob("$dir/*", GLOB_ONLYDIR | GLOB_NOSORT);
-        if (is_array($folders)) {
+        if (\is_array($folders)) {
             foreach ($folders as $folder) {
                 if (is_file("$folder/index.yaml")) {
                     $contexts[$folder] = Yaml::parseFile("$folder/index.yaml");

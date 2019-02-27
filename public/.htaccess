@@ -22,6 +22,7 @@ Options -Indexes -MultiViews -ExecCGI +FollowSymLinks +SymLinksIfOwnerMatch
 
 RewriteCond %{HTTP_HOST} !^arnapou\.net [NC]
 RewriteCond %{HTTP_HOST} !^arnapou\.dev\.local [NC]
+RewriteCond %{HTTP_HOST} !^arnapou\.local [NC]
 RewriteCond %{HTTP_HOST} !^$
 RewriteRule ^/?(.*) http://arnapou.net/$1 [L,R,NE]
 
