@@ -1,0 +1,75 @@
+{% extends "@templates/base-post.twig" %}
+
+{% block article %}
+
+    <p>Pour un projet particulier, j'ai eu à valider un choix d'architecture basé sur <a href="http://nodejs.org/">NodeJS</a>.
+    </p>
+
+    <p>Autant coté code, c'est facile, autant coté installation, j'ai trouvé que le web manquait de documentation claire
+        et précise. Du coup je vous fait partager le résultat de mes recherches.</p>
+
+    <h2>Coté serveur</h2>
+
+    <h3>Installation des dépendances</h3>
+    <pre><code class="bash">apt-get install build-essential
+apt-get install python-software-properties
+apt-get install libssl-dev libreadline-dev
+apt-get install git-core curl</code></pre>
+
+    <h3>Installation de nvm</h3>
+    <p>Pour la gestion de NodeJS et de ses versions, je vous conseille de passer par <a
+                href="https://github.com/creationix/nvm">nvm (node version manager)</a>.</p>
+    <p>J'ai mis le code dans <code>/opt/nvm</code> pour être plus "propre"</p>
+    <pre><code class="bash">git clone git://github.com/creationix/nvm.git /opt/nvm
+. /opt/nvm/nvm.sh
+nvm install v0.6.3
+nvm alias default v0.6.3
+nvm ls
+nvm help</code></pre>
+
+    <p>Si vous voulez pouvoir utiliser nvm en ligne de commande quand vous voulez, je vous conseille de modifier votre
+        <code>.bashrc</code></p>
+    <pre><code class="bash">cat &gt;&gt; ~/.bashrc &lt;&lt; TXT
+. /opt/nvm/nvm.sh
+TXT</code></pre>
+
+    <h3>Installation de npm</h3>
+
+    <p><a href="http://npmjs.org/">npm (node package manager)</a> est un outil pratique pour gérer les "plugins" qui
+        fonctionnent avec NodeJS.</p>
+    <pre><code class="bash">curl http://npmjs.org/install.sh | sh</code></pre>
+
+
+    <h3>Installation de express et socket.io</h3>
+
+    <p><a href="http://expressjs.com/">Express JS</a> est un "framework" fonctionnant sur NodeJS qui vous simplifiera
+        grandement la vie.</p>
+    <p><a href="http://socket.io/">socket.io</a> est un "package" qui vous simplifie l'usage de websockets avec un
+        système de fallback via composant flash.</p>
+    <pre><code class="bash">cd /var/www
+npm install express
+npm install socket.io
+npm install -g express
+express
+npm install -d</code></pre>
+    <p>L'installation des packages via la commande <code>npm install [package]</code> est la partie simple.</p>
+    <p>Ce qui m'a pris du temps à découvrir et qui est mal documenté c'est de faire le <code>npm install -g
+            express</code> qui permet d'exposer dans le shell la commande <code>express</code> qui elle s'occupera de
+        vous installer le framework. <code>npm install -d</code> s'occupe fanilement d'installer les dépendances et de
+        résoudre ce qu'il vous manque pour faire fonctionner le tout (socket.io entre autres).</p>
+
+    <h2>Coté client</h2>
+
+    <p>Si vous voulez faire comme pour notre projet sur page web générée par PHP mais qui utilise socket.io pour
+        communiquer en client/serveur avec un serveur NodeJS, vous devez comme indiqué dans la <a
+                href="http://socket.io/#faq">FAQ de socket.io</a> (pas forcément évident à trouver...) rajouter dans
+        votre page HTML une variable javascript <code>WEB_SOCKET_SWF_LOCATION</code> qui pointe vers le bon fichier
+        flash qui sert de fallback.</p>
+    <pre class="html"></code>&lt;script type="text/javascript"&gt;
+WEB_SOCKET_SWF_LOCATION = "le_chemin_qui_va_bien/WebSocketMain.swf";
+&lt;/script&gt;
+        </code></pre>
+
+
+{% endblock %}
+

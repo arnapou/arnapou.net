@@ -1,0 +1,76 @@
+{% extends "@templates/base-post.twig" %}
+
+{% block article %}
+
+    <p>J'ai eu faire quelques recherches pour monter un SSO en PHP couplé à AD (Active Directory).</p>
+
+    <p>Après quelques recherches, j'ai trouvé le moyen, et il est simplissime. Je le partage avec vous car ca peut se
+        révéler utile.</p>
+
+
+
+    <h2 class="section-heading">Coté serveur (système)</h2>
+
+    <p>Installation des dépendances :</p>
+    <pre><code class="bash">apt-get install libapache2-mod-perl2 perl build-essential
+apt-get install libapache2-authenntlm-perl</code></pre>
+
+    <p>Modification de la conf apache (modifiez les paramètres DOMAIN, DC1, DC2, SITE avant de copier-coller comme un
+        bourrin !) :</p>
+    <pre><code class="bash">cat &gt;&gt; /etc/apache2/sites-enabled/000-default &lt;&lt;TXT
+
+PerlModule Apache2::AuthenNTLM
+&lt;Directory "/var/www/SITE"&gt;
+    PerlAuthenHandler Apache2::AuthenNTLM
+    AuthType ntlm,basic
+    AuthName paipartners
+    require valid-user
+    PerlAddVar ntdomain "DOMAIN DC1 DC2"
+    PerlSetVar defaultdomain DOMAIN
+    PerlSetVar splitdomainprefix 1
+&lt;/Directory&gt;
+TXT</code></pre>
+    <p>Vous trouverez de la doc sur la config de ce module Perl sur <a
+                href="http://search.cpan.org/~speeves/Apache2-AuthenNTLM-0.02/AuthenNTLM.pm">ce lien</a>.</p>
+
+    <p>Config <code>hosts</code></p>
+    <pre><code class="bash">vi /etc/hosts
+# Ajouter
+192.168.10.99   domain.ext DOMAIN DC1 DC2</code></pre>
+
+    <p>Config <code>resolv.conf</code></p>
+    <pre><code class="bash">vi /etc/resolv.conf
+# Ajouter
+search domain.ext
+nameserver IP_DC1
+nameserver IP_DC2</code></pre>
+
+    <p>Et enfin un petit restart d'apache</p>
+    <pre><code class="bash">/etc/init.d/apache2 restart</code></pre>
+
+
+
+    <h2 class="section-heading">Coté serveur (php)</h2>
+    <p>Vous pouvez récupérer le login de la personne via la clé <code>REMOTE_USER</code> de la variable
+        <code>$_SERVER</code> :</p>
+    <pre><code class="php">&lt;?php
+echo "Hello " . $_SERVER['REMOTE_USER'] . " !";
+</code></pre>
+    <p>Si vous devez par la suite checker des droits applicatifs renseignés dans AD, il vous suffit d'interroger AD via
+        l'extension <code>ldap</code> de PHP.</p>
+
+
+
+    <h2 class="section-heading">Coté client</h2>
+
+    <p>Il faut rajouter dans la base de registre (regedit.exe) la clé <code>DWORD</code> suivante <code>HKEY_LOCAL_MACHINE/SYSTEM/CurrentControlSet/Control/Lsa/LmCompatibilityLevel</code>
+        avec la valeur <code>1</code>.</p>
+    <p>Allez faire un tour sur <a href="http://technet.microsoft.com/en-us/library/cc960646.aspx">ce lien</a> de Ms
+        Technet pour comprendre à quoi sert cette clé.</p>
+
+    <p>Enfin il ne reste plus qu'à ajouter l'url de votre site dans les sites trustés pour chaque browser utilisé. Pour
+        Firefox, allez dans <code>about:config</code> et mettez votre url dans la valeur <code>network.automatic-ntlm-auth.trusted-uris</code>.
+    </p>
+
+
+{% endblock %}

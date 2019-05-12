@@ -1,0 +1,35 @@
+{% extends "@templates/base.twig" %}
+
+{% block h1 %}A mon propos{% endblock %}
+{% block subh1 %}Quelques informations éparses sur moi{% endblock %}
+
+{% block header_bg %}{{ asset('theme-blog/img/about-bg.jpg') }}{% endblock %}
+
+{% block content %}
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <p>Je fais de la programmation depuis {{ age.value - 6 }} ans (j'ai commencé à 6 ans). La logique fait
+                    partie intégrante de ma vie.</p>
+                <p>Mon pseudo <em>arnapou</em> a été inventé par un ami quand j'étais ado et je le porte depuis
+                    pour ce qui a trait à ma vie informatique.</p>
+                <p>Je suis diplômé de <a href="http://www.hei.fr/">HEI</a>, une école d'ingénieur généraliste. Je
+                    travaille actuellement comme expert en PHP. Pour en savoir plus, allez voir mon
+                    <a href="/cv/">CV</a>.</p>
+                <p>Papa de 3 enfants, j'ai moins de temps à consacrer à mes passions informatiques depuis leur
+                    naissance. Mais c'est le lot de tous les papas.</p>
+                <p>L'ouverture d'esprit est importante pour moi car j'ai passé mon enfance en Afrique.
+                    17 ans répartis entre Togo, Madagascar, Sénégal, Côte-d'Ivoire</p>
+                <p>Quelques unes de mes activités favorites hors informatique :
+                <ul>
+                    <li>lectures de SF/fantasy</li>
+                    <li>jouer à <a href="https://www.guildwars2.com/fr/">GuildWars 2</a></li>
+                </ul>
+                </p>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

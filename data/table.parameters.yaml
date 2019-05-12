@@ -1,0 +1,7 @@
+- { id: birthday         ,  value: 29/11/1979 }
+- { id: domain           ,  value: arnapou.net }
+- { id: email            ,  value: arnaud@arnapou.net }
+- { id: page_title       ,  value: Arnapou }
+- { id: social_twitter   ,  value: https://twitter.com/arnapou }
+- { id: social_linkedin  ,  value: https://www.linkedin.com/in/arnaud-buathier/ }
+- { id: social_github    ,  value: https://github.com/arnapou }

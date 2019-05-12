@@ -1,0 +1,39 @@
+{% extends "@templates/base-post.twig" %}
+
+{% block article %}
+
+    <p>J'ai eu une période assez dense en traitement vidéo, et j'utilisais des outils opensource pour encoder, graver,
+        traiter mes vidéos.</p>
+
+    <p>Par exemple, j'ai récupéré à l'époque plusieurs dizaines d'heures de vidéos de mon enfance que j'ai traité et
+        pour lesquelles j'avais fait des DVD personnalisés, etc ...</p>
+
+    <p>Dans cet objectif, j'avais développé et maintenu sur plus d'un an à titre perso un assez gros projet qui était
+        une interface qui servait à piloter ces différents outils :</p>
+    <ul>
+        <li><a href="https://www.dvdstyler.org/">DVD Styler</a></li>
+        <li><a href="https://www.imagemagick.org/">ImageMagick</a></li>
+        <li><a href="http://www.mplayerhq.hu/">MPlayer - MEncoder</a></li>
+    </ul>
+
+    <p>Il y avait pas mal de challenge autour de ce projet :</p>
+    <ul>
+        <li>apprentissage autodidacte des bases de l'encodage video/audio avec les problèmes de codecs, bitrate etc
+            ...
+        </li>
+        <li>lecture temps réel d'un flux texte (output de mencoder) pour le parser et afficher une barre de
+            progression
+        </li>
+        <li>packaging de l'ensemble des briques logicielles avec un installeur
+            (<a href="https://fr.wikipedia.org/wiki/Nullsoft_Scriptable_Install_System">nsis</a>) et des scripts VBS
+            pour modifier la base de registre
+        </li>
+        <li>production d'une video à partir de sources images (diaporama) avec fading configurable</li>
+    </ul>
+
+    <h2 class="section-heading">Aperçus du programme</h2>
+
+    <p><img class="img-fluid" src="screen1.png" alt=""></p>
+    <p><img class="img-fluid" src="screen2.png" alt=""></p>
+
+{% endblock %}

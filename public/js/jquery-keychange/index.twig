@@ -1,0 +1,23 @@
+{% extends "@templates/base-post.twig" %}
+
+{% block article %}
+
+    <p>Vous qui lisez ces lignes, vous devez connaître tous les plugins d'autocomplete et autres qui existent de part la
+        toile.</p>
+
+    <p>Ils sont tous plus ou moins sympas, mais en voulant en chercher un qui ne s'occupe que de la mécanique de
+        détection de la frappe, je me suis retrouvé face au néant.</p>
+
+    <p>J'avais simplement besoin d'un plugin qui me déclenche un évènement de frappe de texte pour effectuer un filtrage
+        sur les données d'un select, impossible d'en trouver un.</p>
+
+    <p>Force a été de constater qu'il était plus rentable de le coder que de passer des heures à chercher.</p>
+
+
+
+    <h2 class="section-heading">Code source</h2>
+
+    <pre><code class="js">{{ source('/js/jquery-keychange/keyChange.js')|escape }}</code></pre>
+
+{% endblock %}
+

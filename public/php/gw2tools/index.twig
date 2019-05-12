@@ -1,0 +1,122 @@
+{% extends "@templates/base-post.twig" %}
+
+{% block article %}
+
+    <p>Comme vous pouvez le lire dans une autre section de ce site, je joue pas mal à
+        <a href="https://www.guildwars2.com/fr/">Guild Wars 2</a></p>
+
+    <p>Je suis très accès contenu HL et j'aime bien stuffer tout mes persos. J'ai démarré un petit projet pour
+        visualiser l'équipement via l'API GW2 officielle qui finalement a grossi plus que prévu initialement.</p>
+
+    <p>La première version était codée en code maison, et en juin 2016, j'ai tout migré sur Symfony 3.1</p>
+
+    <p>Il existe pas mal de fan sites pour faire ce genre de choses, mais je trouvais pas chaussure à mon pied. D'autant
+        plus que je désirais vraiment une orientation "équipement".</p>
+
+
+
+
+    <h2 class="section-heading">Périmètre</h2>
+
+    <ul>
+        <li>Symfony 3.1</li>
+        <li>Boostrap 3.3</li>
+        <li>jQuery 2.1</li>
+        <li>PHP 7</li>
+        <li>Varnish</li>
+        <li>MySql</li>
+        <li>Mongo DB</li>
+    </ul>
+
+
+
+    <h2 class="section-heading">Fonctionnalités</h2>
+
+    <p>Ce projet est un pur navigateur d'API : il n'y a quasiment aucun stockage relationnel si ce ne sont les clés
+        d'API (mysql).</p>
+
+    <p>Le développement est orienté serveur, il n'y a presque pas de développement front. Visuellement c'est du
+        bootstrap avec du jQuery basique.</p>
+
+    <p>Le serveur s'occupe de faire les requêtes à l'API officielle en mettant en cache MongoDB les résultats des
+        requêtes et certaines données partiellement structurées communes à tout le monde (items, specialisations,
+        ...). Même les images sont mises en cache varnish + fichier sur mon serveur pour solliciter au moins possible
+        les serveurs officiels, disons que c'est guidé par une attitude responsable.</p>
+
+    <p>A chaque clé d'API est associé un code généré aléatoirement. Exemple <code>R2eZnmgC4B</code> qui diminue
+        considérablement le risque de tomber par hasard ou en devinant sur le profil public de quelqu'un. Si une
+        association clé/code n'a pas été accédée par son propriétaire durant 1 an, elle est automatiquement supprimée.
+    </p>
+
+    <p>On peut décider de rendre plus ou moins publiques certaines informations. Par défaut, beaucoup d'informations
+        sont privées, au contraire d'autres fan site, il n'est pas question pour moi de transformer l'outil en "réseau
+        social" ou tout le monde interagit. GW2Tool a vocation à être un pur outil de browsing d'API.</p>
+
+    <p>Le site est relié à un autre fan site pour produire des liens directement vers le sien via un système d'api
+        privée (filtrage IP) à lui.</p>
+
+
+
+    <h2 class="section-heading">Sous-projet indépendant</h2>
+
+    <p>GW2Tool n'est que la partie émergée de l'iceberg, une partie non moins importante est un sous-projet
+        <a href="https://github.com/arnapou/gw2apiclient/">GW2ApiClient</a>
+        qui consiste en un client de connexion à l'api que tout un chacun peut utiliser de manière indépendante à
+        GW2Tool pour interroger l'API officielle. C'est dans ce projet que l'on a des mécanismes de cache MongoBD qui
+        sont étoffés dans GW2Tool.</p>
+
+
+
+    <h2 class="section-heading">Imagerie</h2>
+
+    <p>Pour faciliter l'intégration, j'ai reproduit beaucoup de pictos de jeu sous forme de webfont à partir de SVG que
+        j'ai fait "from scratch".</p>
+
+    <p>Productions :</p>
+    <ul>
+        <li>
+            <a href="https://github.com/arnapou/gw2tools/tree/master/web/assets/images/icons">
+                Icones diverses <i class="fa fa-github"></i>
+            </a><br>
+            <small><em>professions, ui, armes, armures, ...</em></small>
+        </li>
+        <li>
+            <a href="https://github.com/arnapou/gw2tools/tree/master/web/assets/images/stats">
+                Stats d'équipement <i class="fa fa-github"></i>
+            </a><br>
+            <small><em>le graphisme initial est celui du fan site <a href="http://gw2skills.net/">gw2skills.net</a>,
+                    j'ai juste vectorisé ses pictos.</em></small>
+        </li>
+    </ul>
+
+    <p>Exemples :</p>
+
+    <div class="row">
+        <div class="col-lg-3">
+            <img src="profession-berserker.svg" class="img-fluid"/>
+        </div>
+        <div class="col-lg-3">
+            <img src="ui-masteries.svg" class="img-fluid"/>
+        </div>
+        <div class="col-lg-3">
+            <img src="berserker.svg" class="img-fluid"/>
+        </div>
+        <div class="col-lg-3">
+            <img src="harrier.svg" class="img-fluid"/>
+        </div>
+    </div>
+
+
+
+    <h2 class="section-heading">Captures d'écran</h2>
+
+    <p>Profil d'un personnage</p>
+    <p><img class="img-fluid" src="screen1.png"/></p>
+
+    <p>Stock de matériaux</p>
+    <p><img class="img-fluid" src="screen2.png"/></p>
+
+    <p>PvP</p>
+    <p><img class="img-fluid" src="screen3.png"/></p>
+
+{% endblock %}

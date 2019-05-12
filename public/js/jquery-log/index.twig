@@ -1,0 +1,32 @@
+{% extends "@templates/base-post.twig" %}
+
+{% block article %}
+
+    <p>J'ai fait ce petit outil en octobre 2008, ça date un peu... mais même s'il ne vous sert pas en tant que tel, son
+        code et la manière dont il a été réalisé peut vous intéresser.</p>
+    <p>Ca sert à loguer des choses et checker le timing d'exécution de vos fonctions javascript.</p>
+    <p>Vous pouvez utiliser des raccourcis claviers comme F2, ALT+F2,... pour animer les fonctionnalités de la boîte de
+        dialogue jLog.</p>
+    <p>En mode "standard", la boîte est invisible. Il faut faire F2 pour la faire apparaître. Ce n'est pas le cas dans
+        l'exemple ci-dessous.</p>
+
+
+    <h2 class="section-heading">Le plugin</h2>
+    <p>Vous avez juste à intégrer jQuery (si ce n'est pas déjà le cas), jLog avec le css qui va avec (customizable par
+        vous bien sûr...). Et il reste plus qu'à utiliser :)</p>
+    <pre><code class="html">&lt;script type="text/javascript" src="jQuery.js" &gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="jLog.js" &gt;&lt;/script&gt;
+&lt;link rel="stylesheet" type="text/css" href="jLog.css" /&gt;</code></pre>
+
+
+    <h2 class="section-heading">jLog.css</h2>
+    <pre><code class="css">{{ source('js/jquery-log/jLog.css')|escape }}</code></pre>
+
+
+    <h2 class="section-heading">jLog.js</h2>
+    <pre><code class="js">{{ source('js/jquery-log/jLog.js')|escape }}</code></pre>
+
+
+
+{% endblock %}
+

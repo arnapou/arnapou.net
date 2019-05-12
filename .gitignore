@@ -1,11 +1,3 @@
-
-###> symfony/framework-bundle ###
-/.env
-/public/bundles/
-/var/
-/vendor/
-###< symfony/framework-bundle ###
-
+cache
 .idea
-old
-.php_cs.cache
+

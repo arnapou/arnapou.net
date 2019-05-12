@@ -1,0 +1,26 @@
+{% extends "@templates/base-post.twig" %}
+
+{% block article %}
+
+    <p>Histoire de satisfaire ma curiosité je me suis mis en tête de faire une petite appli Ext JS pour noter quelques
+        bouts d'infos ;)</p>
+    <p>Je suis parti de rien, juste de google, Ext JS, de leur doc et leur forum. En quelques heures a pris forme la
+        petite appli que vous pouvez télécharger ici.</p>
+    <p>L'objectif est simple : vous fournir une appli simple, pas trop complexe, utilisant les contrôles de base d'Ext
+        JS afin de vous aider à découvrir ce framework particulièrement puissant !</p>
+
+    <p>L'appli s'appelle KB comme Knowledge Base : il s'agit juste d'un petit stockage XML d'infos basiques... snippets
+        de code, urls intéressantes, détails techniques que vous avez mis des heures à trouver pour un usage unique mais
+        qui pourraient servir à nouveau dès vous l'aurez oublié :D etc... ou tout autre usage que vous y trouverez
+        ;)</p>
+
+    <h2 class="section-heading">Aperçu de l'appli</h2>
+    <p><img class="img-fluid" src="screen.png"/></p>
+
+    <h2 class="section-heading">Code JS</h2>
+    <pre class="js"><code>{{ source('js/extjs-kb/fic.js')|escape }}</code></pre>
+
+    <h2 class="section-heading">Code PHP</h2>
+    <pre class="php"><code>{{ source('js/extjs-kb/fic.php')|escape }}</code></pre>
+
+{% endblock %}

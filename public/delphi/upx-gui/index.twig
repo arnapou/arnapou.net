@@ -1,0 +1,18 @@
+{% extends "@templates/base-post.twig" %}
+
+{% block article %}
+
+    <p>Je ne sais pas si vous connaissez <a href="https://upx.github.io/">UPX</a>. C'est un projet qui permet de
+        compresser un executable. En bref, ca compresse le <code>.exe</code> sans changer son comportement, ca rajoute
+        juste un peu de temps pour la phase de décompression à la volée en mémoire.</p>
+
+    <p>Disons que comprimer certains exe était pratique quand on voulait économiser de la bande passante ou les
+        transférer sur certainss supports.</p>
+
+    <p>L'IHM comporte un onglet permettant de faire la compression de plusieurs exe en batch.</p>
+
+    <h2 class="section-heading">Aperçu du programme</h2>
+
+    <img class="img-fluid" src="screen.png" alt="">
+
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "@templates/base-post.twig" %}
+
+{% block article %}
+
+    <p>Pendant mon adolescence, mon grand père m'a appris à "extraire une racine carrée à la main", il s'agit de la
+        méthode manuelle pour calculer une racine carrée sans calculatrice !</p>
+    <p>Vous allez me rétorquer que cela ne sert à rien ! Et bien c'est vrai ! Sauf si vous voulez par exemple
+        implémenter vous-même cet algorithme (car au final, c'est un algorithme)...</p>
+    <p>Et même si ça ne vous intéresse pas à implémenter, au moins vous pourrez, en retenant la méthode, vous dire "je
+        sais le faire" ;)</p>
+    <p>Anecdote : cette méthode m'a servi en 1997 pendant que je passais le concours FESIC d'entrée aux grandes
+        écoles... pas de calculettes autorisée, donc j'ai utilisé cette méthode pour valider un de mes résultats...</p>
+
+    <h2 class="section-heading">La méthode</h2>
+    <p><img src="racine1.png" class="img-fluid"/></p>
+
+    <small>
+        <ol>
+            <li>
+                Séparer en tranches de deux chiffres le nombre de départ en partant de la droite.
+            </li>
+            <li>
+                Quel est le plus grand carré obtenu dans <code>94</code> ? : <code>9 x 9 = 81</code>.<br/>
+                Je déduis <code>81</code> de <code>94</code> et j'abaisse la tranche suivante.<br/>
+                <code>9</code> est le premier chiffre de la racine.
+            </li>
+            <li>
+                Je double la racine, je laisse le chiffre de droite (<code>7</code>).<br/>
+                Combien de fois <code>18</code> est contenu dans <code>133</code> ? (réponse = <code>7</code>).<br/>
+                <code>187 x 7 = 1309</code>.<br/>
+                Je déduis <code>1 309</code> de <code>1 337</code> et j'abaisse la tranche suivante.<br/>
+                <code>7</code> est le deuxième chiffre de la racine.
+            </li>
+            <li>
+                Je double la racine, je laisse le chiffre de droite (<code>2</code>).<br/>
+                Combien de fois <code>194</code> est contenu dans <code>281</code> ? (réponse = <code>1</code>).<br/>
+                <code>1 941 x 1 = 1 941</code>.<br/>
+                Je déduis <code>1 941</code> de <code>2 812</code> et j'abaisse la tranche suivante.<br/>
+                <code>1</code> est le troisième chiffre de la racine.
+            </li>
+            <li>
+                Je double la racine, je laisse le chiffre de droite (<code>5</code>).<br/>
+                Combien de fois <code>1 942</code> est contenu dans <code>8 713</code> ? (réponse =
+                <code>4</code>).<br/>
+                <code>1 942 x 4 = 77 696</code>. <br/>
+                Je déduis <code>77 696</code> de <code>87 135</code> et j'abaisse la tranche suivante qui ne peut être
+                que
+                des zéros et je met une virgule à la racine après le quatrième chiffre de le racine (<code>4</code>).
+            </li>
+            <li>
+                Je double la racine, je laisse le chiffre de droite (<code>0</code>).<br/>
+                Combien de fois <code>19 428</code> est contenu dans <code>94 390</code> ? (réponse =
+                <code>4</code>).<br/>
+                <code>194 284 x 4 = 777 136</code>.<br/>
+                Je déduis <code>777 136</code> de <code>943 900</code> et j'abaisse la tranche suivante.<br/>
+                <code>4</code> est la première décimale de la racine.
+            </li>
+            <li>
+                Je double la racine, je laisse le chiffre de droite (<code>0</code>).<br/>
+                Combien de fois <code>194 288</code> est contenu dans <code>1 667 640</code> ? (réponse =
+                <code>8</code>).<br/>
+                <code>1 942 888 x 8 = 15 543 104</code>.
+            </li>
+            <li>
+                Je déduis <code>15 543 104</code> de <code>16 676 400</code> et j'abaisse la tranche suivante.<br/>
+                <code>8</code> est la deuxième décimale de la racine.
+            </li>
+        </ol>
+    </small>
+    <p>La preuve : <img src="racine2.png" class="img-fluid"/></p>
+
+
+{% endblock %}

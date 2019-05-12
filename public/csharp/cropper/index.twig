@@ -1,0 +1,43 @@
+{% extends "@templates/base-post.twig" %}
+
+{% block article %}
+
+    <p>Après de 2 ans sans faire de C# / WPF, je m'y suis remis... et bien c'est comme le vélo, ça ne s'oublie pas... en
+        une quinzaine d'heure, j'ai réalisé deux petits outils de traitement d'image pour me faire gagner du temps.</p>
+
+    <h2 class="section-heading">Outil 1 : cropper</h2>
+    <p>Le premier outil me sert à découper automatiquement des images en carré en se basant sur une image noir et blanc
+        seuillée.</p>
+    <p><img src="cropper1.png" class="img-fluid"/></p>
+    <p>Pour les images difficiles, il est possible aussi de choisir ses propres limites pour le crop :</p>
+    <p><img src="cropper2.png" class="img-fluid"/></p>
+
+
+    <h2 class="section-heading">Outil 2 : rectangle</h2>
+    <p>Cet outil est assez simple mais tellement efficace que je suis surpris de ne pas l'avoir trouvé ailleurs sur le
+        web.</p>
+    <p>Il sert à découper une image contenant des rectangles en plusieurs images automatiquement tournées et ajustées.
+        Vous sélectionnez les 4 points du rectangle en commencant par celui qui représente le point en haut à gauche, et
+        l'outil s'occupe de tourner l'image, cropper pour ensuite enregistrer les sous-images.</p>
+    <p><img src="rectangle.png" class="img-fluid"/></p>
+    <p>Je n'ai pas besoin de vous faire un dessin pour vous dire le temps que je gagne : 4 clics et mon image est
+        automatiquement croppée et tournée... de moults opérations à faire sous Gimp pour le même résultat.</p>
+
+    <h2 class="section-heading">Code</h2>
+    <p>Dans ces outils, j'ai pu mettre en application du traitement d'image performant avec du code unsafe, une gestion
+        de thread pour cropper un dossier en automatique, sans parler du fait que toutes les interactions graphiques
+        sont gérées par data binding. </p>
+    <p>Je me suis heurté aux problèmes récurrents de gestion de la mémoire par .Net avec les Stream et les Bitmap... un
+        appel récurrent au garbage collector est nécessaire pour assurer de ne pas exploser la mémoire.</p>
+
+    <h4>Code pour la gestion mathématique des angles</h4>
+    <pre class="csharp"><code>{{ source('csharp/cropper/fic1.cs')|escape }}</code></pre>
+
+    <h4>Code pour la gestion des BitmapSource</h4>
+    <pre class="csharp"><code>{{ source('csharp/cropper/fic2.cs')|escape }}</code></pre>
+
+    <h4>Code pour la gestion des Bitmaps</h4>
+    <pre class="csharp"><code>{{ source('csharp/cropper/fic3.cs')|escape }}</code></pre>
+
+
+{% endblock %}

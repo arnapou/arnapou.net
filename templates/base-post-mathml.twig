@@ -1,0 +1,31 @@
+{% extends "@templates/base-post.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('vendor/highlight.css') }}" rel="stylesheet">
+    <style>
+        p.algo {
+            font-size: 70%;
+            border: 1px dotted #bbb;
+            color: #212529;
+            padding: 0.5em;
+            background: #f0f0f0;
+        }
+
+        p.algo q {
+            display: block;
+            padding-left: 3em;
+        }
+
+        p.algo q:after,
+        p.algo q:before {
+            display: none;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('vendor/ASCIIMathML.js') }}"></script>
+{% endblock %}

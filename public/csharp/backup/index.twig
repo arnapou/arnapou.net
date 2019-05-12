@@ -1,0 +1,26 @@
+{% extends "@templates/base-post.twig" %}
+
+{% block article %}
+
+    <p>Encore un script de backup, le même que les autres... mais en .Net cette fois ci ! ;-)</p>
+    <p>Pourquoi le .Net ?</p>
+    <p>Etant donné les performances des 2 premiers scripts, je me suis demandé si en binaire, ca irait simplement plus
+        vite ou beaucoup plus vite...</p>
+    <p>J'ai fait quelques benchs... et sans surprises, le programme .Net compilé var plus vite que le perl ! Et la
+        différence est significative, quasiment deux fois plus vite que le perl et 3 fois plus vite que le VBS... Vous
+        allez deviner sans doute que j'utilise désormais ce dernier programme pour faire mes backups chez moi ;-)</p>
+    <p>Le script fait un backup / image : il copie dans le dossier de destination le dossier source en supprimant dans
+        le dossier de destination les fichiers ayant disparu du dossier source</p>
+
+
+    <h2 class="section-heading">Usage</h2>
+    <pre><code>Usage: backup_copy.exe &lt;Source> &lt;Dest> [Delete] [Log]
+       - Source : source folder
+       - Dest   : destination folder
+       - Delete : whether to delete backup old files (default TRUE)
+       - Log    : log file (default : no log)</code></pre>
+
+    <h2 class="section-heading">Code source</h2>
+    <pre class="csharp"><code>{{ source('csharp/backup/Program.cs')|escape }}</code></pre>
+
+{% endblock %}
