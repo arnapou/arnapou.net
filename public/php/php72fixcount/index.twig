@@ -1,0 +1,78 @@
+{% extends "@templates/base-post.twig" %}
+
+{% block article %}
+
+
+    <p>Pour ceux qui veulent migrer de vieux projets en PHP 7.2+, une BC est apparue sur la fonction <code>count</code>
+        (et <code>sizeof</code> du coup)</p>
+
+    <p>La nouvelle fonction <code>count</code> ne fonctionne que sur des <code>Countable</code> ou des <code>array</code>.</p>
+
+    <p>Avant PHP 7.2, la fonction avait un comportement plutôt bizarre mais bon c'était "historique". Cela a été réglé à juste titre.
+        Le problème c'est le code legacy dans d'énormes projets ou les briques dépendantes legacy du web non compatibles php 7.2.</p>
+
+    <p>Exemples d'incohérences précédentes : </p>
+    <ul>
+        <li>count(&lt;string&gt;) = 1</li>
+        <li>count(&lt;integer&gt;) = 1</li>
+        <li>count(&lt;boolean&gt;) = 1</li>
+        <li>count(&lt;float&gt;) = 1</li>
+        <li>count(&lt;object&gt;) = 1</li>
+        <li>count(null) = 0</li>
+    </ul>
+
+
+    <h2 class="section-heading">Principe</h2>
+
+    <p>L'outil est ajouté via <code>composer</code> et se lance en "script" <code>post-autoload-dump</code> de ce dernier.</p>
+    <p>Php 7.2 fix count parse tous les fichiers php à la recherche d'utilisation de <code>count</code> et <code>sizeof</code>
+        et chaque fois que ces utilisations sont trouvées il génère un "hack" qui override la fonction dans le namespace où
+        elle a été détectée.</p>
+    <p>Le corrolaire c'est que ça ne fonctionne pas si vous avez utilisé la fonction avec le backslash <code>\count</code></p>
+
+    <p>En pratique je m'en suis servi sur un projet interne qui a plus de 2.5M de lignes de code et 13k fichiers.
+        L'analyse et le fix prennent autour de 20 secondes ce qui est plutôt honorable.
+        J'avais bien sûr de gros besoin de perf et le code a été conçu dans cette optique (optimisation à base de switch, code
+        assez bas niveau, mais 100% testé).</p>
+
+    <h2 class="section-heading">Installation</h2>
+
+    <h4>Dans le <code>composer.json</code></h4>
+
+    <pre><code class="json">"require": {
+    "arnapou/php72fixcount": "^1.0"
+},
+"scripts": {
+    "post-autoload-dump": [
+        "@php vendor/bin/php72-fix-count.php --quiet generate src vendor"
+    ]
+}</code></pre>
+
+
+    <h4>utilisation en direct</h4>
+
+    <pre><code class="text">PHP 7.2 FIX COUNT
+
+DESCRIPTION
+    This command generate php files which are loaded by composer
+    in order to fix/hack the breaking change of the count/sizeof
+    breaking change for php 7.2+
+
+SYSNOPSIS
+    php php72-fix-count.php [OPTION] COMMAND DIRECTORY...
+
+OPTION
+    --quiet    silent mode (usefull for composer post-autoload-dump)
+
+COMMAND
+    generate   generate the fixes
+    search     search the fixes (same as generate but no write)
+    clean      remove the fixes
+
+EXAMPLES
+    php php72-fix-count.php --quiet generate src vendor
+    php php72-fix-count.php clean</code></pre>
+
+
+
+{% endblock %}

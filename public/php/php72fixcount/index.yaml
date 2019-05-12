@@ -1,0 +1,8 @@
+post:
+
+    month: 2019-02
+    date: Février 2019
+    title: PHP 7.2 Fix count
+    subtitle: '"Corriger" la fonction count sur des projets legacy'
+    links:
+        github: https://github.com/arnapou/php72fixcount/

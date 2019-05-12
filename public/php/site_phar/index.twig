@@ -1,0 +1,51 @@
+{% extends "@templates/base-post.twig" %}
+
+{% block article %}
+
+    <p>Il y a environ 15 ans, j'avais un cms perso et basé dessus, j'avais fait quelques sites pour mon père collectionneur.</p>
+
+    <p>A part de brèves mises à jour, il restait à ce jour 4 sites tournant en php 5.4 sur un vieux hébergement OVH.
+        Avec PHP 7, les sites commencaient vraiment à être poussiéreux et il fallait bon gré mal gré que je m'y remette pour
+        faire un truc simple pour mon père et qui puisse tenir dans le temps.</p>
+
+    <p>Tant qu'à m'y remettre je me suis dit que j'allais faire l'effort de mutualiser les différents besoins des sites
+        en 1 seul système facile à déployer et peu gourmand.</p>
+
+    <h2 class="section-heading">Conception</h2>
+
+    <ul>
+        <li>PHP 7.2+</li>
+        <li>Mini framework basé sur des briques solides:
+            <ul>
+                <li>arnapou/pfdb</li>
+                <li>monolog/monolog</li>
+                <li>symfony/cache</li>
+                <li>symfony/event-dispatcher</li>
+                <li>symfony/http-foundation</li>
+                <li>symfony/routing</li>
+                <li>twig/twig</li>
+            </ul>
+        </li>
+        <li>Build du système dans un fichier <code>.phar</code> facile à déployer (utilisation du projet bien fichu
+            <a href="https://box-project.github.io/box2/" target="_blank">Box project</a>)
+        </li>
+        <li>Le système intègre une gestion de Lazy loading de services.</li>
+        <li>Pas de base de donnée externe, simples fichiers à plat yaml avec caching.</li>
+    </ul>
+
+    <p>Les sites legacy couverts qui existent encore :</p>
+    <ul>
+        <li><a href="http://multicollec.net/" target="_blank">multicollec.net</a> <em>(site créé en 1997 mais NDD déposé en 2005)</em></li>
+        <li><a href="http://commemo.multicollec.net/" target="_blank">commemo.multicollec.net</a> <em>(créé en 2005)</em></li>
+        <li><a href="http://anrc.multicollec.net/" target="_blank">anrc.multicollec.net</a> <em>(créé en 2005)</em></li>
+        <li><a href="http://assignat.fr/" target="_blank">assignat.fr</a> <em>(créé en 2009)</em></li>
+    </ul>
+
+    <p>Tant qu'à faire j'ai carrément migré mon site perso <a href="http://arnapou.net/">arnapou.net</a> sur ce système en 1 soirée.</p>
+
+    <p>Le code est stocké sur un repo GitHub privé donc à ce stade je n'ai pas grand chose à partager. Le plus important ce
+        sont les briques mises en commun et l'intérêt du build de <code>.phar</code></p>
+
+    <p>Le fichier <code>.phar</code> fait 790Ko compressé en GZ, donc c'est plutôt léger.</p>
+
+{% endblock %}

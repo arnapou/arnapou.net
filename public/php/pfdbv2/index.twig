@@ -1,0 +1,101 @@
+{% extends "@templates/base-post.twig" %}
+
+{% block article %}
+
+    <p>Il s'agit de la v2 de mon outil de fichiers à plat que j'ai ré-écrit de zéro en quelques jours.</p>
+
+    <p>J'avais ces objectifs en tête :</p>
+    <ul>
+        <li>PHP 7.2+</li>
+        <li>Code mieux découplé</li>
+        <li>100% de couverture en TU/TF pour faciliter les refactors</li>
+    </ul>
+
+    <p>Le besoin couvert concerne le stockage de petits fichiers de data type "table" de bdd pouvant être requêtés
+        facilement avec un système assez ouvert permettant d'effectuer des "jointures" ManyToOne facilement pour
+        récupérer des éléments de tables parentes.</p>
+
+    <p>Clairement, ce système ne se veut pas hyper performant (ce sera toujours mieux une bdd MySql ou autre), mais
+        c'est facile et pratique d'accès.</p>
+
+    <h2 class="section-heading">Conditioning</h2>
+    <pre><code>$storage = new \Arnapou\PFDB\Storage\PhpFileStorage($somePath);
+$database = new \Arnapou\PFDB\Database($storage);
+
+$table = $database->getTable('vehicle');
+
+$expr = $table->expr()->and(
+     $table->expr()->gt('price', 10000),
+     $table->expr()->match('model', '^C[0-9]+')
+);
+
+$iterator = $table->find($expr)
+                  ->sort('constructor' , ['model' , 'DESC'])
+                  ->limit(0, 50);
+
+foreach($iterator as $key => $row) {
+    // do whatever you want
+}</code></pre>
+
+
+    <h2 class="section-heading">Extending Expressions</h2>
+
+    <p>Class: </p>
+    <pre><code>class IsUppercaseExpr implements \Arnapou\PFDB\Query\Helper\Expr\ExprInterface {
+
+    private $field;
+
+    public function __construct(string $field)
+    {
+        $this->field = $field;
+    }
+
+    public function __invoke(array $row, $key = null): bool
+    {
+        if(!isset($row[$this->field]) {
+            return false;
+        }
+        $testedValue = (string)$row[$this->field];
+        return $testedValue === strtoupper($testedValue);
+    }
+
+}
+</code></pre>
+
+    <p>Usage :</p>
+    <pre><code>$storage = new \Arnapou\PFDB\Storage\PhpFileStorage($somePath);
+$database = new \Arnapou\PFDB\Database($storage);
+
+$table = $database->getTable('vehicle');
+
+$expr = new IsUppercaseExpr('model');
+
+foreach($table->find($expr) as $key => $row) {
+    // do whatever you want
+}</code></pre>
+
+
+    <h2 class="section-heading">Use PFDB Iterator out of storage context</h2>
+    <pre><code>$data = [
+    ['name' => 'John', 'age' => 20],
+    ['name' => 'Edith', 'age' => 25],
+    ['name' => 'Steve', 'age' => 30],
+    ['name' => 'Matthew', 'age' => 22],
+);
+
+$query = (new \Arnapou\PFDB\Query\Query())
+    ->from(new \ArrayIterator($data))
+    ->where($query->expr()->gt('age', 24));
+
+foreach($query as $key => $row) {
+    // do whatever you want
+}
+</code></pre>
+
+
+    <h2 class="section-heading">Build your own storage</h2>
+    <p>You want to use CSV file instead of php dumped array ?</p>
+    <p>Easy : extends or implements your own storage and use it to load, store or delete data.</p>
+    <p>Look at the existing storages and write your own.</p>
+
+{% endblock %}
