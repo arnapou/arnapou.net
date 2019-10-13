@@ -1,0 +1,9 @@
+post:
+
+    month: 2019-10
+    date: Octobre 2019
+    title: Connect 4
+    subtitle: Petit jeu de puissance 4
+    links:
+        demo: http://connect4.arnapou.net/
+        github: https://github.com/arnapou/connect4/
