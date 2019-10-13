@@ -7,7 +7,7 @@ cv:
         location: La Salvetat Saint-Gilles (31)
         items:
           - >
-            Je me définis en priorité comme un développeur, et ensuite seulement comme expert en PHP.
+            Je me définis en priorité comme un ingénieur, ensuite comme un développeur et enfin seulement comme expert en PHP.
             J'aime me pencher sur des problématiques d'architecture logicielle.
             Pour moi, programmer c'est autre chose que juste des lignes de code, mais une philosophie,
             une manière de structurer sa pensée, un savoir-faire.
@@ -15,7 +15,7 @@ cv:
              Chaque jour qui passe autour de mes activités de développeur, c'est un moyen de partager mon savoir et de
              grapiller des connaissances autour de moi et même mieux : découvrir d'autres manières de penser.
           - >
-            Je programme à depuis l'âge de 6 ans, cela fait partie de mon ADN, j'ai passé des dizaines d'heures sur mes
+            Je programme depuis l'âge de 6 ans, cela fait partie de mon ADN, j'ai passé des dizaines d'heures sur mes
             calcultrices à inventer seul des concepts que je saurai nommer plus tard comme la récursivité ou les
             algorithmes de Brensenham.
 
@@ -33,7 +33,7 @@ cv:
         items:
           - Architecture de nouvelles solutions plus modernes et en phase avec les besoins des infrastructures.
           - Lead dev PHP, conseil et décision dans un esprit devops pour consolider l'existant et préparer l'avenir.
-          - Maintenance de Php sur tous les serveurs (5.6 -> 7.2)
+          - Maintenance de Php (5.6 -> 7.2 -> 7.3)
           - Mise en place d'un RabbitMQ pour corriger des pb de gestion de taches back (crons ...)
           - Mise en place d'un système de logging ELK
           - Refonte briques basses (connecteurs pdo) / proxysql
