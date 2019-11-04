@@ -23,10 +23,20 @@ cv:
     #----------( EXPERIENCE )----------
     experience:
 
+      - company: Peopulse
+        title: Développeur PHP sénior
+        location: Blagnac, 31
+        dates: [ novembre 2019, présent ]
+        description: >
+          Peopulse développe des solutions web dans le métier de l'intérim en fluidifiant les rapports entre leurs acteurs
+        items:
+          - à venir ...
+        technos: PHP5/7, MySql, ...
+
       - company: LivingObjects
         title: Lead développeur PHP
         location: Colomiers, 31
-        dates: [ avril 2017, présent ]
+        dates: [ avril 2017, octobre 2019 ]
         description: >
             LivingObjects développe des solutions de gestion de performance réseau (fixe, mobile,...)
             pour des opérateurs télécom comme SFR
