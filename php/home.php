@@ -1,10 +1,8 @@
 <?php
 
-namespace App;
+use Arnapou\SimpleSite\Core\Controller;
 
-use Cms\AbstractController;
-
-new class() extends AbstractController {
+return new class() extends Controller {
     public function configure(): void
     {
         $this->addRoute('', [$this, 'routeHome'], 'home');
