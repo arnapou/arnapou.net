@@ -54,12 +54,12 @@
 
 {% block links %}
     {% if post.links is defined and post.links is iterable %}
-        {% set icons = { demo: 'eye',          github: 'github' } %}
-        {% set texts = { demo: 'Voir la démo', github: 'Voir sur GitHub' } %}
+        {% set icons = { demo: 'eye',          github: 'github',          gitlab: 'gitlab' } %}
+        {% set texts = { demo: 'Voir la démo', github: 'Voir sur GitHub', gitlab: 'Voir sur GitLab' } %}
         <h2 class="section-heading">Liens</h2>
         <p>
             {% for type, url in post.links %}
-                {% if type in ['demo', 'github'] %}
+                {% if type in ['demo', 'github', 'gitlab'] %}
                     <a class="btn btn-primary" href="{{ url }}" role="button">
                         <i class="fa fa-{{ icons[type] }}"></i>{{ texts[type] }}
                     </a>

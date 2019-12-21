@@ -5,3 +5,4 @@
 - { id: social_twitter   ,  value: https://twitter.com/arnapou }
 - { id: social_linkedin  ,  value: https://www.linkedin.com/in/arnaud-buathier/ }
 - { id: social_github    ,  value: https://github.com/arnapou }
+- { id: social_gitlab    ,  value: https://gitlab.com/arnapou }

@@ -5,4 +5,4 @@ post:
     title: PHP 7.2 Fix count
     subtitle: '"Corriger" la fonction count sur des projets legacy'
     links:
-        github: https://github.com/arnapou/php72fixcount/
+        gitlab: https://gitlab.com/arnapou/php72fixcount/
