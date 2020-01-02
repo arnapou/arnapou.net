@@ -6,3 +6,5 @@ post:
     subtitle: En réseau et avec IA
     downloads:
       - name: dames_chinoises.zip
+    links:
+      gitlab: https://gitlab.com/arnapou/dames_chinoises/
