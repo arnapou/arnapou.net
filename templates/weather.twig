@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{{ weather.data.city.name }}</title>
+    <style>
+        body {
+            background: #dddddd;
+            padding: 4px 4px 5em 4px;
+            font-family: Verdana, Arial, serif;
+            font-size: 2.5vw;
+        }
+
+        svg {
+            border: 1px solid #aaaaaa;
+            background: #ffffff;
+            width: 100%;
+            height: auto;
+        }
+
+        svg.icon {
+            background: rgba(184, 222, 255, 0.25);
+        }
+    </style>
+    <link rel="icon" type="image/png" href="{{ weather.icon }}"/>
+</head>
+<body>
+
+<div>
+    <small>Température</small>
+    {{ weather.svglines('temp', '#f66364') | raw }}
+</div>
+<div>
+    <small>Température ressentie</small>
+    {{ weather.svglines('feels_like', '#dc0d0e') | raw }}
+</div>
+<div>
+    <small>Vent km/h</small>
+    {{ weather.svglines('wind_speed', '#a4650a', 5) | raw }}
+</div>
+<div>
+    <small>Humidité %</small>
+    {{ weather.svglines('humidity', '#367dc4', 5) | raw }}
+</div>
+<div>
+    <small>Nuages %</small>
+    {{ weather.svgimg('icon') | raw }}
+    {{ weather.svglines('clouds', '#69767c', 10) | raw }}
+</div>
+<div>
+    <small>Précipitations mm</small>
+    {{ weather.svglines('mm', '#19A979') | raw }}
+</div>
+<div>
+    <small>Pression hPa</small>
+    {{ weather.svglines('pressure', '#da5a1b', 2, 1013) | raw }}
+</div>
+
+</body>
