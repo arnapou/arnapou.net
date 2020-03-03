@@ -35,44 +35,52 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
 </head>
 <body>
+{% if weather.empty %}
+    <div style="color: red">
+        Les données récupérées sont vides ... retenter plus tard.
+    </div>
+{% else %}
 
-<div>
-    <small>Température</small>
-    {{ weather.svglines('temp', '#f66364') | raw }}
-</div>
-<div>
-    <small>Température ressentie</small>
-    {{ weather.svglines('feels_like', '#dc0d0e') | raw }}
-</div>
-<div>
-    <small>Vent km/h</small>
-    {{ weather.svglines('wind_speed', '#a4650a', 5, -35) | raw }}
-</div>
-<div>
-    <small>Humidité %</small>
-    {{ weather.svglines('humidity', '#367dc4', 5) | raw }}
-</div>
-<div>
-    <small>Nuages %</small>
-    {{ weather.svgimg('icon') | raw }}
-    {{ weather.svglines('clouds', '#69767c', 10) | raw }}
-</div>
-<div>
-    <small>Précipitations mm</small>
-    {{ weather.svglines('mm', '#19A979', 1, -7) | raw }}
-</div>
-<div>
-    <small>Pression hPa</small>
-    {{ weather.svglines('pressure', '#da5a1b', 2, 1013) | raw }}
-</div>
-<div>
-    <small><span>Ville : </span>{{ weather.data.city.name }}</small><br>
-    <small><span>Jour : </span>{{ weather.data.city.sunrise|date('H:i:s') }} &mdash; {{ weather.data.city.sunset|date('H:i:s') }}</small><br>
-</div>
+    <div>
+        <small>Température</small>
+        {{ weather.svglines('temp', '#f66364') | raw }}
+    </div>
+    <div>
+        <small>Température ressentie</small>
+        {{ weather.svglines('feels_like', '#dc0d0e') | raw }}
+    </div>
+    <div>
+        <small>Vent km/h</small>
+        {{ weather.svglines('wind_speed', '#a4650a', 5, -35) | raw }}
+    </div>
+    <div>
+        <small>Humidité %</small>
+        {{ weather.svglines('humidity', '#367dc4', 5) | raw }}
+    </div>
+    <div>
+        <small>Nuages %</small>
+        {{ weather.svgimg('icon') | raw }}
+        {{ weather.svglines('clouds', '#69767c', 10) | raw }}
+    </div>
+    <div>
+        <small>Précipitations mm</small>
+        {{ weather.svglines('mm', '#19A979', 1, -7) | raw }}
+    </div>
+    <div>
+        <small>Pression hPa</small>
+        {{ weather.svglines('pressure', '#da5a1b', 2, 1013) | raw }}
+    </div>
+    <div>
+        <small><span>Ville : </span>{{ weather.data.city.name }}</small><br>
+        <small><span>Jour : </span>{{ weather.data.city.sunrise|date('H:i:s') }} &mdash; {{ weather.data.city.sunset|date('H:i:s') }}</small><br>
+        <small><span>Période : </span>{{ weather.tsMin|date('j M H\\h') }} &mdash; {{ weather.tsMax|date('j M H\\h') }}</small><br>
+    </div>
 
-<!----------------------------------------------------------------------
+    <!----------------------------------------------------------------------
 {{ weather.data|json_encode(constant('JSON_PRETTY_PRINT'))|raw }}
 ----------------------------------------------------------------------->
+
+{% endif %}
 
 <script>
     setTimeout(function () {
