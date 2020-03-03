@@ -75,11 +75,6 @@
         <small><span>Jour : </span>{{ weather.data.city.sunrise|date('H:i:s') }} &mdash; {{ weather.data.city.sunset|date('H:i:s') }}</small><br>
         <small><span>Période : </span>{{ weather.tsMin|date('j M H\\h') }} &mdash; {{ weather.tsMax|date('j M H\\h') }}</small><br>
     </div>
-
-    <!----------------------------------------------------------------------
-{{ weather.data|json_encode(constant('JSON_PRETTY_PRINT'))|raw }}
------------------------------------------------------------------------>
-
 {% endif %}
 
 <script>

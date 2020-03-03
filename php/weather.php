@@ -5,6 +5,8 @@ use Arnapou\SimpleSite\Utils;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 use function count;
 
 class ApiClient
@@ -293,20 +295,27 @@ return new class() extends Controller {
 
     public function configure(): void
     {
-        $this->addRoute('weather{days}', [$this, 'weather'], 'weather')->setRequirement('days', '[2345]?');
-        $this->addRoute('weather{days}-{city}', [$this, 'weather'], 'weather')->setRequirement('days', '[2345]?');
+        $this->addRoute('weather{days}{city}{ext}', [$this, 'weather'], 'weather')
+            ->setRequirement('days', '[2345]?')
+            ->setRequirement('city', '(-[a-zA-Z ]+)?')
+            ->setRequirement('ext', '(\.json)?');
     }
 
-    public function weather(?string $days = null, ?string $city = null)
+    public function weather(?string $days = null, ?string $city = null, ?string $ext = null)
     {
         Utils::mkdir($directory = $this->container()->Config()->path_cache() . '/weather');
         $cache = new FilesystemAdapter('', ApiClient::TTL, $directory);
 
         $client = new ApiClient(
-            $city ?: ApiClient::CORNEBARRIEU,
+            trim($city ?: ApiClient::CORNEBARRIEU, '-'),
             intval($days ?: 5),
             $cache
         );
-        return $this->render('@templates/weather.twig', ['weather' => $client]);
+
+        if ($ext) {
+            return new JsonResponse($client->data);
+        } else {
+            return $this->render('@templates/weather.twig', ['weather' => $client]);
+        }
     }
 };
