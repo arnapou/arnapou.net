@@ -2,6 +2,8 @@
 
 include __DIR__ . '/../../simplesite.phar';
 
+date_default_timezone_set('Europe/Paris');
+
 \Arnapou\SimpleSite\run(
     [
         'name'           => 'Arnapou',

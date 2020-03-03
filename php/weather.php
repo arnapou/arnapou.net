@@ -203,15 +203,17 @@ class ApiClient
 
     private function svgDays(string &$svg, int $height): void
     {
-        $ts      = $this->tsMin;
-        $numJour = 0;
+        $ts = $this->tsMin;
         while ($ts <= $this->tsMax) {
             $x = $this->svgX($ts);
             switch (intval(date('H', $ts))) {
                 case 0:
-                    $numJour++;
-                    if ($numJour % 2) {
-                        Svg::rect($svg, self::GRID_COLOR, $x, 0, $this->svgX($ts + 24 * 3600) - $x, $height, self::GRID_ALPHA * .5);
+                    if (floor($ts / 86400) % 2) {
+                        $x2 = $this->svgX($ts + 86400);
+                        Svg::rect($svg, self::GRID_COLOR, $x, 0, $x2 - $x, $height, self::GRID_ALPHA * .5);
+                    } elseif ($ts - 86400 < $this->tsMin) {
+                        $x1 = $this->svgX($ts - 86400);
+                        Svg::rect($svg, self::GRID_COLOR, $x1, 0, $x - $x1, $height, self::GRID_ALPHA * .5);
                     }
                     break;
                 case 7:
