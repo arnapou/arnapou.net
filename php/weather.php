@@ -34,6 +34,7 @@ class ApiClient
     public $data;
     public $series = [];
     public $icon;
+    public $url;
 
     public function __construct(string $city, int $nbDays, ?CacheItemPoolInterface $cache = null)
     {
@@ -47,10 +48,10 @@ class ApiClient
         } else {
             $params['q'] = $city;
         }
-        $url = self::API_URL . 'data/2.5/forecast?' . http_build_query($params);
+        $this->url = self::API_URL . 'data/2.5/forecast?' . http_build_query($params);
 
-        $getData = function () use ($url) {
-            return json_decode(file_get_contents($url), true) ?: [];
+        $getData = function () {
+            return json_decode(file_get_contents($this->url), true) ?: [];
         };
 
         if ($cache) {
@@ -124,14 +125,21 @@ class ApiClient
                 Svg::rect($svg, '#cccccc', $margin, $y, $nb * self::SVG_BAR, 1);
             }
         }
-        $y = $calcY($threshold);
-        Svg::rect($svg, '#cccccc', $margin, $y, $nb * self::SVG_BAR, $height - $y, .25);
+        if ($threshold < 0) {
+            $y = $calcY(-$threshold);
+            Svg::rect($svg, '#cccccc', $margin, 0, $nb * self::SVG_BAR, $y, .25);
+        } else {
+            $y = $calcY($threshold);
+            Svg::rect($svg, '#cccccc', $margin, $y, $nb * self::SVG_BAR, $height - $y, .25);
+        }
         // days
         for ($i = 0; $i < \count($values); $i++) {
             $ts = $this->series['date'][$i];
+            $x  = $calcX($i);
             if ($ts % 86400 == 0) {
-                $x = $calcX($i);
-                Svg::rect($svg, '#cccccc', $x, 0, 1, $height);
+                Svg::line($svg, '#cccccc', $x, 0, $x, $height, 1, 1);
+            } elseif ($ts % 43200 == 0) {
+                Svg::line($svg, '#cccccc', $x, 0, $x, $height, 1, .8, .5 * self::SVG_FONT);
             }
         }
         // points
@@ -139,9 +147,9 @@ class ApiClient
         for ($i = 0; $i < \count($values); $i++) {
             $y = $calcY($values[$i]);
             $x = $calcX($i);
-            Svg::circle($svg, $color, 0.4 * self::SVG_FONT, $x, $y);
+            Svg::circle($svg, $color, 0.35 * self::SVG_FONT, $x, $y);
             if ($i) {
-                Svg::line($svg, $color, $x1, $y1, $x, $y, 2);
+                Svg::line($svg, $color, $x1, $y1, $x, $y, 0.15 * self::SVG_FONT);
             }
             [$x1, $y1] = [$x, $y];
         }
@@ -221,10 +229,11 @@ class Svg
             . '>' . $text . '</text>';
     }
 
-    public static function line(string &$svg, string $color, float $x1, float $y1, float $x2, float $y2, float $width = 1, float $opacity = 1)
+    public static function line(string &$svg, string $color, float $x1, float $y1, float $x2, float $y2, float $width = 1, float $opacity = 1, string $dasharray = '')
     {
         $svg .= '<line '
             . ($opacity !== 1 ? 'stroke-opacity="' . $opacity . '" ' : '')
+            . ($dasharray ? 'stroke-dasharray="' . $dasharray . '" ' : '')
             . ' stroke="' . $color . '"'
             . ' stroke-width="' . $width . '"'
             . ' x1="' . round($x1, 3) . '"'

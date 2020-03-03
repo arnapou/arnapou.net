@@ -43,7 +43,7 @@
 </div>
 <div>
     <small>Vent km/h</small>
-    {{ weather.svglines('wind_speed', '#a4650a', 5) | raw }}
+    {{ weather.svglines('wind_speed', '#a4650a', 5, -35) | raw }}
 </div>
 <div>
     <small>Humidité %</small>
@@ -56,11 +56,15 @@
 </div>
 <div>
     <small>Précipitations mm</small>
-    {{ weather.svglines('mm', '#19A979') | raw }}
+    {{ weather.svglines('mm', '#19A979', 1, -7) | raw }}
 </div>
 <div>
     <small>Pression hPa</small>
     {{ weather.svglines('pressure', '#da5a1b', 2, 1013) | raw }}
 </div>
+
+<!----------------------------------------------------------------------
+{{ weather.data|json_encode(constant('JSON_PRETTY_PRINT'))|raw }}
+----------------------------------------------------------------------->
 
 </body>
