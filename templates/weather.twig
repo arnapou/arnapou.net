@@ -8,7 +8,7 @@
             background: #cccccc;
             padding: 4px 0 5em 0;
             font-family: Verdana, Arial, serif;
-            font-size: 2.5vw;
+            font-size: 2vw;
             margin: 0;
         }
 
@@ -18,15 +18,16 @@
             height: auto;
         }
 
-        small {
-            padding-left: 1vw;
-        }
-
         svg.icon {
-            background: rgba(184, 222, 255, 0.25);
+            background: transparent;
         }
 
-        div > small > span {
+        div > span {
+            display: block;
+            padding: 1.4vw 0 .2vw 1vw;
+        }
+
+        div > span > span {
             color: #888888;
         }
     </style>
@@ -45,32 +46,32 @@
     </div>
 {% else %}
 
-    <small>Température</small>
+    <div><span>Température</span></div>
     <div>{{ weather.svglines('temp', '#f66364') | raw }}</div>
 
-    <small>Température ressentie</small>
+    <div><span>Température ressentie</span></div>
     <div>{{ weather.svglines('feels_like', '#dc0d0e') | raw }}</div>
 
-    <small>Vent km/h</small>
+    <div><span>Vent km/h</span></div>
     <div>{{ weather.svglines('wind_speed', '#a4650a', 5, -35) | raw }}</div>
 
-    <small>Humidité %</small>
+    <div><span>Humidité %</span></div>
     <div>{{ weather.svglines('humidity', '#367dc4', 5) | raw }}</div>
 
-    <small>Nuages %</small>
+    <div><span>Nuages %</span></div>
     <div>{{ weather.svgimg('icon') | raw }}</div>
     <div>{{ weather.svglines('clouds', '#69767c', 10) | raw }}</div>
 
-    <small>Précipitations mm</small>
+    <div><span>Précipitations mm</span></div>
     <div>{{ weather.svglines('mm', '#19A979', 1, -7) | raw }}</div>
 
-    <small>Pression hPa</small>
+    <div><span>Pression hPa</span></div>
     <div>{{ weather.svglines('pressure', '#da5a1b', 2, 1013) | raw }}</div>
 
     <div>
-        <small><span>Ville : </span>{{ weather.data.city.name }}</small><br>
-        <small><span>Jour : </span>{{ weather.data.city.sunrise|date('H:i:s') }} &mdash; {{ weather.data.city.sunset|date('H:i:s') }}</small><br>
-        <small><span>Période : </span>{{ weather.tsMin|date('j M H\\h') }} &mdash; {{ weather.tsMax|date('j M H\\h') }}</small><br>
+        <span><span>Ville : </span>{{ weather.data.city.name }}</span>
+        <span><span>Jour : </span>{{ weather.data.city.sunrise|date('H:i:s') }} &mdash; {{ weather.data.city.sunset|date('H:i:s') }}</span>
+        <span><span>Période : </span>{{ weather.tsMin|date('j M H\\h') }} &mdash; {{ weather.tsMax|date('j M H\\h') }}</span>
     </div>
 {% endif %}
 

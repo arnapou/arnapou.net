@@ -181,11 +181,11 @@ class ApiClient
             return '';
         }
 
-        $scale  = 1.5;
+        $scale  = 1.4;
         $height = self::SVG_BAR * $scale;
 
         $svg = '<svg class="' . $serie . '" xmlns="http://www.w3.org/2000/svg" height="' . $height . '" width="' . $this->width . '" viewBox="0 0 ' . $this->width . ' ' . $height . '">';
-        $this->svgDays($svg, $height);
+        // $this->svgDays($svg, $height);
         for ($i = 0; $i < $this->nb; $i++) {
             $x = $this->svgX($i) - (self::SVG_BAR * $scale) / 2;
             Svg::image($svg, $values[$i], $x, 0, self::SVG_BAR * $scale, self::SVG_BAR * $scale);
