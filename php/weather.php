@@ -136,8 +136,10 @@ class ApiClient
         for ($i = 0; $i < \count($values); $i++) {
             $ts = $this->series['date'][$i];
             $x  = $calcX($i);
-            if ($ts % 43200 == 0) {
-                Svg::line($svg, '#cccccc', $x, 0, $x, $height, 1, 1, ($ts % 86400) ? '' : round(0.15 * self::SVG_FONT));
+            if ($ts % 86400 == 0) {
+                Svg::line($svg, '#cccccc', $x, 0, $x, $height, 1, 1);
+            } elseif ($ts % 43200 == 0) {
+                Svg::line($svg, '#cccccc', $x, 0, $x, $height, 1, .8, self::SVG_FONT);
             }
         }
         // points
