@@ -24,7 +24,7 @@
 
         div > span {
             display: block;
-            padding: 1.4vw 0 .2vw 1vw;
+            padding: 1.4vw 1vw .2vw 1vw;
         }
 
         div > span > span {
@@ -68,11 +68,16 @@
     <div><span>Pression hPa</span></div>
     <div>{{ weather.svglines('pressure', '#da5a1b', 2, 1013) | raw }}</div>
 
+    <div style="float: right">
+        <span><span><small>{{ 'now'|date('j M H:i:s')|lower }}</small></span></span>
+    </div>
+
     <div>
         <span><span>Ville : </span>{{ weather.data.city.name }}</span>
         <span><span>Jour : </span>{{ weather.data.city.sunrise|date('H:i:s') }} &mdash; {{ weather.data.city.sunset|date('H:i:s') }}</span>
         <span><span>Période : </span>{{ weather.tsMin|date('j M H\\h') }} &mdash; {{ weather.tsMax|date('j M H\\h') }}</span>
     </div>
+
 {% endif %}
 
 <script>
