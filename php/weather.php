@@ -34,6 +34,7 @@ class ApiClient
     public $data;
     public $series = [];
     public $icon;
+    public $url;
 
     public function __construct(string $city, int $nbDays, ?CacheItemPoolInterface $cache = null)
     {
@@ -47,10 +48,10 @@ class ApiClient
         } else {
             $params['q'] = $city;
         }
-        $url = self::API_URL . 'data/2.5/forecast?' . http_build_query($params);
+        $this->url = self::API_URL . 'data/2.5/forecast?' . http_build_query($params);
 
-        $getData = function () use ($url) {
-            return json_decode(file_get_contents($url), true) ?: [];
+        $getData = function () {
+            return json_decode(file_get_contents($this->url), true) ?: [];
         };
 
         if ($cache) {
@@ -124,8 +125,13 @@ class ApiClient
                 Svg::rect($svg, '#cccccc', $margin, $y, $nb * self::SVG_BAR, 1);
             }
         }
-        $y = $calcY($threshold);
-        Svg::rect($svg, '#cccccc', $margin, $y, $nb * self::SVG_BAR, $height - $y, .25);
+        if ($threshold < 0) {
+            $y = $calcY(-$threshold);
+            Svg::rect($svg, '#cccccc', $margin, 0, $nb * self::SVG_BAR, $y, .25);
+        } else {
+            $y = $calcY($threshold);
+            Svg::rect($svg, '#cccccc', $margin, $y, $nb * self::SVG_BAR, $height - $y, .25);
+        }
         // days
         for ($i = 0; $i < \count($values); $i++) {
             $ts = $this->series['date'][$i];
@@ -139,9 +145,9 @@ class ApiClient
         for ($i = 0; $i < \count($values); $i++) {
             $y = $calcY($values[$i]);
             $x = $calcX($i);
-            Svg::circle($svg, $color, 0.4 * self::SVG_FONT, $x, $y);
+            Svg::circle($svg, $color, 0.35 * self::SVG_FONT, $x, $y);
             if ($i) {
-                Svg::line($svg, $color, $x1, $y1, $x, $y, 2);
+                Svg::line($svg, $color, $x1, $y1, $x, $y, 0.15 * self::SVG_FONT);
             }
             [$x1, $y1] = [$x, $y];
         }
