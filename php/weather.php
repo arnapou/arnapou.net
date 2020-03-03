@@ -135,9 +135,9 @@ class ApiClient
         // days
         for ($i = 0; $i < \count($values); $i++) {
             $ts = $this->series['date'][$i];
-            if ($ts % 86400 == 0) {
-                $x = $calcX($i);
-                Svg::rect($svg, '#cccccc', $x, 0, 1, $height);
+            $x  = $calcX($i);
+            if ($ts % 43200 == 0) {
+                Svg::line($svg, '#cccccc', $x, 0, $x, $height, 1, 1, ($ts % 86400) ? '' : round(0.15 * self::SVG_FONT));
             }
         }
         // points
@@ -227,10 +227,11 @@ class Svg
             . '>' . $text . '</text>';
     }
 
-    public static function line(string &$svg, string $color, float $x1, float $y1, float $x2, float $y2, float $width = 1, float $opacity = 1)
+    public static function line(string &$svg, string $color, float $x1, float $y1, float $x2, float $y2, float $width = 1, float $opacity = 1, string $dasharray = '')
     {
         $svg .= '<line '
             . ($opacity !== 1 ? 'stroke-opacity="' . $opacity . '" ' : '')
+            . ($dasharray ? 'stroke-dasharray="' . $dasharray . '" ' : '')
             . ' stroke="' . $color . '"'
             . ' stroke-width="' . $width . '"'
             . ' x1="' . round($x1, 3) . '"'
