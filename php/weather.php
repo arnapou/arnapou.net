@@ -139,7 +139,7 @@ class ApiClient
             if ($ts % 86400 == 0) {
                 Svg::line($svg, '#cccccc', $x, 0, $x, $height, 1, 1);
             } elseif ($ts % 43200 == 0) {
-                Svg::line($svg, '#cccccc', $x, 0, $x, $height, 1, .8, self::SVG_FONT);
+                Svg::line($svg, '#cccccc', $x, 0, $x, $height, 1, .8, .5 * self::SVG_FONT);
             }
         }
         // points
