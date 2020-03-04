@@ -147,12 +147,12 @@
     $(function () {
         // refresh auto de page
         setTimeout(function () {
-            window.location.reload();
+            location.reload();
         }, {{ TTL * 1000 }});
 
         // clic links
         $('span.link').click(function () {
-            window.location = $(this).data('href');
+            location.href = $(this).data('href');
         });
     });
 </script>
