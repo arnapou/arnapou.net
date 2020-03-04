@@ -27,8 +27,32 @@
             padding: 1.4vw 1vw .2vw 1vw;
         }
 
+        div > span.link {
+            border-radius: .5vw;
+            vertical-align: middle;
+            border: .2vw solid #008CBA;
+            padding: .5vw 1vw;
+            margin-right: 1vw;
+            color: #008CBA;
+            background: #ffffff;
+            cursor: pointer;
+            margin-bottom: .5vw;
+        }
+
+        div > span.link:hover {
+            background: #008CBA;
+            color: white;
+        }
+
         div > span > span {
             color: #888888;
+        }
+
+        div.right {
+            float: right;
+            clear: both;
+            margin-right: 1vw;
+            margin-bottom: .8vw;
         }
     </style>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -68,9 +92,17 @@
     <div><span>Pression hPa</span></div>
     <div>{{ weather.svglines('pressure', '#da5a1b', 2, 1013) | raw }}</div>
 
-    <div style="float: right">
+    <div class="right">
         <span><span><small>{{ 'now'|date('j M H:i:s')|lower }}</small></span></span>
     </div>
+
+    {% for nb in [3, 5] %}
+        <div class="right">
+            <span data-href="{{ path('weather', { days: nb, city: city, ext: none }) }}" class="link">
+                🔄 sur {{ nb }} jours
+            </span>
+        </div>
+    {% endfor %}
 
     <div>
         <span><span>Ville : </span>{{ weather.data.city.name }}</span>
@@ -80,9 +112,18 @@
 
 {% endif %}
 
+<script src="{{ asset('theme-blog/vendor/jquery/jquery.min.js') }}"></script>
 <script>
-    setTimeout(function () {
-        window.location.reload();
-    }, 5 * 60 * 1000);
+    $(function () {
+        // refresh auto de page
+        setTimeout(function () {
+            window.location.reload();
+        }, {{ TTL * 1000 }});
+
+        // clic links
+        $('span.link').click(function () {
+            window.location = $(this).data('href');
+        });
+    });
 </script>
 </body>

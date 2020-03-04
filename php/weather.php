@@ -295,6 +295,8 @@ class Svg
 
 return new class() extends Controller {
 
+    private $TTL = 300;
+
     public function configure(): void
     {
         $this->addRoute('weather{days}{city}{ext}', [$this, 'weather'], 'weather')
@@ -315,9 +317,20 @@ return new class() extends Controller {
         );
 
         if ($ext) {
-            return new JsonResponse($client->data);
+            $response = new JsonResponse($client->data);
         } else {
-            return $this->render('@templates/weather.twig', ['weather' => $client]);
+            $response = $this->render(
+                '@templates/weather.twig',
+                [
+                    'weather' => $client,
+                    'days'    => $days,
+                    'city'    => $city,
+                    'TTL'     => $this->TTL + 5,
+                ]
+            );
         }
+        $response->setSharedMaxAge($this->TTL);
+        $response->setExpires((new DateTime())->modify("+$this->TTL seconds"));
+        return $response;
     }
 };
