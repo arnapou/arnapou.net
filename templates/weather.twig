@@ -3,6 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ weather.data.city.name }}</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="theme-color" content="#367fa9">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="{{ weather.data.city.name }}}">
+    <link rel="apple-touch-icon" sizes="180x180" href="./theme-blog/img/weather.png">
+    <link rel="icon" type="image/png" href="./theme-blog/img/weather.png"/>
+    <link rel="icon" type="image/png" sizes="192x192" href="./theme-blog/img/weather.svg">
+    <link rel="icon" type="image/png" sizes="96x96" href="./theme-blog/img/weather.svg">
     <style>
         body {
             background: #cccccc;
@@ -10,6 +18,9 @@
             font-family: Verdana, Arial, serif;
             font-size: 2.5vw;
             margin: 0;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
         }
 
         div > span {
@@ -17,7 +28,9 @@
             padding: 1.4vw 1vw .2vw 1vw;
         }
 
-        div > span.link {
+        div > .link {
+            display: block;
+            text-decoration: none;
             font-size: 150%;
             border-radius: .5vw;
             vertical-align: middle;
@@ -29,7 +42,7 @@
             margin-top: .5vw;
         }
 
-        div > span.link:hover {
+        div > .link:hover {
             background: #008CBA;
             color: white;
         }
@@ -64,19 +77,12 @@
             fill: #008CBA;
         }
 
-        div > span.link:hover svg.refresh {
+        div > .link:hover svg.refresh {
             fill: #ffffff;
         }
     </style>
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="icon" type="image/png" href="./theme-blog/img/weather.png"/>
-    <meta name="theme-color" content="#367fa9">
-    <link rel="apple-touch-icon" sizes="180x180" href="./theme-blog/img/weather.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="./theme-blog/img/weather.svg">
-    <link rel="icon" type="image/png" sizes="96x96" href="./theme-blog/img/weather.svg">
-    <meta name="apple-mobile-web-app-capable" content="yes">
 </head>
-<body>
+<body ontouchstart="">
 {% if weather.empty %}
     <div style="color: red">
         Les données récupérées sont vides ... retenter plus tard.
@@ -107,26 +113,30 @@
 
     {% for nb in [3, 5] %}
         <div class="right">
-            <span data-href="{{ path('weather', { days: nb, city: city, ext: none }) }}" class="link">
+            <a href="{{ path('weather', { days: nb, city: city, ext: none }) }}" class="link">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="refresh"
                      viewBox="0 0 477.867 477.867" style="enable-background:new 0 0 477.867 477.867;" xml:space="preserve">
-<g><g>
-    <path d="M409.6,0c-9.426,0-17.067,7.641-17.067,17.067v62.344C304.667-5.656,164.478-3.386,79.411,84.479
-        c-40.09,41.409-62.455,96.818-62.344,154.454c0,9.426,7.641,17.067,17.067,17.067S51.2,248.359,51.2,238.933
-        c0.021-103.682,84.088-187.717,187.771-187.696c52.657,0.01,102.888,22.135,138.442,60.976l-75.605,25.207
-        c-8.954,2.979-13.799,12.652-10.82,21.606s12.652,13.799,21.606,10.82l102.4-34.133c6.99-2.328,11.697-8.88,11.674-16.247v-102.4
-        C426.667,7.641,419.026,0,409.6,0z"/>
-</g></g>
-<g><g>
-    <path d="M443.733,221.867c-9.426,0-17.067,7.641-17.067,17.067c-0.021,103.682-84.088,187.717-187.771,187.696
-        c-52.657-0.01-102.888-22.135-138.442-60.976l75.605-25.207c8.954-2.979,13.799-12.652,10.82-21.606
-        c-2.979-8.954-12.652-13.799-21.606-10.82l-102.4,34.133c-6.99,2.328-11.697,8.88-11.674,16.247v102.4
-        c0,9.426,7.641,17.067,17.067,17.067s17.067-7.641,17.067-17.067v-62.345c87.866,85.067,228.056,82.798,313.122-5.068
-        c40.09-41.409,62.455-96.818,62.344-154.454C460.8,229.508,453.159,221.867,443.733,221.867z"/>
-</g></g>
-</svg>
-                sur {{ nb }} jours
-            </span>
+                    <g>
+                        <g>
+                            <path d="M409.6,0c-9.426,0-17.067,7.641-17.067,17.067v62.344C304.667-5.656,164.478-3.386,79.411,84.479
+                            c-40.09,41.409-62.455,96.818-62.344,154.454c0,9.426,7.641,17.067,17.067,17.067S51.2,248.359,51.2,238.933
+                            c0.021-103.682,84.088-187.717,187.771-187.696c52.657,0.01,102.888,22.135,138.442,60.976l-75.605,25.207
+                            c-8.954,2.979-13.799,12.652-10.82,21.606s12.652,13.799,21.606,10.82l102.4-34.133c6.99-2.328,11.697-8.88,11.674-16.247v-102.4
+                            C426.667,7.641,419.026,0,409.6,0z"/>
+                        </g>
+                    </g>
+                    <g>
+                        <g>
+                            <path d="M443.733,221.867c-9.426,0-17.067,7.641-17.067,17.067c-0.021,103.682-84.088,187.717-187.771,187.696
+                            c-52.657-0.01-102.888-22.135-138.442-60.976l75.605-25.207c8.954-2.979,13.799-12.652,10.82-21.606
+                            c-2.979-8.954-12.652-13.799-21.606-10.82l-102.4,34.133c-6.99,2.328-11.697,8.88-11.674,16.247v102.4
+                            c0,9.426,7.641,17.067,17.067,17.067s17.067-7.641,17.067-17.067v-62.345c87.866,85.067,228.056,82.798,313.122-5.068
+                            c40.09-41.409,62.455-96.818,62.344-154.454C460.8,229.508,453.159,221.867,443.733,221.867z"/>
+                        </g>
+                    </g>
+                </svg>
+                {{ nb }} jours
+            </a>
         </div>
     {% endfor %}
 
@@ -151,8 +161,10 @@
         }, {{ TTL * 1000 }});
 
         // clic links
-        $('span.link').click(function () {
-            location.href = $(this).data('href');
+        $('.link').click(function (e) {
+            location.href = $(this).prop('href');
+            e.preventDefault();
+            return false;
         });
     });
 </script>
