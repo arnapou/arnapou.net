@@ -28,15 +28,15 @@
         }
 
         div > span.link {
+            font-size: 150%;
             border-radius: .5vw;
             vertical-align: middle;
             border: .2vw solid #008CBA;
             padding: .5vw 1vw;
-            margin-right: 1vw;
             color: #008CBA;
             background: #ffffff;
             cursor: pointer;
-            margin-bottom: .5vw;
+            margin-top: .5vw;
         }
 
         div > span.link:hover {
@@ -51,7 +51,7 @@
         div.right {
             float: right;
             clear: both;
-            margin-right: 1vw;
+            margin-right: 2vw;
             margin-bottom: .8vw;
         }
     </style>
@@ -92,10 +92,6 @@
     <div><span>Pression hPa</span></div>
     <div>{{ weather.svglines('pressure', '#da5a1b', 2, 1013) | raw }}</div>
 
-    <div class="right">
-        <span><span><small>{{ 'now'|date('j M H:i:s')|lower }}</small></span></span>
-    </div>
-
     {% for nb in [3, 5] %}
         <div class="right">
             <span data-href="{{ path('weather', { days: nb, city: city, ext: none }) }}" class="link">
@@ -103,6 +99,10 @@
             </span>
         </div>
     {% endfor %}
+
+    <div class="right">
+        <span><span><small>{{ 'now'|date('j M H:i:s')|lower }}</small></span></span>
+    </div>
 
     <div>
         <span><span>Ville : </span>{{ weather.data.city.name }}</span>
