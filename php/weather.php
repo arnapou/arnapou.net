@@ -39,6 +39,7 @@ class ApiClient
     const THRESHOLD_COLOR = '#000088';
     const THRESHOLD_ALPHA = 0.1;
     const GRID_COLOR      = '#000000';
+    const GRID_WEEKEND    = '#000088';
     const GRID_ALPHA      = 0.2;
     const TEXT_COLOR      = '#000000';
     const TEXT_ALPHA      = 0.5;
@@ -225,21 +226,21 @@ class ApiClient
             $x = $this->svgX($ts);
             switch (intval(date('H', $ts))) {
                 case 0:
+                    $x2        = $this->svgX($ts + 86400);
+                    $isWeekend = in_array(date('N', $ts + 14400), [6, 7]);
+                    $color     = $isWeekend ? self::GRID_WEEKEND : self::GRID_COLOR;
                     if (floor($ts / 86400) % 2) {
-                        $x2 = $this->svgX($ts + 86400);
-                        Svg::rect($svg, self::GRID_COLOR, $x, 0, $x2 - $x, $height, self::GRID_ALPHA * .5);
+                        Svg::rect($svg, $color, $x, 0, $x2 - $x, $height, self::GRID_ALPHA * .5);
+                    } elseif ($isWeekend) {
+                        Svg::rect($svg, $color, $x, 0, $x2 - $x, $height, self::GRID_ALPHA * .3);
                     } elseif ($ts - 86400 < $this->tsMin) {
-                        $x1 = $this->svgX($ts - 86400);
-                        Svg::rect($svg, self::GRID_COLOR, $x1, 0, $x - $x1, $height, self::GRID_ALPHA * .5);
+                        Svg::rect($svg, $color, $x2, 0, $x - $x2, $height, self::GRID_ALPHA * .5);
                     }
                     break;
                 case 7:
                 case 17:
                     Svg::line($svg, self::THRESHOLD_COLOR, $x, 0, $x, $height, 1, self::GRID_ALPHA * 2, .2 * self::SVG_FONT);
                     break;
-                // case 12:
-                //     Svg::line($svg, self::SVG_GRID_COLOR, $x, 0, $x, $height, 1, self::SVG_GRID_OPACITY, .5 * self::SVG_FONT);
-                //     break;
             }
             $ts += 3600;
         }
