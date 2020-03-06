@@ -124,14 +124,29 @@ class ApiClient
         }
     }
 
-    public function svglines(string $serie, string $color, float $vGrid = 1, float $threshold = 0)
+    public function svglines($series, $colors, float $vGrid = 1, float $threshold = 0)
     {
-        if (empty($values = $this->series[$serie] ?? [])) {
+        $series = (array)$series;
+        $colors = (array)$colors;
+
+        $allValues = [];
+        foreach ($series as $key => $serie) {
+            if (empty($values = $this->series[$serie] ?? [])) {
+                unset($series[$key], $colors[$key]);
+            } else {
+                $allValues[$key] = $values;
+            }
+        }
+        if (\count($series) !== \count($colors) || empty($series)) {
             return '';
         }
 
-        $min = floor(min($values));
-        $max = ceil(max($values));
+        $max = $min = null;
+        foreach ($allValues as $values) {
+            $min = $min === null ? min($values) : min($min, ...$values);
+            $max = $max === null ? max($values) : max($max, ...$values);
+        }
+        [$min, $max] = [floor($min), ceil($max)];
         if ($max - $min == 0) {
             $min -= $vGrid;
             $max += $vGrid;
@@ -161,15 +176,17 @@ class ApiClient
             Svg::rect($svg, self::THRESHOLD_COLOR, self::SVG_MARGIN, $y, $this->nb * self::SVG_BAR, $height - $y, self::THRESHOLD_ALPHA);
         }
         // points
-        $x1 = $y1 = 0;
-        for ($i = 0; $i < $this->nb; $i++) {
-            $y = $calcY($values[$i]);
-            $x = $this->svgX($i);
-            Svg::circle($svg, $color, 0.35 * self::SVG_FONT, $x, $y);
-            if ($i) {
-                Svg::line($svg, $color, $x1, $y1, $x, $y, 0.15 * self::SVG_FONT);
+        foreach ($allValues as $key => $values) {
+            $x1 = $y1 = 0;
+            for ($i = 0; $i < $this->nb; $i++) {
+                $x = $this->svgX($i);
+                $y = $calcY($values[$i]);
+                Svg::circle($svg, $colors[$key], 0.35 * self::SVG_FONT, $x, $y);
+                if ($i) {
+                    Svg::line($svg, $colors[$key], $x1, $y1, $x, $y, 0.15 * self::SVG_FONT);
+                }
+                [$x1, $y1] = [$x, $y];
             }
-            [$x1, $y1] = [$x, $y];
         }
 
         return "$svg</svg>";

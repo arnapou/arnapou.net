@@ -80,6 +80,26 @@
         div > .link:hover svg.refresh {
             fill: #ffffff;
         }
+
+        i.dot {
+            position: relative;
+            display: inline-block;
+            width: .6em;
+            height: .6em;
+            border-radius: 1em;
+            margin: 0 .4em;
+        }
+
+        i.dot:before {
+            content: "";
+            position: absolute;
+            display: block;
+            width: 1.2em;
+            height: .16em;
+            background: inherit;
+            top: .22em;
+            left: -.3em;
+        }
     </style>
 </head>
 <body ontouchstart="">
@@ -89,11 +109,8 @@
     </div>
 {% else %}
 
-    <div><span>Température</span></div>
-    <div>{{ weather.svglines('temp', '#f66364') | raw }}</div>
-
-    <div><span>Température ressentie</span></div>
-    <div>{{ weather.svglines('feels_like', '#dc0d0e') | raw }}</div>
+    <div><span>Température <i class="dot" style="background: #e3191a"></i> ressentie <i class="dot" style="background: #700f0f"></i></span></div>
+    <div>{{ weather.svglines(['temp', 'feels_like'], ['#e3191a', '#700f0f']) | raw }}</div>
 
     <div><span>Vent km/h</span></div>
     <div>{{ weather.svglines('wind_speed', '#a4650a', 5, -35) | raw }}</div>
