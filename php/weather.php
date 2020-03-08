@@ -31,16 +31,22 @@ class ApiClient
     const API_LANG   = 'fr';
     const API_METRIC = 'metric';
 
-    const SVG_BAR        = 30;
     const SVG_FONT       = 20;
     const SVG_FONTFACTOR = .6;
+    const SVG_BAR        = 30;
+    const SVG_LINE       = 1.25 * self::SVG_FONT;
     const SVG_MARGIN     = self::SVG_FONT * 4 * self::SVG_FONTFACTOR + 5;
+
+    const DOT_RADIUS = 0.35 * self::SVG_FONT;
+    const LINE_WIDTH = 0.15 * self::SVG_FONT;
 
     const THRESHOLD_COLOR = '#000088';
     const THRESHOLD_ALPHA = 0.1;
     const GRID_COLOR      = '#000000';
-    const GRID_WEEKEND    = '#000088';
     const GRID_ALPHA      = 0.2;
+    const WEEKEND_COLOR   = '#000000';
+    const WEEKEND_ALPHA   = .9;
+    const WEEKEND_WIDTH   = 2;
     const TEXT_COLOR      = '#000000';
     const TEXT_ALPHA      = 0.5;
 
@@ -127,6 +133,43 @@ class ApiClient
 
     public function svglines($series, $colors, float $vGrid = 1, float $threshold = 0)
     {
+        if (!$this->svglinesInit($series, $colors, $vGrid, $allValues, $min, $max)) {
+            return '';
+        }
+
+        $height     = ($max - $min + 2 * $vGrid) * self::SVG_LINE / $vGrid;
+        $realHeight = $height + self::WEEKEND_WIDTH;
+
+        $calcY = function ($value) use ($height, $min, $max, $vGrid) {
+            return $height - ($value - $min + $vGrid) * $height / ($max - $min + 2 * $vGrid);
+        };
+
+        $svg = '<svg class="' . $series[0] . '" xmlns="http://www.w3.org/2000/svg" height="' . $realHeight . '" width="' . $this->width . '" viewBox="0 0 ' . $this->width . ' ' . $realHeight . '">';
+        Svg::rect($svg, '#ffffff', 0, 0, $this->width, $height);
+
+        $this->svgTimes($svg, $height);
+        $this->svgGridText($svg, $vGrid, $min, $max, $calcY, $height);
+        $this->svgThreshold($svg, $threshold, $height, $calcY);
+
+        // ooints
+        foreach ($allValues as $key => $values) {
+            $x1 = $y1 = 0;
+            for ($i = 0; $i < $this->nb; $i++) {
+                $x = $this->svgX($i);
+                $y = $calcY($values[$i]);
+                Svg::circle($svg, $colors[$key], self::DOT_RADIUS, $x, $y);
+                if ($i) {
+                    Svg::line($svg, $colors[$key], $x1, $y1, $x, $y, self::LINE_WIDTH);
+                }
+                [$x1, $y1] = [$x, $y];
+            }
+        }
+
+        return "$svg</svg>";
+    }
+
+    private function svglinesInit(&$series, &$colors, $vGrid, &$allValues, &$min, &$max): bool
+    {
         $series = (array)$series;
         $colors = (array)$colors;
 
@@ -139,7 +182,7 @@ class ApiClient
             }
         }
         if (\count($series) !== \count($colors) || empty($series)) {
-            return '';
+            return false;
         }
 
         $max = $min = null;
@@ -152,46 +195,9 @@ class ApiClient
             $min -= $vGrid;
             $max += $vGrid;
         }
-        $height = ($max - $min + 2 * $vGrid) * self::SVG_FONT * 1.25 / $vGrid;
-
-        $calcY = function ($value) use ($height, $min, $max, $vGrid) {
-            return $height - ($value - $min + $vGrid) * $height / ($max - $min + 2 * $vGrid);
-        };
-
-        $svg = '<svg class="' . $serie . '" xmlns="http://www.w3.org/2000/svg" height="' . $height . '" width="' . $this->width . '" viewBox="0 0 ' . $this->width . ' ' . $height . '">';
-        $this->svgDays($svg, $height);
-        // grid + text
-        for ($i = $min - $vGrid; $i < $max + $vGrid; $i++) {
-            if ($i % $vGrid == 0) {
-                $y = $calcY($i);
-                Svg::text($svg, self::TEXT_COLOR, $i, 2 + self::SVG_FONT * self::SVG_FONTFACTOR * (4 - strlen($i)), $y + 5, self::SVG_FONT, self::TEXT_ALPHA);
-                Svg::line($svg, self::GRID_COLOR, self::SVG_MARGIN, $y, $this->width, $y, 1, self::GRID_ALPHA);
-            }
-        }
-        // zone grise
-        if ($threshold < 0) {
-            $y = $calcY(-$threshold);
-            Svg::rect($svg, self::THRESHOLD_COLOR, self::SVG_MARGIN, 0, $this->nb * self::SVG_BAR, $y, self::THRESHOLD_ALPHA);
-        } else {
-            $y = $calcY($threshold);
-            Svg::rect($svg, self::THRESHOLD_COLOR, self::SVG_MARGIN, $y, $this->nb * self::SVG_BAR, $height - $y, self::THRESHOLD_ALPHA);
-        }
-        // points
-        foreach ($allValues as $key => $values) {
-            $x1 = $y1 = 0;
-            for ($i = 0; $i < $this->nb; $i++) {
-                $x = $this->svgX($i);
-                $y = $calcY($values[$i]);
-                Svg::circle($svg, $colors[$key], 0.35 * self::SVG_FONT, $x, $y);
-                if ($i) {
-                    Svg::line($svg, $colors[$key], $x1, $y1, $x, $y, 0.15 * self::SVG_FONT);
-                }
-                [$x1, $y1] = [$x, $y];
-            }
-        }
-
-        return "$svg</svg>";
+        return true;
     }
+
 
     public function svgimg(string $serie)
     {
@@ -203,7 +209,6 @@ class ApiClient
         $height = self::SVG_BAR * $scale;
 
         $svg = '<svg class="' . $serie . '" xmlns="http://www.w3.org/2000/svg" height="' . $height . '" width="' . $this->width . '" viewBox="0 0 ' . $this->width . ' ' . $height . '">';
-        // $this->svgDays($svg, $height);
         for ($i = 0; $i < $this->nb; $i++) {
             $x = $this->svgX($i) - (self::SVG_BAR * $scale) / 2;
             Svg::image($svg, $values[$i], $x, 0, self::SVG_BAR * $scale, self::SVG_BAR * $scale);
@@ -219,30 +224,60 @@ class ApiClient
         return self::SVG_MARGIN + self::SVG_BAR * .5 + $x;
     }
 
-    private function svgDays(string &$svg, int $height): void
+    private function svgTimes(string &$svg, int $height): void
     {
-        $ts = $this->tsMin;
+        $ts = $this->tsMin - 86400;       // on demarre avant pour etre sur de chopper le premier creneau
         while ($ts <= $this->tsMax) {
             $x = $this->svgX($ts);
-            switch (intval(date('H', $ts))) {
+            switch ($hour = intval(date('H', $ts))) {
                 case 0:
-                    $x2        = $this->svgX($ts + 86400);
                     $isWeekend = in_array(date('N', $ts + 14400), [6, 7]);
-                    $color     = $isWeekend ? self::GRID_WEEKEND : self::GRID_COLOR;
+                    $x1        = max($x, self::SVG_MARGIN);
+                    $x2        = $this->svgX($ts + 86400);
+                    if ($x2 < self::SVG_MARGIN) {
+                        continue;
+                    }
                     if (floor($ts / 86400) % 2) {
-                        Svg::rect($svg, $color, $x, 0, $x2 - $x, $height, self::GRID_ALPHA * .5);
-                    } elseif ($isWeekend) {
-                        Svg::rect($svg, $color, $x, 0, $x2 - $x, $height, self::GRID_ALPHA * .3);
-                    } elseif ($ts - 86400 < $this->tsMin) {
-                        Svg::rect($svg, $color, $x2, 0, $x - $x2, $height, self::GRID_ALPHA * .5);
+                        Svg::rect($svg, self::GRID_COLOR, $x1, 0, $x2 - $x1, $height, self::GRID_ALPHA * .5);
+                    }
+                    if ($isWeekend) {
+                        Svg::rect($svg, self::WEEKEND_COLOR, $x1, $height, $x2 - $x1, self::WEEKEND_WIDTH, self::WEEKEND_ALPHA);
                     }
                     break;
                 case 7:
                 case 17:
-                    Svg::line($svg, self::THRESHOLD_COLOR, $x, 0, $x, $height, 1, self::GRID_ALPHA * 2, .2 * self::SVG_FONT);
+                    if ($x >= self::SVG_MARGIN) {
+                        Svg::line($svg, self::THRESHOLD_COLOR, $x, 0, $x, $height, 1, self::GRID_ALPHA * 2, .2 * self::SVG_FONT);
+                    }
                     break;
             }
             $ts += 3600;
+        }
+    }
+
+    private function svgGridText(&$svg, float $vGrid, float $min, float $max, Closure $calcY, float $height)
+    {
+        for ($i = $min - $vGrid; $i < $max + $vGrid; $i++) {
+            if ($i % $vGrid == 0) {
+                $y     = $calcY($i);
+                $xText = 2 + self::SVG_FONT * self::SVG_FONTFACTOR * (4 - strlen($i));
+                $yText = $y + 0.3 * self::SVG_FONT;
+                if ($yText < $height && $yText - 0.9 * self::SVG_FONT >= 0) {
+                    Svg::text($svg, self::TEXT_COLOR, $i, $xText, $yText, self::SVG_FONT, self::TEXT_ALPHA);
+                }
+                Svg::line($svg, self::GRID_COLOR, self::SVG_MARGIN, $y, $this->width, $y, 1, self::GRID_ALPHA);
+            }
+        }
+    }
+
+    private function svgThreshold(&$svg, float $threshold, $height, Closure $calcY)
+    {
+        if ($threshold < 0) {
+            $y = $calcY(-$threshold);
+            Svg::rect($svg, self::THRESHOLD_COLOR, self::SVG_MARGIN, 0, $this->nb * self::SVG_BAR, $y, self::THRESHOLD_ALPHA);
+        } else {
+            $y = $calcY($threshold);
+            Svg::rect($svg, self::THRESHOLD_COLOR, self::SVG_MARGIN, $y, $this->nb * self::SVG_BAR, $height - $y, self::THRESHOLD_ALPHA);
         }
     }
 
