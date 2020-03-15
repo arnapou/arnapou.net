@@ -151,7 +151,7 @@ class ApiClient
         $this->svgGridText($svg, $vGrid, $min, $max, $calcY, $height);
         $this->svgThreshold($svg, $threshold, $height, $calcY);
 
-        // ooints
+        // points
         foreach ($allValues as $key => $values) {
             $x1 = $y1 = 0;
             for ($i = 0; $i < $this->nb; $i++) {
@@ -235,7 +235,7 @@ class ApiClient
                     $x1        = max($x, self::SVG_MARGIN);
                     $x2        = $this->svgX($ts + 86400);
                     if ($x2 < self::SVG_MARGIN) {
-                        continue;
+                        break;
                     }
                     if (floor($ts / 86400) % 2) {
                         Svg::rect($svg, self::GRID_COLOR, $x1, 0, $x2 - $x1, $height, self::GRID_ALPHA * .5);
