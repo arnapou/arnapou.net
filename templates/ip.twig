@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IP</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="theme-color" content="#367fa9">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="IP">
+    <link rel="apple-touch-icon" sizes="180x180" href="./theme-blog/img/ip.png">
+    <link rel="icon" type="image/png" href="./theme-blog/img/ip.png"/>
+    <link rel="icon" type="image/png" sizes="192x192" href="./theme-blog/img/ip.svg">
+    <link rel="icon" type="image/png" sizes="96x96" href="./theme-blog/img/ip.svg">
+    <style>
+        body {
+            background: #e8e8ee;
+            font-family: Verdana, Arial, serif;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+
+        #refresh {
+            position: fixed;
+            bottom: .5rem;
+            width: 100%;
+            left: 0;
+            font-weight: bold;
+        }
+
+        #refresh a {
+            text-decoration: none;
+            color: #ffffff;
+            display: inline-block;
+            padding: .5rem 1rem;
+            background: #005cbf;
+            border-radius: .5rem;
+            margin-right: 1rem;
+            vertical-align: middle;
+        }
+
+        #refresh a:hover {
+            background: #0062e3;
+        }
+
+        #refresh span {
+            color: rgba(0, 0, 0, .5);
+        }
+    </style>
+</head>
+<body ontouchstart="">
+
+<p><b>{{ ip }}</b></p>
+<p>{{ host }}</p>
+<p>{{ desc }}</p>
+
+<div id="refresh">
+    <a href="{{ path('ip-htm', { ext: 'htm' }) }}">
+        refresh
+    </a>
+    <span>{{ 'now'|date('H:i:s') }}</span>
+</div>
+
+<script src="{{ asset('theme-blog/vendor/jquery/jquery.min.js') }}"></script>
+<script>
+    $(function () {
+        $('#refresh a').click(function (e) {
+            location.href = $(this).prop('href');
+            e.preventDefault();
+            return false;
+        });
+    });
+</script>
+</body>
