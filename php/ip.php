@@ -18,7 +18,7 @@ return new class() extends Controller {
 <html>
 <title>$ip</title>
 <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
-<body>
+<body style=\"text-align:center; font-family: Arial, Helvetica, sans-serif\">
 <p>$ip</p>
 <p>$host</p>
 </body>
