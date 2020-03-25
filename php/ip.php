@@ -25,7 +25,7 @@ return new class() extends Controller {
 </html>");
     }
 
-    public function routeIpTxt($ext)
+    public function routeIpTxt()
     {
         return new Response($_SERVER['REMOTE_ADDR']);
     }
