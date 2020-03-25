@@ -20,9 +20,14 @@
             text-align: center;
         }
 
+        p.ip {
+            font-weight: bold;
+            font-size: 2em;
+        }
+
         #refresh {
             position: fixed;
-            bottom: .5rem;
+            bottom: 1.5rem;
             width: 100%;
             left: 0;
             font-weight: bold;
@@ -50,9 +55,9 @@
 </head>
 <body ontouchstart="">
 
-<p><b>{{ ip }}</b></p>
-<p>{{ host }}</p>
-<p>{{ desc }}</p>
+<p class="ip">{{ ip }}</p>
+<p class="host">{{ host }}</p>
+<p class="desc">{{ desc }}</p>
 
 <div id="refresh">
     <a href="{{ path('ip-htm', { ext: 'htm' }) }}">
