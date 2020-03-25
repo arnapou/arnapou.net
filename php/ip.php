@@ -17,7 +17,7 @@ return new class() extends Controller {
         return new Response("<!DOCTYPE html>
 <html>
 <title>$ip</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">
 <body>
 <p>$ip</p>
 <p>$host</p>
