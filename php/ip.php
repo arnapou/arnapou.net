@@ -1,5 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the Arnapou www package.
+ *
+ * (c) Arnaud Buathier <arnaud@arnapou.net>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 use Arnapou\SimpleSite\Core\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -32,7 +43,7 @@ return new class() extends Controller {
     {
         $response = $this->render('@templates/ip.twig', $this->ipData());
         $response->setSharedMaxAge(2);
-        $response->setExpires((new DateTime())->modify("+2 seconds"));
+        $response->setExpires((new DateTime())->modify('+2 seconds'));
         return $response;
     }
 

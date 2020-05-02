@@ -1,0 +1,14 @@
+{
+    "name": "arnapou/www",
+    "description": "Arnapou website",
+    "authors": [
+        {
+            "name": "Arnaud Buathier",
+            "email": "arnaud@arnapou.net",
+            "homepage": "http://arnapou.net"
+        }
+    ],
+    "require": {
+        "php": "^7.4"
+    }
+}

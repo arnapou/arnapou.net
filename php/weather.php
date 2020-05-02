@@ -1,17 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the Arnapou www package.
+ *
+ * (c) Arnaud Buathier <arnaud@arnapou.net>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 use Arnapou\SimpleSite\Core\Controller;
 use Arnapou\SimpleSite\Utils;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
-
 use Symfony\Component\HttpFoundation\JsonResponse;
-
-use function count;
 
 class ApiClient
 {
-
     // Temps courant
     // doc    -> https://openweathermap.org/current
     // ex     -> https://api.openweathermap.org/data/2.5/weather?id=3023606&lang=fr&units=metric&appid=b8818ae6ec5845bc74a39443b5b58748
@@ -52,11 +59,11 @@ class ApiClient
 
     const TTL = 900;
 
-    public  $url;
-    public  $data;
-    public  $series = [];
-    public  $tsMin;
-    public  $tsMax;
+    public $url;
+    public $data;
+    public $series = [];
+    public $tsMin;
+    public $tsMax;
     private $nb;
     private $width;
 
@@ -65,7 +72,7 @@ class ApiClient
         $this->initData($city, $cache);
         $this->initSeries($nbDays);
 
-        $this->nb    = count($this->series['date'] ?? []);
+        $this->nb    = \count($this->series['date'] ?? []);
         $this->width = $this->nb * self::SVG_BAR + self::SVG_MARGIN;
         if (!$this->isEmpty()) {
             $this->tsMin = 3600 * floor($this->series['date'][0] / 3600);
@@ -127,7 +134,7 @@ class ApiClient
         }
 
         foreach ($this->series as $serie => $values) {
-            $this->series[$serie] = array_slice($this->series[$serie], 0, 8 * $nbDays);
+            $this->series[$serie] = \array_slice($this->series[$serie], 0, 8 * $nbDays);
         }
     }
 
@@ -147,7 +154,7 @@ class ApiClient
         $svg = '<svg class="' . $series[0] . '" xmlns="http://www.w3.org/2000/svg" height="' . $realHeight . '" width="' . $this->width . '" viewBox="0 0 ' . $this->width . ' ' . $realHeight . '">';
         Svg::rect($svg, '#ffffff', 0, 0, $this->width, $height);
 
-        $this->svgTimes($svg, $height);
+        $this->svgTimes($svg, (int)$height);
         $this->svgGridText($svg, $vGrid, $min, $max, $calcY, $height);
         $this->svgThreshold($svg, $threshold, $height, $calcY);
 
@@ -226,12 +233,12 @@ class ApiClient
 
     private function svgTimes(string &$svg, int $height): void
     {
-        $ts = $this->tsMin - 86400;       // on demarre avant pour etre sur de chopper le premier creneau
+        $ts = \intval($this->tsMin) - 86400;       // on demarre avant pour etre sur de chopper le premier creneau
         while ($ts <= $this->tsMax) {
             $x = $this->svgX($ts);
-            switch ($hour = intval(date('H', $ts))) {
+            switch ($hour = \intval(date('H', $ts))) {
                 case 0:
-                    $isWeekend = in_array(date('N', $ts + 14400), [6, 7]);
+                    $isWeekend = \in_array(date('N', $ts + 14400), [6, 7]);
                     $x1        = max($x, self::SVG_MARGIN);
                     $x2        = $this->svgX($ts + 86400);
                     if ($x2 < self::SVG_MARGIN) {
@@ -247,7 +254,7 @@ class ApiClient
                 case 7:
                 case 17:
                     if ($x >= self::SVG_MARGIN) {
-                        Svg::line($svg, self::THRESHOLD_COLOR, $x, 0, $x, $height, 1, self::GRID_ALPHA * 2, .2 * self::SVG_FONT);
+                        Svg::line($svg, self::THRESHOLD_COLOR, $x, 0, $x, $height, 1, self::GRID_ALPHA * 2, \strval(.2 * self::SVG_FONT));
                     }
                     break;
             }
@@ -260,10 +267,10 @@ class ApiClient
         for ($i = $min - $vGrid; $i < $max + $vGrid; $i++) {
             if ($i % $vGrid == 0) {
                 $y     = $calcY($i);
-                $xText = 2 + self::SVG_FONT * self::SVG_FONTFACTOR * (4 - strlen($i));
+                $xText = 2 + self::SVG_FONT * self::SVG_FONTFACTOR * (4 - \strlen((string)$i));
                 $yText = $y + 0.3 * self::SVG_FONT;
                 if ($yText < $height && $yText - 0.9 * self::SVG_FONT >= 0) {
-                    Svg::text($svg, self::TEXT_COLOR, $i, $xText, $yText, self::SVG_FONT, self::TEXT_ALPHA);
+                    Svg::text($svg, self::TEXT_COLOR, "$i", $xText, $yText, self::SVG_FONT, self::TEXT_ALPHA);
                 }
                 Svg::line($svg, self::GRID_COLOR, self::SVG_MARGIN, $y, $this->width, $y, 1, self::GRID_ALPHA);
             }
@@ -280,7 +287,6 @@ class ApiClient
             Svg::rect($svg, self::THRESHOLD_COLOR, self::SVG_MARGIN, $y, $this->nb * self::SVG_BAR, $height - $y, self::THRESHOLD_ALPHA);
         }
     }
-
 }
 
 class Svg
@@ -347,7 +353,6 @@ class Svg
 }
 
 return new class() extends Controller {
-
     private $TTL = 300;
 
     public function configure(): void
@@ -364,8 +369,8 @@ return new class() extends Controller {
         $cache = new FilesystemAdapter('', ApiClient::TTL, $directory);
 
         $client = new ApiClient(
-            trim($city ?: ApiClient::CORNEBARRIEU, '-'),
-            intval($days ?: 5),
+            trim(\strval($city ?: ApiClient::CORNEBARRIEU), '-'),
+            \intval($days ?: 5),
             $cache
         );
 
