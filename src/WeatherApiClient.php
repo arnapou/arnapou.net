@@ -30,6 +30,7 @@ class WeatherApiClient
     private const BLAGNAC      = '3032469';
 
     private const API_URL    = 'http://api.openweathermap.org/';
+    private const API_KEY    = 'b8818ae6ec5845bc74a39443b5b58748';
     private const API_LANG   = 'fr';
     private const API_METRIC = 'metric';
 
@@ -58,7 +59,7 @@ class WeatherApiClient
         $params = [
                 'lang'  => self::API_LANG,
                 'units' => self::API_METRIC,
-                'appid' => getenv('OPENWEATHERMAP_APIKEY'),
+                'appid' => self::API_KEY,
             ] + (ctype_digit($this->city) ? ['id' => $this->city] : ['q' => $this->city]);
 
         $url       = self::API_URL . 'data/2.5/forecast?' . http_build_query($params);
