@@ -1,0 +1,11 @@
+{% extends "@internal/error.500.twig" %}
+
+{% import "@internal/error.500.twig" as macro %}
+
+{% block body %}
+    {% if ENV != 'dev' %}
+        {{ parent() }}
+    {% else %}
+        <pre>{{ macro.error(exception) }}</pre>
+    {% endif %}
+{% endblock %}

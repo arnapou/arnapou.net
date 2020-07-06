@@ -24,6 +24,7 @@ return new class() implements PhpCode {
             $twig->addGlobal($key, $data['value'] ?? '');
         }
         $twig->addGlobal('age', $this->age($parameters->get('birthday')['value']));
+        $twig->addGlobal('ENV', getenv('ENVIRONMENT'));
     }
 
     protected function age($birthday)
