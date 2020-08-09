@@ -34,8 +34,8 @@ class WeatherApiClient
     private const API_LANG   = 'fr';
     private const API_METRIC = 'metric';
 
-    private const REQUEST_TTL = 900;
-    private const DEFAULT_TTL = 86400;
+    private const REQUEST_TTL = 300;
+    private const DEFAULT_TTL = 86400 + 3600;
 
     private RedisAdapter         $cache;
     private array                $data;
@@ -104,17 +104,16 @@ class WeatherApiClient
             $points[(int)$point['dt']] = $point;
         }
 
-        $allItem = $this->cache->getItem("allpoints.$this->key");
-        if ($allItem->isHit()) {
-            foreach ($allItem->get() as $dt) {
-                if (isset($points[$dt])) {
-                    continue;
-                }
+        $allItem    = $this->cache->getItem("allpoints.$this->key");
+        $timestamps = $allItem->isHit() ? $allItem->get() : [];
+        foreach ($timestamps as $dt) {
+            if (isset($points[$dt])) {
+                continue;
+            }
 
-                $pointItem = $this->cache->getItem("point.$dt.$this->key");
-                if ($pointItem->isHit()) {
-                    $points[$dt] = $pointItem->get();
-                }
+            $pointItem = $this->cache->getItem("point.$dt.$this->key");
+            if ($pointItem->isHit()) {
+                $points[$dt] = $pointItem->get();
             }
         }
 
