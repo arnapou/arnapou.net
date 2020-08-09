@@ -161,8 +161,8 @@
     </div>
 
     <div>
-        <span><span>Ville : </span>{{ weather.data.city.name }}</span>
-        <span><span>Jour : </span>{{ weather.data.city.sunrise|date('H:i:s') }} &mdash; {{ weather.data.city.sunset|date('H:i:s') }}</span>
+        <span><span>Ville : </span>{{ client.data.city.name }}</span>
+        <span><span>Jour : </span>{{ client.data.city.sunrise|date('H:i:s') }} &mdash; {{ client.data.city.sunset|date('H:i:s') }}</span>
         <span><span>Période : </span>{{ weather.tsMin|date('j M H\\h') }} &mdash; {{ weather.tsMax|date('j M H\\h') }}</span>
     </div>
 

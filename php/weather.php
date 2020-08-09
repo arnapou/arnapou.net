@@ -37,6 +37,7 @@ return new class() extends Controller {
                 '@templates/weather.twig',
                 [
                     'weather' => $graphics,
+                    'client'  => $client,
                     'days'    => $days,
                     'city'    => $city,
                     'TTL'     => $this->responseTtl + 5,

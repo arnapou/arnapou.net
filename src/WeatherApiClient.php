@@ -145,4 +145,9 @@ class WeatherApiClient
 
         return $series;
     }
+
+    public function data()
+    {
+        return $this->data;
+    }
 }
