@@ -35,13 +35,13 @@ class WeatherApiClient
     private const API_METRIC = 'metric';
 
     private const REQUEST_TTL = 300;
-    private const DEFAULT_TTL = 86400 + 3600;
+    private const DEFAULT_TTL = 86400 * 2;
 
     private RedisAdapter         $cache;
     private array                $data;
     private string               $city;
     private int                  $nbDays;
-    private string               $key;
+    private string               $hash;
 
     public function __construct(string $city, int $nbDays)
     {
@@ -62,10 +62,10 @@ class WeatherApiClient
                 'appid' => self::API_KEY,
             ] + (ctype_digit($this->city) ? ['id' => $this->city] : ['q' => $this->city]);
 
-        $url       = self::API_URL . 'data/2.5/forecast?' . http_build_query($params);
-        $this->key = date('Ymd') . '.' . substr(md5($url), 0, 8);
+        $url        = self::API_URL . 'data/2.5/forecast?' . http_build_query($params);
+        $this->hash = substr(md5($url), 0, 8);
 
-        $item = $this->cache->getItem("request.$this->key");
+        $item = $this->cache->getItem("request.$this->hash");
         if (!$item->isHit()) {
             $data = json_decode(file_get_contents($url), true) ?: [];
             $item->set($data);
@@ -78,43 +78,67 @@ class WeatherApiClient
         return $item->get();
     }
 
+    private function allpointsGet($Ymd)
+    {
+        $item = $this->cache->getItem("allpoints.$Ymd.$this->hash");
+        return [
+            'item'       => $item,
+            'timestamps' => $item->isHit() ? $item->get() : [],
+        ];
+    }
+
+    private function allpointsSet($data)
+    {
+        $item       = $data['item'];
+        $timestamps = array_unique($data['timestamps']);
+        sort($timestamps);
+        $item->set($timestamps);
+        $this->cache->save($item);
+    }
+
+    private function savePoint($timestamp, $point)
+    {
+        $pointItem = $this->cache->getItem("point.$timestamp.$this->hash");
+        $pointItem->set($point);
+        $this->cache->save($pointItem);
+    }
+
     private function savePoints($points)
     {
-        $allItem = $this->cache->getItem("allpoints.$this->key");
-
-        $timestamps = $allItem->isHit() ? $allItem->get() : [];
+        $allpoints = [];
         foreach ($points as $point) {
-            $timestamps[] = $dt = (int)$point['dt'];
+            $dt  = (int)$point['dt'];
+            $Ymd = date('Ymd', $dt);
 
-            $pointItem = $this->cache->getItem("point.$dt.$this->key");
-            $pointItem->set($point);
-            $this->cache->save($pointItem);
+            $allpoints[$Ymd]                 ??= $this->allpointsGet($Ymd);
+            $allpoints[$Ymd]['timestamps'][] = $dt;
+
+            $this->savePoint($dt, $point);
         }
 
-        $timestamps = array_unique($timestamps);
-        sort($timestamps);
-        $allItem->set($timestamps);
-        $this->cache->save($allItem);
+        foreach ($allpoints as $Ymd => $data) {
+            $this->allpointsSet($data);
+        }
     }
 
     private function points()
     {
         $points = [];
-        foreach (($this->data['list'] ?? []) as $point) {
-            $points[(int)$point['dt']] = $point;
-        }
 
-        $allItem    = $this->cache->getItem("allpoints.$this->key");
-        $timestamps = $allItem->isHit() ? $allItem->get() : [];
-        foreach ($timestamps as $dt) {
-            if (isset($points[$dt])) {
-                continue;
+        $interval = new DateInterval('P1D');
+        $date     = new DateTime();
+        $date->setTime(12, 0, 0);
+
+        for ($i = 1; $i <= $this->nbDays; $i++) {
+            $timestamps = $this->allpointsGet($date->format('Ymd'))['timestamps'];
+            foreach ($timestamps as $dt) {
+                $pointItem = $this->cache->getItem("point.$dt.$this->hash");
+                if ($pointItem->isHit()) {
+                    $points[$dt] = $pointItem->get();
+                }
             }
 
-            $pointItem = $this->cache->getItem("point.$dt.$this->key");
-            if ($pointItem->isHit()) {
-                $points[$dt] = $pointItem->get();
-            }
+            $date = $date->add($interval);
         }
 
         ksort($points);
