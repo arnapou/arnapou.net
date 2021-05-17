@@ -30,8 +30,13 @@ cv:
         description: >
           Peopulse développe des solutions web dans le métier de l'intérim en fluidifiant les rapports entre leurs acteurs
         items:
-          - à venir ...
-        technos: PHP5/7, MySql, ...
+          - Modernisation de l'infra logicielle et système.
+          - Automatisation de tâches précédemment manuelles
+          - Maintenance de Php et de ses dépendances (5.6 -> 7.3 -> ...)
+          - Optimisation de code, découplages tech / métier
+          - Développement d'outils
+          - Amélioration de la qualité
+        technos: PHP5/7, Docker, PHP, MySql, RabbitMQ, ELK, Redis, proxysql, github actions
 
       - company: LivingObjects
         title: Lead développeur PHP

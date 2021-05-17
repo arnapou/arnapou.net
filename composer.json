@@ -5,10 +5,15 @@
         {
             "name": "Arnaud Buathier",
             "email": "arnaud@arnapou.net",
-            "homepage": "http://arnapou.net"
+            "homepage": "https://arnapou.net/"
         }
     ],
     "require": {
-        "php": "^7.4"
+        "php": "^8.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": ">=5.0",
+        "vimeo/psalm": ">=1.0",
+        "friendsofphp/php-cs-fixer": "^2.18"
     }
 }

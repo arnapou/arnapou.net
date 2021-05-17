@@ -27,7 +27,7 @@ return new class() extends Controller {
 
     public function weather(?string $days = null, ?string $city = null, ?string $ext = null)
     {
-        $client   = new WeatherApiClient(trim((string)$city, '-'), (int)($days ?: 5));
+        $client = new WeatherApiClient(trim((string) $city, '-'), (int) ($days ?: 5));
         $graphics = new WeatherGraphics($client);
 
         if ($ext) {
@@ -37,15 +37,16 @@ return new class() extends Controller {
                 '@templates/weather.twig',
                 [
                     'weather' => $graphics,
-                    'client'  => $client,
-                    'days'    => $days,
-                    'city'    => $city,
-                    'TTL'     => $this->responseTtl + 5,
+                    'client' => $client,
+                    'days' => $days,
+                    'city' => $city,
+                    'TTL' => $this->responseTtl + 5,
                 ]
             );
         }
         $response->setSharedMaxAge($this->responseTtl);
         $response->setExpires((new DateTime())->modify("+$this->responseTtl seconds"));
+
         return $response;
     }
 };

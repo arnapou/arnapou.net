@@ -1,4 +1,7 @@
 cache
 .idea
+.php_cs.cache
 githubhook.log
 simplesite.phar
+composer.lock
+vendor

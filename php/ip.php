@@ -23,7 +23,7 @@ return new class() extends Controller {
 
     public function ipData()
     {
-        $ip   = $_SERVER['REMOTE_ADDR'];
+        $ip = $_SERVER['REMOTE_ADDR'];
         $host = gethostbyaddr("$ip");
         $desc = '';
         if (strpos($host, '.mobile.')) {
@@ -32,8 +32,9 @@ return new class() extends Controller {
         if (strpos($host, '.wanadoo.')) {
             $desc = 'connexion ADSL';
         }
+
         return [
-            'ip'   => $ip,
+            'ip' => $ip,
             'host' => $host,
             'desc' => $desc,
         ];
@@ -44,6 +45,7 @@ return new class() extends Controller {
         $response = $this->render('@templates/ip.twig', $this->ipData());
         $response->setSharedMaxAge(2);
         $response->setExpires((new DateTime())->modify('+2 seconds'));
+
         return $response;
     }
 
@@ -51,6 +53,7 @@ return new class() extends Controller {
     {
         $response = new Response(implode("\n", $this->ipData()));
         $response->headers->set('Content-Type', 'text/plain');
+
         return $response;
     }
 };

@@ -20,7 +20,7 @@ return new class() extends StaticController {
         $context = parent::yamlContext($view);
 
         if ($context['list-posts'] ?? false) {
-            $path    = \dirname($this->container()->Config()->path_public() . "/$view");
+            $path = \dirname($this->container()->Config()->path_public() . "/$view");
             $context = array_merge($context, ['posts' => $this->getListPosts($path)]);
         }
 
@@ -30,7 +30,7 @@ return new class() extends StaticController {
     private function getListPosts(string $dir): array
     {
         $contexts = $this->getSubfolderContexts($dir);
-        $posts    = [];
+        $posts = [];
         foreach ($contexts as $folder => $context) {
             if (isset($context['post'])) {
                 $posts[] = $context['post'] + ['baseurl' => basename($folder)];
@@ -43,18 +43,20 @@ return new class() extends StaticController {
                     ?: (($b['title'] ?? 0) <=> ($a['title'] ?? 0));
             }
         );
+
         return $posts;
     }
 
     private function getSubfolderContexts(string $dir): array
     {
         $contexts = [];
-        $folders  = glob("$dir/*", GLOB_ONLYDIR | GLOB_NOSORT) ?: [];
+        $folders = glob("$dir/*", GLOB_ONLYDIR | GLOB_NOSORT) ?: [];
         foreach ($folders as $folder) {
             if (is_file("$folder/index.yaml")) {
                 $contexts[$folder] = Yaml::parseFile("$folder/index.yaml");
             }
         }
+
         return $contexts;
     }
 };
